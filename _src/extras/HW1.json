@@ -1,0 +1,182 @@
+[
+  {
+    "after": "1. 先弄清评分规则和通用流程",
+    "kind": "flow",
+    "pos": "end",
+    "title": "读完需求先问自己四个问题：每个问题对应一种 SQL 写法",
+    "spec": {
+      "dir": "TB",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "结果的一行代表什么？\n定下 GROUP BY 的键",
+          "kind": "pill",
+          "c": "blue"
+        },
+        {
+          "id": "q1",
+          "label": "有「曾经 / 存在」类条件？",
+          "kind": "diamond"
+        },
+        {
+          "id": "r1",
+          "label": "DISTINCT 子集 或 EXISTS\n别用会扇出的普通连接",
+          "c": "green"
+        },
+        {
+          "id": "q2",
+          "label": "要和「本组的统计值」比？",
+          "kind": "diamond"
+        },
+        {
+          "id": "r2",
+          "label": "相关子查询\n或 窗口 AVG() OVER",
+          "c": "green"
+        },
+        {
+          "id": "q3",
+          "label": "要「每组只取一个」？",
+          "kind": "diamond"
+        },
+        {
+          "id": "r3",
+          "label": "LATERAL + LIMIT 1\n或 ROW_NUMBER / QUALIFY",
+          "c": "green"
+        },
+        {
+          "id": "q4",
+          "label": "要「没有就插、有就改」？",
+          "kind": "diamond"
+        },
+        {
+          "id": "r4",
+          "label": "INSERT … SELECT …\nON CONFLICT DO UPDATE",
+          "c": "green"
+        },
+        {
+          "id": "z",
+          "label": "排序写全次关键字，最后 LIMIT",
+          "kind": "pill",
+          "c": "amber"
+        }
+      ],
+      "edges": [
+        [
+          "a",
+          "q1"
+        ],
+        [
+          "q1",
+          "r1",
+          "是"
+        ],
+        [
+          "q1",
+          "q2",
+          "否"
+        ],
+        [
+          "r1",
+          "q2"
+        ],
+        [
+          "q2",
+          "r2",
+          "是"
+        ],
+        [
+          "q2",
+          "q3",
+          "否"
+        ],
+        [
+          "r2",
+          "q3"
+        ],
+        [
+          "q3",
+          "r3",
+          "是"
+        ],
+        [
+          "q3",
+          "q4",
+          "否"
+        ],
+        [
+          "r3",
+          "q4"
+        ],
+        [
+          "q4",
+          "r4",
+          "是"
+        ],
+        [
+          "q4",
+          "z",
+          "否"
+        ],
+        [
+          "r4",
+          "z"
+        ]
+      ]
+    }
+  },
+  {"after": "4. 题型二 > 解题步骤", "kind": "viz", "id": "hw1-sql", "scenes": [0], "pos": "end"},
+  {"after": "6. 题型四", "kind": "viz", "id": "hw1-sql", "scenes": [1], "pos": "intro"},
+  {"after": "7. 题型五 > 写法二", "kind": "viz", "id": "hw1-sql", "scenes": [2], "pos": "end"},
+  {"after": "8. 题型六", "kind": "viz", "id": "hw1-sql", "scenes": [3], "pos": "intro"},
+  {
+    "after": "7. 题型五",
+    "kind": "layers",
+    "title": "一条 SELECT 在逻辑上按这个顺序求值（所以窗口函数看得到 GROUP BY 的结果，WHERE 里却不能用它）",
+    "spec": {
+      "rows": [
+        {
+          "tag": "第 1 步",
+          "label": "FROM / JOIN：先拼出所有行",
+          "desc": "连接在这里发生；扇出（行被复制）也在这里发生",
+          "c": "blue"
+        },
+        {
+          "tag": "第 2 步",
+          "label": "WHERE：逐行过滤",
+          "desc": "只能看单行的值，看不到聚合，也看不到窗口函数",
+          "c": "blue"
+        },
+        {
+          "tag": "第 3 步",
+          "label": "GROUP BY：把行收拢成组",
+          "desc": "之后每组只剩一行；非分组列只能出现在聚合函数里",
+          "c": "purple"
+        },
+        {
+          "tag": "第 4 步",
+          "label": "HAVING：按组过滤",
+          "desc": "可以用 COUNT / MAX 等聚合结果",
+          "c": "purple"
+        },
+        {
+          "tag": "第 5 步",
+          "label": "窗口函数：在剩下的行上开窗计算",
+          "desc": "ROW_NUMBER、AVG() OVER …；DuckDB 的 QUALIFY 紧接着按它过滤",
+          "c": "amber"
+        },
+        {
+          "tag": "第 6 步",
+          "label": "SELECT / DISTINCT：算出输出列，再去重",
+          "desc": "列的顺序就是评分比对的顺序",
+          "c": "green"
+        },
+        {
+          "tag": "第 7 步",
+          "label": "ORDER BY / LIMIT：排序后截断",
+          "desc": "并列必须有次关键字，否则 LIMIT 选中哪几行不确定",
+          "c": "red"
+        }
+      ]
+    }
+  }
+]

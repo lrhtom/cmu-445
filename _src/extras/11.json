@@ -1,0 +1,40 @@
+[
+  {"after": "6. 外部归并排序", "kind": "viz", "id": "extsort", "scenes": [0], "pos": "intro"},
+  {"after": "二路归并（2-way）", "kind": "viz", "id": "extsort", "scenes": [1], "pos": "end"},
+  {"after": "完整例子：N = 108 页，B = 5 页", "kind": "viz", "id": "extsort", "scenes": [2], "pos": "end"},
+  {"after": "装不下：外部哈希聚合", "kind": "viz", "id": "extsort", "scenes": [3], "pos": "end"},
+  { "after": "完整例子：N = 108 页，B = 5 页", "kind": "layers", "title": "N = 108 页、B = 5 页：每一趟之后磁盘上有什么", "pos": "end", "spec": {
+      "rows": [
+        { "tag": "Pass 0", "label": "22 个 run，每个 5 页（最后一个 3 页）", "desc": "B 页全部用来读 + 排序，产出 ⌈108/5⌉ 个 run", "c": "blue" },
+        { "tag": "Pass 1", "label": "6 个 run，每个 20 页（最后一个 8 页）", "desc": "4 路归并：⌈22/4⌉ = 6", "c": "amber" },
+        { "tag": "Pass 2", "label": "2 个 run：80 页 + 28 页", "desc": "4 路归并：⌈6/4⌉ = 2", "c": "amber" },
+        { "tag": "Pass 3", "label": "1 个 run，108 页", "desc": "全部有序；共 4 趟，总 I/O = 2 × 108 × 4 = 864", "c": "green" }
+      ]
+  } },
+  { "after": "决策树总结", "kind": "flow", "title": "该用哪种排序：一棵决策树", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a", "label": "数据装得下内存？", "kind": "diamond" },
+        { "id": "b", "label": "内存排序\nQuicksort / Powersort", "c": "green" },
+        { "id": "c", "label": "有 ORDER BY + LIMIT？", "kind": "diamond" },
+        { "id": "d", "label": "Top-N 堆排序", "c": "green" },
+        { "id": "e", "label": "有聚簇 B+ 树\n且顺序匹配？", "kind": "diamond" },
+        { "id": "f", "label": "直接扫叶子层", "c": "green" },
+        { "id": "g", "label": "外部归并排序", "c": "blue" }
+      ],
+      "edges": [ ["a","b","是"], ["a","c","否"], ["c","d","是"], ["c","e","否"], ["e","f","是"], ["e","g","否"] ]
+  } },
+  { "after": "装不下：外部哈希聚合", "kind": "flow", "title": "外部哈希聚合的两个阶段", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a", "label": "扫描输入（1 页缓冲）", "kind": "pill", "c": "blue" },
+        { "id": "b", "label": "阶段 1：用 h₁ 分到\nB−1 个分区，页满写盘", "c": "amber" },
+        { "id": "c", "label": "阶段 2：读入一个分区", "c": "blue" },
+        { "id": "d", "label": "用 h₂ 建内存哈希表\n去重 / 更新累计值", "c": "purple" },
+        { "id": "e", "label": "哈希表内容写到结果\n然后清空哈希表", "c": "green" },
+        { "id": "f", "label": "还有分区？", "kind": "diamond" },
+        { "id": "g", "label": "结束", "kind": "pill", "c": "green" }
+      ],
+      "edges": [ ["a","b"], ["b","c"], ["c","d"], ["d","e"], ["e","f"], ["f","c","有", {"back": true}], ["f","g","没有"] ]
+  } }
+]

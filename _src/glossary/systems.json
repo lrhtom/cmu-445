@@ -1,0 +1,1231 @@
+[
+ {
+  "t": "Andy Pavlo",
+  "full": "本课主讲教授",
+  "desc": "CMU 数据库方向的副教授，15-445 的主讲老师。笔记里的观点和段子大多出自他。",
+  "see": "L01"
+ },
+ {
+  "t": "Jim Gray",
+  "full": "事务理论的奠基人，图灵奖得主",
+  "desc": "在 IBM System R 项目中研究事务与锁，参与提出 2PL，五分钟法则和弹珠写偏斜也出自他。",
+  "see": "L20"
+ },
+ {
+  "t": "Ted Codd",
+  "alias": [
+   "Codd"
+  ],
+  "full": "关系模型的发明人，图灵奖得主",
+  "desc": "提出关系模型和关系代数，奠定了现代数据库的基础。OLAP 这个词也是他造的。",
+  "see": "L01"
+ },
+ {
+  "t": "Charles Bachman",
+  "full": "网状数据库的先驱，图灵奖得主",
+  "desc": "主导 IDS，是 CODASYL 网状模型的代表人物，主张程序员沿着指针在数据里导航。",
+  "see": "L01"
+ },
+ {
+  "t": "Michael Stonebraker",
+  "alias": [
+   "Stonebraker"
+  ],
+  "full": "Ingres 和 Postgres 的缔造者，图灵奖得主",
+  "desc": "在伯克利先后做出 Ingres 和 Postgres，还写过 shared-nothing 论文、提出 3PC。",
+  "see": "L01"
+ },
+ {
+  "t": "Leslie Lamport",
+  "alias": [
+   "Lamport"
+  ],
+  "full": "Paxos 的发明人，图灵奖得主",
+  "desc": "分布式系统大师。Paxos 论文用考古故事包装，当年被拒，多年后才正式发表。",
+  "see": "L24"
+ },
+ {
+  "t": "Goetz Graefe",
+  "alias": [
+   "Graefe"
+  ],
+  "full": "Volcano 和 Cascades 的作者",
+  "desc": "还提出了 Exchange 算子，写过 B+ 树技术专著，课上的 lock/latch 对照表也出自他。",
+  "see": "L16"
+ },
+ {
+  "t": "Rudolf Bayer",
+  "alias": [
+   "Bayer"
+  ],
+  "full": "B 树的发明人之一",
+  "desc": "在波音与 McCreight 提出 B 树，后来又和 Schkolnick 提出乐观的 latch crabbing。",
+  "see": "L10"
+ },
+ {
+  "t": "Phil Lehman",
+  "alias": [
+   "Lehman"
+  ],
+  "full": "B-link 树的第一作者",
+  "desc": "在 CMU 提出 B-link 树，它加入的兄弟指针成了现代 B+ 树的标配。",
+  "see": "L08"
+ },
+ {
+  "t": "Guido Moerkotte",
+  "full": "Zone Map（SMA）论文的作者",
+  "desc": "德国数据库学者，Thomas Neumann 的博士导师。Zone Map 的思路出自他的 SMA 论文。",
+  "see": "L13"
+ },
+ {
+  "t": "Thomas Neumann",
+  "full": "HyPer 和 Umbra 的主要作者",
+  "desc": "慕尼黑的数据库学者，Andy 口中的「头号德国人」，以查询优化和代码生成著称。",
+  "see": "L13"
+ },
+ {
+  "t": "H. T. Kung",
+  "alias": [
+   "H.T. Kung",
+   "Kung"
+  ],
+  "full": "OCC 的发明人",
+  "desc": "在 CMU 提出乐观并发控制。有趣的是他本行不是数据库，而是做网络的。",
+  "see": "L19"
+ },
+ {
+  "t": "Larry Ellison",
+  "alias": [
+   "Ellison"
+  ],
+  "full": "Oracle 创始人",
+  "desc": "照着 IBM 的做法做出 Oracle。课上讲了他把糟糕的优化器包装成「语义优化器」的故事。",
+  "see": "L15"
+ },
+ {
+  "t": "Linus Torvalds",
+  "alias": [
+   "Linus"
+  ],
+  "full": "Linux 内核的作者",
+  "desc": "曾在邮件列表上痛批用户态自旋锁。数据库大多不照做，因为不想让线程被内核挂起。",
+  "see": "L10"
+ },
+ {
+  "t": "Jignesh Patel",
+  "full": "CMU 数据库方向教授",
+  "desc": "CMU 另一位教数据库的教授，David DeWitt 的博士生。"
+ },
+ {
+  "t": "David DeWitt",
+  "full": "数据库领域的资深学者",
+  "desc": "Jignesh Patel 的博士导师，Hybrid 哈希连接的发明人之一，曾直言微软买下的假列存是垃圾。",
+  "see": "L06"
+ },
+ {
+  "t": "Jeff Dean",
+  "full": "Google 的顶尖工程师",
+  "desc": "课上的硬件延迟表源自他的经典版本，Andy 也拿他当顶尖工程师的代名词。",
+  "see": "L03"
+ },
+ {
+  "t": "Andreas Reuter",
+  "alias": [
+   "Reuter"
+  ],
+  "full": "ACID 缩写的提出者之一",
+  "desc": "和 Theo Härder 合写论文造出 ACID，又和 Jim Gray 合著那本讲事务的经典教材。",
+  "see": "L17"
+ },
+ {
+  "t": "Dave Andersen",
+  "full": "CMU 教授",
+  "desc": "他和学生发明了 Cuckoo Filter，团队写出了最好的开源布谷鸟哈希，SuRF 也出自他的学生。",
+  "see": "L09"
+ },
+ {
+  "t": "Marcin Żukowski",
+  "full": "Snowflake 联合创始人",
+  "desc": "在 CWI 做 VectorWise 时提出向量化执行的核心思路，这套做法后来成了业界标准。",
+  "see": "L25"
+ },
+ {
+  "t": "PostgreSQL",
+  "alias": [
+   "Postgres",
+   "PG"
+  ],
+  "full": "由 Stonebraker 的 Postgres 发展而来的开源关系数据库",
+  "desc": "课上最常拿来举例的系统：进程模型、追加式 MVCC，要靠 VACUUM 清理旧版本。",
+  "see": "L20"
+ },
+ {
+  "t": "MySQL",
+  "full": "最流行的开源关系数据库之一",
+  "desc": "默认引擎 InnoDB，默认隔离级别 REPEATABLE READ，增量式 MVCC，二级索引存主键。",
+  "see": "L20"
+ },
+ {
+  "t": "InnoDB",
+  "full": "MySQL 的默认存储引擎",
+  "desc": "索引组织存储（聚簇索引），默认页 16 KB，缓冲池用 young/old 两区近似 LRU-K。",
+  "see": "L05"
+ },
+ {
+  "t": "SQLite",
+  "full": "嵌入式关系数据库",
+  "desc": "不用服务器，以库的形式嵌进应用，整个数据库就是一个文件。单写者多读者。",
+  "see": "L21"
+ },
+ {
+  "t": "Oracle",
+  "full": "甲骨文公司的商业关系数据库",
+  "desc": "Zone Map 一词出自它。默认 READ COMMITTED，要 SERIALIZABLE 时实际给的是更弱的级别。",
+  "see": "L19"
+ },
+ {
+  "t": "SQL Server",
+  "full": "微软的商业关系数据库",
+  "desc": "优化器按 Cascades 风格重写，Andy 评价极高。默认隔离级别 READ COMMITTED。",
+  "see": "L16"
+ },
+ {
+  "t": "DB2",
+  "full": "IBM 的商业关系数据库",
+  "desc": "把 System R 的研究成果做成产品，让 SQL 成了事实标准。游标稳定性就是它的隔离级别。",
+  "see": "L02"
+ },
+ {
+  "t": "System R",
+  "full": "IBM 早期的关系数据库原型",
+  "desc": "第一个基于成本的查询优化器出自这里，SEQUEL 语言和 2PL 也是。",
+  "see": "L15"
+ },
+ {
+  "t": "Ingres",
+  "alias": [
+   "INGRES"
+  ],
+  "full": "Stonebraker 在伯克利做的关系数据库",
+  "desc": "和 System R 同期的早期关系系统，用 QUEL 语言。PostgreSQL 的名字就是 Post-Ingres。",
+  "see": "L01"
+ },
+ {
+  "t": "IMS",
+  "full": "Information Management System · IBM 的层次数据库",
+  "desc": "为阿波罗登月造的，数据按树形组织、逻辑和存储绑死。至今还在银行里运行。",
+  "see": "L01"
+ },
+ {
+  "t": "CODASYL",
+  "full": "Conference on Data Systems Languages",
+  "desc": "网状数据模型的标准组织。程序员沿指针逐条导航，和 Codd 的关系模型有过一场大论战。",
+  "see": "L01"
+ },
+ {
+  "t": "DuckDB",
+  "full": "嵌入式分析型数据库",
+  "desc": "列存加向量化，以库的形式运行，语法沿用 PostgreSQL。HW1 就用它写 SQL。",
+  "see": "HW1"
+ },
+ {
+  "t": "ClickHouse",
+  "full": "开源列式分析数据库，出自 Yandex",
+  "desc": "查询极快，靠向量化和专用代码，光哈希表就有 24 种实现。连接重排序是短板。",
+  "see": "L25"
+ },
+ {
+  "t": "HyPer",
+  "full": "慕尼黑工业大学的数据库系统",
+  "desc": "最早做推模型和 LLVM 查询编译的系统之一。DuckDB 的优化器抄的就是它。",
+  "see": "L25"
+ },
+ {
+  "t": "Umbra",
+  "full": "HyPer 的二代",
+  "desc": "自底向上优化器公认最好。两段式 JIT：先跑汇编，后台用 LLVM 编译好再热替换。",
+  "see": "L25"
+ },
+ {
+  "t": "CedarDB",
+  "full": "Umbra 的商业版",
+  "desc": "把 Umbra 这条研究线做成产品的数据库，技术上和 Umbra 一脉相承。",
+  "see": "L25"
+ },
+ {
+  "t": "Vertica",
+  "full": "早期的商业列存数据库",
+  "desc": "最早做列存加晚期物化的系统之一，后来改从 S3 读数据时认定这是错误，把它去掉了。",
+  "see": "L11"
+ },
+ {
+  "t": "MonetDB",
+  "full": "荷兰 CWI 的列存数据库",
+  "desc": "物化模型的首创者：算子一次把全部结果交给上层。VectorWise 就是为改进它而生的。",
+  "see": "L13"
+ },
+ {
+  "t": "VectorWise",
+  "full": "出自 CWI 的向量化分析引擎",
+  "desc": "向量化执行和预编译原语的源头，后被 Ingres 买下，作者随后参与创办 Snowflake。",
+  "see": "L25"
+ },
+ {
+  "t": "Snowflake",
+  "full": "云数据仓库",
+  "desc": "选择 shared-disk，把存储交给 S3、工程投在计算上，执行走向量化和预编译原语。",
+  "see": "L23"
+ },
+ {
+  "t": "Redshift",
+  "full": "Amazon Redshift · AWS 的云数据仓库",
+  "desc": "现代 OLAP 系统之一，列存加向量化执行。课上提到它的 mostly8 编码。",
+  "see": "L13"
+ },
+ {
+  "t": "BigQuery",
+  "full": "Google 的云数据仓库",
+  "desc": "内部引擎是 Dremel。把 shuffle 当成中间检查点，查询中途也能增减节点。",
+  "see": "L24"
+ },
+ {
+  "t": "Teradata",
+  "full": "老牌商业数据仓库",
+  "desc": "课上常和 Oracle、DB2 并列，代表昂贵的商业系统，也卖软硬一体的数据库一体机。",
+  "see": "L12"
+ },
+ {
+  "t": "Databricks",
+  "full": "云数据平台公司",
+  "desc": "产品基于 Spark，自研了 Photon 引擎，Delta Lake 也由它主导。",
+  "see": "L25"
+ },
+ {
+  "t": "Photon",
+  "full": "Databricks 的 C++ 查询引擎",
+  "desc": "通过 JNI 接进 JVM 上的 Spark，靠向量化和预编译原语取代了原来的 JIT 路线。",
+  "see": "L25"
+ },
+ {
+  "t": "Yellowbrick",
+  "full": "商业数据仓库",
+  "desc": "以极端著称：自写内核驱动和 UDP 协议，用 DPDK 绕过内核，启动后不再和 OS 打交道。",
+  "see": "L25"
+ },
+ {
+  "t": "Firebolt",
+  "full": "云数据仓库",
+  "desc": "最初是 ClickHouse 的一个 fork，第 18 讲的客座来自这里。",
+  "see": "L18"
+ },
+ {
+  "t": "MotherDuck",
+  "full": "DuckDB 的商业化公司之一",
+  "desc": "第 11 讲的客座。主打双端执行：一条查询拆成本地和云端两部分来跑。",
+  "see": "L11"
+ },
+ {
+  "t": "SpiralDB",
+  "alias": [
+   "Spiral"
+  ],
+  "full": "Vortex 文件格式背后的公司",
+  "desc": "第 14 讲的客座，主张字节在 S3 上的排列方式决定了性能。",
+  "see": "L14"
+ },
+ {
+  "t": "Vortex",
+  "full": "SpiralDB 的列式文件格式",
+  "desc": "目标是替代 Parquet，随机访问和扫描都更快，可以直接从 DuckDB 里查询。",
+  "see": "L14"
+ },
+ {
+  "t": "DataFusion",
+  "full": "Apache 的可嵌入查询引擎",
+  "desc": "现代向量化引擎的一员，走推模型；早期是向量化加拉模型。",
+  "see": "L13"
+ },
+ {
+  "t": "RelationalAI",
+  "full": "第 25 讲的客座公司",
+  "desc": "在做 Rel 语言，想用小而语义清晰的核心语言修掉 SQL 的问题。",
+  "see": "L25"
+ },
+ {
+  "t": "dbt",
+  "full": "data build tool · 数据转换工具",
+  "desc": "用 SQL 加 Jinja 模板写数据管道，把查询下推到数据仓库里执行。第 2 讲的客座。",
+  "see": "L02"
+ },
+ {
+  "t": "Spanner",
+  "full": "Google 的全球分布式数据库",
+  "desc": "用原子钟同步时间，是极少数支持外部一致性的系统。它的论文承认了事务不可或缺。",
+  "see": "L17"
+ },
+ {
+  "t": "DynamoDB",
+  "full": "亚马逊的云托管键值数据库",
+  "desc": "课上提到它的确定性调度和侦察事务：先假跑一遍不改数据，提交时再跑一遍比对。",
+  "see": "L19"
+ },
+ {
+  "t": "CockroachDB",
+  "full": "分布式 SQL 数据库",
+  "desc": "少数默认可串行化的系统之一，优化器走 Cascades 路线。",
+  "see": "L19"
+ },
+ {
+  "t": "YugabyteDB",
+  "alias": [
+   "Yugabyte"
+  ],
+  "full": "兼容 PostgreSQL 的分布式数据库",
+  "desc": "直接复用 PostgreSQL 源码改造而成，开源。第 7 讲的客座。",
+  "see": "L07"
+ },
+ {
+  "t": "TiDB",
+  "full": "PingCAP 的分布式数据库",
+  "desc": "课上把它和 SingleStore 并列为 HTAP 的代表。",
+  "see": "L06"
+ },
+ {
+  "t": "SingleStore",
+  "full": "HTAP 数据库",
+  "desc": "最初是内存数据库，后来改了架构。第 5 讲的客座。",
+  "see": "L05"
+ },
+ {
+  "t": "Neon",
+  "full": "云上的 PostgreSQL 服务",
+  "desc": "创始人也是 SingleStore 的创始人，后被 Databricks 收购。",
+  "see": "L05"
+ },
+ {
+  "t": "Cassandra",
+  "full": "Apache 的分布式 NoSQL 数据库",
+  "desc": "存储用 LSM 树，分片用一致性哈希。",
+  "see": "L23"
+ },
+ {
+  "t": "HBase",
+  "full": "Hadoop 生态的分布式 NoSQL 数据库",
+  "desc": "跑在 HDFS 上，底层是 LSM 树。",
+  "see": "L05"
+ },
+ {
+  "t": "MongoDB",
+  "full": "文档数据库",
+  "desc": "NoSQL 的代表。早期没有缓冲池，直接用 mmap，后来全部砍掉，收购了 WiredTiger。",
+  "see": "L04"
+ },
+ {
+  "t": "Redis",
+  "full": "内存键值存储",
+  "desc": "常用作缓存。命令在单线程上执行，所以天然原子，几乎不用操心并发控制。",
+  "see": "L10"
+ },
+ {
+  "t": "RocksDB",
+  "full": "Facebook 基于 LevelDB 开发的嵌入式键值存储",
+  "desc": "LSM 树的代表实现，被很多数据库当存储引擎。",
+  "see": "L05"
+ },
+ {
+  "t": "LevelDB",
+  "full": "Google 开源的嵌入式键值存储",
+  "desc": "LSM 树的经典实现，RocksDB 就是从它 fork 出来的。",
+  "see": "L05"
+ },
+ {
+  "t": "WiredTiger",
+  "full": "MongoDB 的存储引擎",
+  "desc": "MongoDB 收购后用来替换 mmap 方案。主体是标准缓冲池，mmap 只用在极小的场景。",
+  "see": "L04"
+ },
+ {
+  "t": "LMDB",
+  "full": "Lightning Memory-Mapped Database",
+  "desc": "嵌入式键值库，基于 mmap 和影子分页，作者的理念和 Andy 正好相反。",
+  "see": "L21"
+ },
+ {
+  "t": "Berkeley DB",
+  "full": "嵌入式键值存储库",
+  "desc": "里面实现了线性哈希，后被 Oracle 收购。",
+  "see": "L07"
+ },
+ {
+  "t": "Parquet",
+  "full": "Apache Parquet · 列式文件格式",
+  "desc": "数据湖的事实标准，按 row group 分块，footer 里放元数据。正被一批新格式挑战。",
+  "see": "L06"
+ },
+ {
+  "t": "ORC",
+  "full": "Optimized Row Columnar",
+  "desc": "Hadoop 生态里的列式文件格式，和 Parquet 同类。",
+  "see": "L06"
+ },
+ {
+  "t": "Iceberg",
+  "full": "Apache Iceberg · 开放表格式",
+  "desc": "在 Parquet 这类文件之上维护表的元数据，让数据湖里的一堆文件能当一张表用。",
+  "see": "L06"
+ },
+ {
+  "t": "Delta Lake",
+  "full": "Databricks 主导的开放表格式",
+  "desc": "作用和 Iceberg 类似：在数据湖文件上加事务日志，让它具备表的能力。",
+  "see": "L06"
+ },
+ {
+  "t": "MapReduce",
+  "full": "Google 提出的分布式批处理模型",
+  "desc": "分 Map 和 Reduce 两步，中间靠 shuffle 搬数据。这件事数据库其实更早就在做。",
+  "see": "L24"
+ },
+ {
+  "t": "Hadoop",
+  "full": "Apache 的开源大数据平台",
+  "desc": "由 HDFS 和 MapReduce 等组成，是大数据和 NoSQL 那一波的代表。"
+ },
+ {
+  "t": "HDFS",
+  "full": "Hadoop Distributed File System · Hadoop 分布式文件系统",
+  "desc": "文件只能追加、不能原地修改，这类存储正是 LSM 树的用武之地。",
+  "see": "L05"
+ },
+ {
+  "t": "Spark",
+  "full": "Apache Spark · 分布式计算引擎",
+  "desc": "用 Scala 写、跑在 JVM 上，本质是一次一条元组的行式系统。Databricks 的产品基于它。",
+  "see": "L25"
+ },
+ {
+  "t": "S3",
+  "full": "Amazon Simple Storage Service · 亚马逊对象存储",
+  "desc": "容量近乎无限、吞吐高、延迟大，按请求收费。现代云数据库常把它当共享磁盘。",
+  "see": "L23"
+ },
+ {
+  "t": "Lucene",
+  "full": "Java 写的全文检索库",
+  "desc": "倒排索引的代表实现，词典用 FST 存储，Elasticsearch 就建在它之上。",
+  "see": "L09"
+ },
+ {
+  "t": "pgvector",
+  "full": "PostgreSQL 的向量索引扩展",
+  "desc": "支持 IVFFlat 和 HNSW。Andy 认为 90% 的场景用它就够了。",
+  "see": "L09"
+ },
+ {
+  "t": "IBM",
+  "full": "International Business Machines",
+  "desc": "60–80 年代的计算机业巨头，IMS、System R、DB2 和 SQL 都出自这里。",
+  "see": "L02"
+ },
+ {
+  "t": "CWI",
+  "full": "Centrum Wiskunde & Informatica · 荷兰国家数学与计算机科学研究中心",
+  "desc": "MonetDB、VectorWise 和 DuckDB 都出自这里。",
+  "see": "L13"
+ },
+ {
+  "t": "TUM",
+  "full": "Technical University of Munich · 慕尼黑工业大学",
+  "desc": "HyPer 和 Umbra 的出处，课上说的「德国人」主要指这里的数据库团队。",
+  "see": "L16"
+ },
+ {
+  "t": "SQL",
+  "full": "Structured Query Language · 结构化查询语言",
+  "desc": "关系数据库的标准查询语言，声明式：只说要什么，不说怎么取。前身是 IBM 的 SEQUEL。",
+  "see": "L02"
+ },
+ {
+  "t": "DBMS",
+  "full": "Database Management System · 数据库管理系统",
+  "desc": "定义、存储、查询和管理数据库的软件。数据库是数据，DBMS 是管它的系统。",
+  "see": "L01"
+ },
+ {
+  "t": "OS",
+  "full": "Operating System · 操作系统",
+  "desc": "全课主线之一：数据库比 OS 更了解自己的负载，所以很多事不交给它做。",
+  "see": "L04"
+ },
+ {
+  "t": "CPU",
+  "full": "Central Processing Unit · 中央处理器",
+  "desc": "内存够大时，分析查询的瓶颈就在这里，所以现代引擎追求缓存友好、少分支、少函数调用。",
+  "see": "L13"
+ },
+ {
+  "t": "GPU",
+  "full": "Graphics Processing Unit · 图形处理器",
+  "desc": "擅长大批量并行计算。GPU 数据库试了十几年，卡在整个数据库得塞进显存。",
+  "see": "L12"
+ },
+ {
+  "t": "SSD",
+  "full": "Solid State Drive · 固态硬盘",
+  "desc": "闪存做的非易失存储，比 DRAM 慢两个数量级，但比机械硬盘快得多。",
+  "see": "L03"
+ },
+ {
+  "t": "HDD",
+  "full": "Hard Disk Drive · 机械硬盘",
+  "desc": "靠磁头移动寻道，所以随机 I/O 比顺序 I/O 慢得多。",
+  "see": "L03"
+ },
+ {
+  "t": "NVMe",
+  "full": "Non-Volatile Memory Express",
+  "desc": "走 PCIe 总线的高速 SSD 接口，课上说的本地超快盘就是它。",
+  "see": "L14"
+ },
+ {
+  "t": "DRAM",
+  "full": "Dynamic Random Access Memory · 动态随机存取存储器",
+  "desc": "就是内存：掉电丢数据，课上统一叫 memory，缓冲池就放在这里。",
+  "see": "L03"
+ },
+ {
+  "t": "RAID",
+  "full": "Redundant Array of Independent Disks · 独立磁盘冗余阵列",
+  "desc": "把多块盘组合使用。RAID 0 条带化提速，RAID 1 镜像做冗余。",
+  "see": "L14"
+ },
+ {
+  "t": "FPGA",
+  "full": "Field-Programmable Gate Array · 现场可编程门阵列",
+  "desc": "可以重新编程的硬件芯片。BigQuery 用它做内存 shuffle。",
+  "see": "L24"
+ },
+ {
+  "t": "PCIe",
+  "full": "PCI Express",
+  "desc": "CPU 和网卡、SSD、GPU 之间的高速总线。如今网卡带宽已经超过了它。",
+  "see": "L14"
+ },
+ {
+  "t": "NUMA",
+  "full": "Non-Uniform Memory Access · 非一致内存访问",
+  "desc": "多路 CPU 的机器上，访问离自己近的内存快、远的慢。自旋 latch 在这种机器上尤其糟糕。",
+  "see": "L10"
+ },
+ {
+  "t": "IPC",
+  "full": "Inter-Process Communication · 进程间通信",
+  "desc": "进程之间传数据的办法，如管道、信号、共享内存。进程模型的 worker 靠它协作。",
+  "see": "L14"
+ },
+ {
+  "t": "I/O",
+  "full": "Input/Output · 输入输出",
+  "desc": "数据在内存和外部设备之间传输。本课多指读写磁盘，是传统数据库成本的主要来源。",
+  "see": "L03"
+ },
+ {
+  "t": "API",
+  "full": "Application Programming Interface · 应用程序接口",
+  "desc": "程序之间约定好的调用方式。"
+ },
+ {
+  "t": "POSIX",
+  "full": "Portable Operating System Interface · 可移植操作系统接口",
+  "desc": "Unix 系统的接口标准，pthread 的 P 就是它。标准定下来之前，各家 Unix 的线程库互不兼容。",
+  "see": "L14"
+ },
+ {
+  "t": "DPDK",
+  "full": "Data Plane Development Kit",
+  "desc": "让程序绕过内核直接收发网络包的工具集。Yellowbrick 用它做内核旁路。",
+  "see": "L25"
+ },
+ {
+  "t": "SPDK",
+  "full": "Storage Performance Development Kit",
+  "desc": "让程序绕过内核直接访问 NVMe 盘的工具集，和 DPDK 是一类技术。",
+  "see": "L25"
+ },
+ {
+  "t": "RDMA",
+  "full": "Remote Direct Memory Access · 远程直接内存访问",
+  "desc": "网卡直接读写另一台机器的内存，不经过对方的 CPU 和内核，需要专用硬件。",
+  "see": "L25"
+ },
+ {
+  "t": "LLVM",
+  "full": "开源编译器基础设施",
+  "desc": "数据库做 JIT 时常先生成 LLVM IR，再交给它编译成机器码，HyPer、PostgreSQL 都这样。",
+  "see": "L25"
+ },
+ {
+  "t": "IR",
+  "full": "Intermediate Representation · 中间表示",
+  "desc": "编译器内部介于源码和机器码之间的代码形式。数据库做 JIT 时常先生成 IR 再编译。",
+  "see": "L25"
+ },
+ {
+  "t": "JVM",
+  "full": "Java Virtual Machine · Java 虚拟机",
+  "desc": "运行 Java、Scala 字节码的虚拟机。Spark 跑在上面，Andy 对它评价很低。",
+  "see": "L25"
+ },
+ {
+  "t": "JNI",
+  "full": "Java Native Interface",
+  "desc": "JVM 里调用 C/C++ 代码的接口。Photon 靠它把 C++ 引擎接进 Spark。",
+  "see": "L25"
+ },
+ {
+  "t": "SIMD",
+  "full": "Single Instruction, Multiple Data · 单指令多数据",
+  "desc": "一条 CPU 指令同时处理多个数据，是向量化执行提速的关键。",
+  "see": "L13"
+ },
+ {
+  "t": "AVX-512",
+  "alias": [
+   "AVX2"
+  ],
+  "full": "Advanced Vector Extensions · x86 的 SIMD 指令集",
+  "desc": "AVX2 是 256 位，AVX-512 是 512 位。老 CPU 跑 AVX-512 会降频，可能反而更慢。",
+  "see": "L25"
+ },
+ {
+  "t": "GDB",
+  "alias": [
+   "gdb"
+  ],
+  "full": "GNU Debugger · GNU 调试器",
+  "desc": "命令行调试器：打断点、单步、看变量。P2 调 B+ 树时用得最多。",
+  "see": "P0"
+ },
+ {
+  "t": "AddressSanitizer",
+  "alias": [
+   "ASan"
+  ],
+  "full": "编译器内置的内存错误检测工具",
+  "desc": "运行时抓用后释放、越界访问。BusTub 的 Debug 构建默认开启。",
+  "see": "P0"
+ },
+ {
+  "t": "ThreadSanitizer",
+  "alias": [
+   "tsan"
+  ],
+  "full": "编译器内置的数据竞争检测工具",
+  "desc": "运行时检测多线程数据竞争。BusTub 用 -DBUSTUB_SANITIZER=thread 打开。",
+  "see": "P1"
+ },
+ {
+  "t": "clang-tidy",
+  "full": "C++ 静态检查工具",
+  "desc": "检查代码风格和常见错误。Project 提交前必须跑过，不通过就没有分。",
+  "see": "P0"
+ },
+ {
+  "t": "clang-format",
+  "full": "C++ 代码格式化工具",
+  "desc": "按统一风格自动排版，BusTub 用 make format 调用。",
+  "see": "P0"
+ },
+ {
+  "t": "Clang",
+  "alias": [
+   "clang"
+  ],
+  "full": "LLVM 项目的 C/C++ 编译器",
+  "desc": "BusTub 推荐用它开发，CMake 检测到别的编译器时会给出警告。",
+  "see": "P0"
+ },
+ {
+  "t": "GCC",
+  "full": "GNU Compiler Collection · GNU 编译器套件",
+  "desc": "最常用的开源 C/C++ 编译器。早期的查询代码生成就是生成 C 再交给它编译。",
+  "see": "L25"
+ },
+ {
+  "t": "CMake",
+  "alias": [
+   "cmake"
+  ],
+  "full": "跨平台构建配置工具",
+  "desc": "读 CMakeLists.txt 生成 Makefile。BusTub 用它配置编译选项，再用 make 构建。",
+  "see": "P0"
+ },
+ {
+  "t": "Docker",
+  "full": "容器工具",
+  "desc": "把运行环境打包成镜像。Windows 上做 BusTub 最省事的办法之一。",
+  "see": "P0"
+ },
+ {
+  "t": "WSL",
+  "full": "Windows Subsystem for Linux",
+  "desc": "在 Windows 里运行 Linux 的子系统。BusTub 官方 README 写明不支持它。",
+  "see": "P0"
+ },
+ {
+  "t": "gtest",
+  "full": "GoogleTest · Google 的 C++ 单元测试框架",
+  "desc": "BusTub 的单元测试用它写。名字带 DISABLED_ 的用例默认跳过。",
+  "see": "P0"
+ },
+ {
+  "t": "sqllogictest",
+  "alias": [
+   "SQLLogicTest"
+  ],
+  "full": "用脚本测试 SQL 的工具",
+  "desc": "测试写在 .slt 文件里：执行 SQL 并比对输出。BusTub 用它测 P3 的执行器。",
+  "see": "P3"
+ },
+ {
+  "t": "Gradescope",
+  "full": "在线作业提交和自动评分平台",
+  "desc": "Project 提交到这里，用隐藏测试评分。",
+  "see": "P0"
+ },
+ {
+  "t": "mmap",
+  "full": "Memory-Mapped File · 内存映射文件",
+  "desc": "把文件映射进进程地址空间，由 OS 负责换页。Andy 的红线：数据库里永远不要用它。",
+  "see": "L04"
+ },
+ {
+  "t": "fsync",
+  "full": "把文件的脏数据强制刷到磁盘的系统调用",
+  "desc": "返回后数据才算真正落盘。它很慢，所以 WAL 用组提交让多个事务共用一次。",
+  "see": "L21"
+ },
+ {
+  "t": "futex",
+  "full": "Fast Userspace Mutex · 快速用户态互斥锁",
+  "desc": "Linux 的锁机制：先在用户态试，抢不到再进内核睡眠。std::mutex 底下就是它。",
+  "see": "L10"
+ },
+ {
+  "t": "RAII",
+  "full": "Resource Acquisition Is Initialization · 资源获取即初始化",
+  "desc": "构造时拿资源，析构时自动释放。BusTub 的页守卫靠它保证不忘记放锁和 unpin。",
+  "see": "P1"
+ },
+ {
+  "t": "STL",
+  "full": "Standard Template Library · C++ 标准模板库",
+  "desc": "vector、unordered_map 这些容器和算法。数据库内部常自己写，因为它们不受缓冲池管理。",
+  "see": "L07"
+ },
+ {
+  "t": "std::optional",
+  "full": "C++17 · 可能没有值的类型",
+  "desc": "要么装着一个值，要么是空的。CheckedReadPage 失败时就返回空，而不是抛异常。",
+  "see": "P0"
+ },
+ {
+  "t": "std::nullopt",
+  "alias": [
+   "nullopt"
+  ],
+  "full": "std::optional 的空值",
+  "desc": "表示这里没有值。DiskScheduler 析构时往队列放它，让后台线程退出。",
+  "see": "P1"
+ },
+ {
+  "t": "std::move",
+  "full": "把对象转成右值",
+  "desc": "让资源转移而不是拷贝。页守卫、unique_ptr 这类不可拷贝的对象都靠它传递。",
+  "see": "P0"
+ },
+ {
+  "t": "std::mutex",
+  "full": "C++ 互斥锁",
+  "desc": "同一时刻只让一个线程进入临界区，抢不到就睡眠。Linux 上底层是 futex。",
+  "see": "L10"
+ },
+ {
+  "t": "std::shared_mutex",
+  "alias": [
+   "shared_mutex"
+  ],
+  "full": "C++ 读写锁",
+  "desc": "多个读线程可以同时持有，写线程独占。就是第 10 讲的读写 latch。",
+  "see": "L10"
+ },
+ {
+  "t": "std::atomic",
+  "alias": [
+   "atomic"
+  ],
+  "full": "C++ 原子类型",
+  "desc": "对它的读改写不会被其他线程打断，不用加锁。BusTub 的 pin 计数用的就是它。",
+  "see": "P0"
+ },
+ {
+  "t": "std::atomic_flag",
+  "full": "C++ 最简单的原子布尔",
+  "desc": "只有测试并设置和清除两个操作，就是第 10 讲的自旋 latch。",
+  "see": "L10"
+ },
+ {
+  "t": "std::lock_guard",
+  "full": "RAII 锁守卫",
+  "desc": "构造时加锁，离开作用域自动放锁，不能中途放开。",
+  "see": "P0"
+ },
+ {
+  "t": "std::scoped_lock",
+  "full": "C++17 的 RAII 锁守卫",
+  "desc": "和 std::lock_guard 类似，但能一次锁住多个互斥量而不死锁。",
+  "see": "P0"
+ },
+ {
+  "t": "std::unique_lock",
+  "full": "可手动控制的独占锁守卫",
+  "desc": "比 std::lock_guard 灵活，能中途放锁再加锁，可以配合条件变量使用。",
+  "see": "P1"
+ },
+ {
+  "t": "std::shared_lock",
+  "full": "共享模式的锁守卫",
+  "desc": "以读模式持有 std::shared_mutex，离开作用域自动放锁。",
+  "see": "P1"
+ },
+ {
+  "t": "std::promise",
+  "alias": [
+   "std::promise/future"
+  ],
+  "full": "一次性结果通道的写入端",
+  "desc": "一个线程用 set_value 写入结果。DiskScheduler 用它告诉发起方 I/O 完成了。",
+  "see": "P1"
+ },
+ {
+  "t": "std::future",
+  "full": "一次性结果通道的读取端",
+  "desc": "从 std::promise 拿到，调用 get() 等待结果就绪。",
+  "see": "P1"
+ },
+ {
+  "t": "std::unique_ptr",
+  "alias": [
+   "unique_ptr"
+  ],
+  "full": "独占所有权的智能指针",
+  "desc": "不能拷贝只能移动，离开作用域自动释放对象。",
+  "see": "P0"
+ },
+ {
+  "t": "std::shared_ptr",
+  "alias": [
+   "shared_ptr"
+  ],
+  "full": "引用计数的智能指针",
+  "desc": "最后一个持有者销毁时才释放对象。",
+  "see": "P0"
+ },
+ {
+  "t": "std::unordered_map",
+  "alias": [
+   "unordered_map"
+  ],
+  "full": "C++ 标准库的哈希表",
+  "desc": "好用但不受缓冲池管理，所以数据库的页内结构不用它。",
+  "see": "L07"
+ },
+ {
+  "t": "std::terminate",
+  "full": "C++ 运行时终止程序的函数",
+  "desc": "异常没人接住时会走到这里，进程立刻结束。析构函数里抛异常就是这样。",
+  "see": "P1"
+ },
+ {
+  "t": "BusTub",
+  "full": "CMU 自研的教学数据库",
+  "desc": "本课的 Project 都在它上面做，用 C++ 写成，从缓冲池一路做到 MVCC。",
+  "see": "P0"
+ },
+ {
+  "t": "CountMinSketch",
+  "full": "P0 要实现的 Count-Min Sketch",
+  "desc": "用计数矩阵和多个哈希函数估算元素频次，只会高估不会低估。",
+  "see": "P0"
+ },
+ {
+  "t": "BufferPoolManager",
+  "alias": [
+   "BPM"
+  ],
+  "full": "BusTub 的缓冲池管理器",
+  "desc": "P1 的核心：管理内存帧，负责按页号取页、pin 计数、脏页写回和淘汰。",
+  "see": "P1"
+ },
+ {
+  "t": "ArcReplacer",
+  "full": "ARC 替换策略的实现",
+  "desc": "用两个存活列表和两个 ghost 列表决定淘汰哪一帧，是 P1 的 Task 1。",
+  "see": "P1"
+ },
+ {
+  "t": "FrameHeader",
+  "full": "缓冲池里一帧的元数据",
+  "desc": "记录帧号、读写锁、pin 计数、脏标志，还有这一帧 8 KB 的数据。",
+  "see": "P1"
+ },
+ {
+  "t": "DiskScheduler",
+  "full": "磁盘请求调度器",
+  "desc": "把读写请求放进 Channel，由后台线程交给 DiskManager 执行，完成后用 promise 通知。",
+  "see": "P1"
+ },
+ {
+  "t": "DiskManager",
+  "full": "BusTub 的磁盘读写层",
+  "desc": "实际把页写进数据库文件、再读回来。已经写好，由 DiskScheduler 的后台线程调用。",
+  "see": "P1"
+ },
+ {
+  "t": "DiskRequest",
+  "full": "一次磁盘读写请求",
+  "desc": "包含读写标志、内存地址、页号，以及一个用来通知完成的 std::promise。",
+  "see": "P1"
+ },
+ {
+  "t": "Channel",
+  "full": "线程安全的队列模板",
+  "desc": "多生产者多消费者：Put 放入，Get 取出，队列空时阻塞。DiskScheduler 用它传请求。",
+  "see": "P1"
+ },
+ {
+  "t": "ReadPageGuard",
+  "full": "读页守卫",
+  "desc": "RAII 包装：持有页的共享锁和 pin，Drop 或析构时自动释放。可移动、不可拷贝。",
+  "see": "P1"
+ },
+ {
+  "t": "WritePageGuard",
+  "full": "写页守卫",
+  "desc": "和 ReadPageGuard 一样的 RAII 包装，但持有独占锁，可以修改页内容。",
+  "see": "P1"
+ },
+ {
+  "t": "TracedBufferPoolManager",
+  "full": "带计数的缓冲池包装",
+  "desc": "在 BPM 外面包一层，统计读写页的次数。P2 的测试用它检查有没有多读页。",
+  "see": "P2"
+ },
+ {
+  "t": "BPlusTree",
+  "full": "P2 的 B+ 树主类",
+  "desc": "实现点查、插入、删除和迭代器，并要支持并发（latch crabbing）。",
+  "see": "P2"
+ },
+ {
+  "t": "BPlusTreePage",
+  "full": "B+ 树页的公共基类",
+  "desc": "页头放页类型、当前大小和最大大小，内部页和叶子页都继承它。",
+  "see": "P2"
+ },
+ {
+  "t": "BPlusTreeHeaderPage",
+  "full": "B+ 树的头页",
+  "desc": "只存根页号。改根之前先拿它的写守卫，避免根被并发替换。",
+  "see": "P2"
+ },
+ {
+  "t": "BPlusTreeLeafPage",
+  "alias": [
+   "LeafPage"
+  ],
+  "full": "B+ 树的叶子页",
+  "desc": "存有序的键和 RID，用下一页指针串成链表。Fall 2025 还加了墓碑。",
+  "see": "P2"
+ },
+ {
+  "t": "BPlusTreeInternalPage",
+  "alias": [
+   "InternalPage"
+  ],
+  "full": "B+ 树的内部页",
+  "desc": "存分隔键和子页号，只负责导航。第 0 个键不用。",
+  "see": "P2"
+ },
+ {
+  "t": "IndexIterator",
+  "full": "B+ 树的迭代器",
+  "desc": "沿叶子页链表顺序遍历键值对，用于范围扫描。",
+  "see": "P2"
+ },
+ {
+  "t": "Context",
+  "full": "B+ 树操作的上下文（BusTub 类）",
+  "desc": "存着头页守卫和路径上的读写守卫，latch crabbing 时从这里释放。",
+  "see": "P2"
+ },
+ {
+  "t": "Execution Context",
+  "full": "执行上下文",
+  "desc": "表达式求值时带着的环境：当前元组、查询参数、表的 schema，要提前准备好。",
+  "see": "L13"
+ },
+ {
+  "t": "GenericKey",
+  "full": "BusTub 索引的定长键",
+  "desc": "N 字节的定长键模板，大小由 GenericComparator 比较。",
+  "see": "P2"
+ },
+ {
+  "t": "AbstractExecutor",
+  "full": "所有执行器的基类",
+  "desc": "定义 Init、Next 和 GetOutputSchema。这里的 Next 每次产出一批元组，不是一条。",
+  "see": "P3"
+ },
+ {
+  "t": "ExecutorContext",
+  "full": "执行器的运行环境",
+  "desc": "每个执行器都拿到它，从中取事务、Catalog、缓冲池和事务管理器。",
+  "see": "P3"
+ },
+ {
+  "t": "ExecutionEngine",
+  "full": "执行计划的入口",
+  "desc": "把计划树建成执行器树，先 Init 根执行器，再反复调用 Next 取结果。",
+  "see": "P3"
+ },
+ {
+  "t": "AbstractPlanNode",
+  "full": "所有计划节点的基类",
+  "desc": "计划树的节点，带输出 schema 和子节点，优化器改写的就是这棵树。",
+  "see": "P3"
+ },
+ {
+  "t": "Catalog",
+  "full": "BusTub 的系统目录",
+  "desc": "管理表和索引的元数据，可以按名字或 oid 查到 TableInfo 和 IndexInfo。",
+  "see": "P3"
+ },
+ {
+  "t": "TableInfo",
+  "full": "一张表的元数据",
+  "desc": "存表名、schema、oid 和指向 TableHeap 的指针。",
+  "see": "P3"
+ },
+ {
+  "t": "TableHeap",
+  "full": "BusTub 的表堆",
+  "desc": "把一张表存成一串页，提供插入、按 RID 取元组和遍历。",
+  "see": "P3"
+ },
+ {
+  "t": "TableIterator",
+  "full": "表堆的迭代器",
+  "desc": "逐条扫描表堆里的元组，顺序扫描执行器用它。",
+  "see": "P3"
+ },
+ {
+  "t": "TupleMeta",
+  "full": "元组的元信息",
+  "desc": "存时间戳 ts_ 和删除标记 is_deleted_，每条元组一份。",
+  "see": "P3"
+ },
+ {
+  "t": "NestedLoopJoin",
+  "full": "BusTub 的嵌套循环连接",
+  "desc": "内表要能重新扫：每换一条外表元组，右子执行器都要重新开始。",
+  "see": "P3"
+ },
+ {
+  "t": "HashJoin",
+  "full": "BusTub 的哈希连接",
+  "desc": "优化器规则会把等值连接的 NestedLoopJoin 改写成它，非等值连接不能改。",
+  "see": "P3"
+ },
+ {
+  "t": "TopN",
+  "full": "BusTub 的 Top-N 算子",
+  "desc": "Sort 加 Limit 可以改写成它：用容量为 N 的优先队列，不必全排。",
+  "see": "P3"
+ },
+ {
+  "t": "SimpleAggregationHashTable",
+  "full": "聚合用的内存哈希表",
+  "desc": "键是 AggregateKey，值是 AggregateValue，聚合执行器用它累积结果。",
+  "see": "P3"
+ },
+ {
+  "t": "AggregateKey",
+  "full": "聚合的分组键",
+  "desc": "一组 GROUP BY 表达式的值。靠 std::hash 特化和 operator== 放进哈希表。",
+  "see": "P3"
+ },
+ {
+  "t": "MergeSortRun",
+  "full": "外部归并排序的一个 run",
+  "desc": "记着一串有序页的页号，元组在页内和页间都有序，用迭代器读取。",
+  "see": "P3"
+ },
+ {
+  "t": "IntermediateResultPage",
+  "full": "中间结果页",
+  "desc": "存外部归并排序和哈希连接的中间数据，支持变长元组，页格式自己设计。",
+  "see": "P3"
+ },
+ {
+  "t": "Transaction",
+  "full": "事务（BusTub 的事务类）",
+  "desc": "记录事务 id、读时间戳和提交时间戳、状态、隔离级别，以及 undo 日志和写集合。",
+  "see": "P4"
+ },
+ {
+  "t": "TransactionManager",
+  "full": "BusTub 的事务管理器",
+  "desc": "负责开始、提交和中止事务，保管事务表、版本链头和水位线。",
+  "see": "P4"
+ },
+ {
+  "t": "UndoLog",
+  "full": "版本链上的一条 undo 日志",
+  "desc": "记着改了哪些字段、这些字段的旧值、时间戳和上一个版本的链接。",
+  "see": "P4"
+ },
+ {
+  "t": "UndoLink",
+  "full": "指向上一版本的链接",
+  "desc": "由事务 id 和该事务里的日志下标组成，把 undo 日志串成版本链。",
+  "see": "P4"
+ },
+ {
+  "t": "Watermark",
+  "full": "BusTub 的水位线类",
+  "desc": "跟踪所有运行中事务的读时间戳并取最小值，垃圾回收以它为界。",
+  "see": "P4"
+ },
+ {
+  "t": "PageVersionInfo",
+  "full": "一页的版本链头表",
+  "desc": "存这一页每个槽对应的 UndoLink，按页号放在 TransactionManager 里。",
+  "see": "P4"
+ },
+ {
+  "t": "TxnMgrDbg",
+  "full": "打印版本链的调试函数",
+  "desc": "P4 要自己实现：把表堆和版本链打印出来，调试时最有用。",
+  "see": "P4"
+ },
+ {
+  "t": "RID",
+  "alias": [
+   "RecordID"
+  ],
+  "full": "Record ID · 记录 ID",
+  "desc": "由页号和槽号组成，唯一定位一条元组。BusTub 里同名的类就是它。",
+  "see": "L03"
+ }
+]

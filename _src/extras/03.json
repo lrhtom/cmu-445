@@ -1,0 +1,45 @@
+[
+  { "after": "5. 系统全景：一次读页发生了什么", "kind": "seq", "title": "执行引擎要 page 2：从发出请求到脏页写回", "pos": "end", "spec": {
+      "actors": ["执行引擎", "缓冲池", "磁盘"],
+      "msgs": [
+        ["执行引擎", "缓冲池", "给我 page 2"],
+        ["缓冲池", "磁盘", "先读 page directory"],
+        ["磁盘", "缓冲池", "目录进内存", {"dash": true}],
+        ["缓冲池", "缓冲池", "查目录，算出偏移量"],
+        ["缓冲池", "磁盘", "读 page 2"],
+        ["磁盘", "缓冲池", "page 2 放进一个 frame", {"dash": true}],
+        ["缓冲池", "执行引擎", "返回指向内存中该页的指针", {"c": "green"}],
+        {"note": "执行引擎说“用完了”之前，这个页不会被换出（pin）", "over": ["执行引擎", "缓冲池"]},
+        ["执行引擎", "执行引擎", "解释字节、做修改"],
+        {"note": "之后的某个时刻", "over": ["缓冲池", "磁盘"]},
+        ["缓冲池", "磁盘", "把脏页安全地写回", {"c": "amber"}]
+      ]
+  } },
+  { "after": "怎么定位一个页", "kind": "flow", "title": "拿到页号之后，怎么找到这一页在磁盘上的位置", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "要取 page N", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "数据库是单个文件？", "kind": "diamond"},
+        {"id": "c", "label": "纯算术\n偏移量 = 文件起始 + 页号 × 页大小", "c": "green"},
+        {"id": "d", "label": "查页目录 Page Directory\n它记着每个对象的页都在哪", "c": "purple"},
+        {"id": "e", "label": "读出这一页", "kind": "pill"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c", "是（且所有页一样大）"], ["b", "d", "多个文件"], ["c", "e"], ["d", "e"] ]
+  } },
+  {"after": "Slotted Pages：标准答案", "kind": "viz", "id": "slotted", "scenes": [0], "pos": "end"},
+  {"after": "间接层带来的自由", "kind": "viz", "id": "slotted", "scenes": [1], "pos": "end"},
+  {"after": "10. Record ID", "kind": "viz", "id": "slotted", "scenes": [2], "pos": "end"},
+  { "after": "14. 大对象：溢出页与外部存储", "kind": "flow", "title": "一个属性值太大时放哪儿", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "这个属性值有多大？", "kind": "diamond"},
+        {"id": "b", "label": "正常大小\n和元组一起放在页内", "c": "green"},
+        {"id": "c", "label": "超过阈值\nPostgreSQL 2 KB，其他多为半页或整页", "c": "amber"},
+        {"id": "d", "label": "大到不想塞进数据库\n比如 20 GB 的电影", "c": "red"},
+        {"id": "e", "label": "溢出页：元组里只留 指针 + 长度\n一页放不下就再链一页", "c": "amber"},
+        {"id": "f", "label": "外部存储（BFILE / FILESTREAM）\n元组里只存 URI", "c": "red"},
+        {"id": "g", "label": "数据库不提供\n事务安全和持久性保证", "kind": "pill"}
+      ],
+      "edges": [ ["a", "b"], ["a", "c"], ["a", "d"], ["c", "e"], ["d", "f"], ["f", "g"] ]
+  } }
+]

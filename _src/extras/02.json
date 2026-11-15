@@ -1,0 +1,33 @@
+[
+  { "after": "HAVING", "kind": "flow", "title": "为什么聚合结果只能在 HAVING 里过滤", "pos": "end", "spec": {
+      "dir": "LR",
+      "nodes": [
+        { "id": "a", "label": "FROM\n取出数据", "kind": "pill", "c": "blue" },
+        { "id": "b", "label": "WHERE\n逐行过滤\n（聚合还没算出来）", "c": "amber" },
+        { "id": "c", "label": "GROUP BY\n分组并计算聚合", "c": "purple" },
+        { "id": "d", "label": "HAVING\n对聚合结果再过滤", "c": "green" }
+      ],
+      "edges": [ ["a","b"], ["b","c"], ["c","d"] ]
+  } },
+  { "after": "性能警告：这是嵌套查询最大的坑", "kind": "flow", "title": "嵌套查询的两种执行方式", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a", "label": "带嵌套查询的 SQL", "kind": "pill", "c": "blue" },
+        { "id": "b", "label": "系统能把它重写成 JOIN？", "kind": "diamond" },
+        { "id": "c", "label": "重写成 JOIN\n数据库执行 JOIN 非常高效", "c": "green" },
+        { "id": "d", "label": "当成两层嵌套 for 循环\n外层每扫一条记录\n就把内层查询完整跑一遍", "c": "red" }
+      ],
+      "edges": [ ["a","b"], ["b","c","能（Umbra、DuckDB、SQL Server）"], ["b","d","不能"] ]
+  } },
+  { "after": "三个递进的例子", "kind": "flow", "title": "ROW_NUMBER() OVER (PARTITION BY cid ORDER BY sid) 是怎么算出来的", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a", "label": "enrolled 的所有行", "kind": "pill", "c": "blue" },
+        { "id": "b", "label": "PARTITION BY cid\n按课程把行切成分区", "c": "purple" },
+        { "id": "c", "label": "ORDER BY sid\n在每个分区内部排序", "c": "amber" },
+        { "id": "d", "label": "ROW_NUMBER()\n每进入一个新分区，从 1 重新编号", "c": "green" },
+        { "id": "e", "label": "行不会被折叠\n每一行都带着自己的结果输出", "kind": "pill", "c": "blue" }
+      ],
+      "edges": [ ["a","b"], ["b","c"], ["c","d"], ["d","e"] ]
+  } }
+]

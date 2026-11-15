@@ -1,0 +1,263 @@
+{
+ "commit": "d49b823f829a4bf311a2c80b239ab5a9864c9c41",
+ "projects": {
+  "P0": [
+   {
+    "path": "src/include/primer/count_min_sketch.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/primer/count_min_sketch.cpp",
+    "kind": "todo"
+   }
+  ],
+  "P1": [
+   {
+    "path": "src/include/buffer/arc_replacer.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/buffer/arc_replacer.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/common/channel.h",
+    "kind": "readonly"
+   },
+   {
+    "path": "src/include/storage/disk/disk_manager.h",
+    "kind": "readonly"
+   },
+   {
+    "path": "src/include/storage/disk/disk_scheduler.h",
+    "kind": "skeleton"
+   },
+   {
+    "path": "src/storage/disk/disk_scheduler.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/buffer/buffer_pool_manager.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/storage/page/page_guard.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/storage/page/page_guard.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/buffer/buffer_pool_manager.cpp",
+    "kind": "todo"
+   }
+  ],
+  "P2": [
+   {
+    "path": "src/include/storage/page/b_plus_tree_page.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/storage/page/b_plus_tree_page.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/storage/page/b_plus_tree_header_page.h",
+    "kind": "readonly"
+   },
+   {
+    "path": "src/include/storage/page/b_plus_tree_internal_page.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/storage/page/b_plus_tree_internal_page.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/storage/page/b_plus_tree_leaf_page.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/storage/page/b_plus_tree_leaf_page.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/storage/index/index_iterator.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/storage/index/index_iterator.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/storage/index/b_plus_tree.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/storage/index/b_plus_tree.cpp",
+    "kind": "todo"
+   }
+  ],
+  "P3": [
+   {
+    "path": "src/execution/executor_factory.cpp",
+    "kind": "skeleton"
+   },
+   {
+    "path": "src/include/execution/executors/seq_scan_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/seq_scan_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/insert_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/insert_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/update_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/update_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/delete_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/delete_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/index_scan_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/index_scan_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/optimizer/merge_filter_scan.cpp",
+    "kind": "skeleton"
+   },
+   {
+    "path": "src/optimizer/seqscan_as_indexscan.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/plans/aggregation_plan.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/aggregation_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/aggregation_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/nested_loop_join_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/nested_loop_join_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/nested_index_join_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/nested_index_join_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/hash_join_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/hash_join_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/optimizer/nlj_as_hash_join.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/execution_common.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/execution_common.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/storage/page/intermediate_result_page.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/external_merge_sort_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/external_merge_sort_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/limit_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/limit_executor.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/execution/executors/window_function_executor.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/execution/window_function_executor.cpp",
+    "kind": "todo"
+   }
+  ],
+  "P4": [
+   {
+    "path": "src/include/concurrency/transaction.h",
+    "kind": "readonly"
+   },
+   {
+    "path": "src/include/concurrency/watermark.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/concurrency/watermark.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/include/storage/table/table_heap.h",
+    "kind": "readonly"
+   },
+   {
+    "path": "src/include/concurrency/transaction_manager.h",
+    "kind": "todo"
+   },
+   {
+    "path": "src/concurrency/transaction_manager.cpp",
+    "kind": "todo"
+   },
+   {
+    "path": "src/concurrency/transaction_manager_impl.cpp",
+    "kind": "readonly"
+   }
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+[
+ {
+  "t": "WAL",
+  "full": "Write-Ahead Logging · 预写日志",
+  "alias": [
+   "预写日志"
+  ],
+  "desc": "改数据页之前，先把这次修改的日志落盘。崩溃后靠日志恢复，提交时不用强刷数据页。",
+  "see": "L21"
+ },
+ {
+  "t": "LSN",
+  "full": "Log Sequence Number · 日志序列号",
+  "desc": "日志记录的全局递增编号，用来判断一条修改有没有落到数据页上。",
+  "see": "L22"
+ },
+ {
+  "t": "pageLSN",
+  "full": "Page LSN · 页的最新 LSN",
+  "desc": "这一页最后一次被修改对应的日志序号，存在页头里。",
+  "see": "L22"
+ },
+ {
+  "t": "MVCC",
+  "full": "Multi-Version Concurrency Control · 多版本并发控制",
+  "alias": [
+   "多版本并发控制"
+  ],
+  "desc": "写操作生成新版本、不覆盖旧版本，读操作看自己快照里的版本，读写互不阻塞。",
+  "see": "L20"
+ },
+ {
+  "t": "2PL",
+  "full": "Two-Phase Locking · 两阶段封锁",
+  "alias": [
+   "两阶段封锁"
+  ],
+  "desc": "事务先只加锁（增长期），一旦放锁就不能再加锁（收缩期），由此保证冲突可串行化。",
+  "see": "L18"
+ },
+ {
+  "t": "缓冲池",
+  "full": "Buffer Pool",
+  "alias": [
+   "Buffer Pool"
+  ],
+  "desc": "数据库自己管理的一块内存，缓存磁盘页。读写页都经过它，由替换策略决定淘汰谁。",
+  "see": "L04"
+ }
+]

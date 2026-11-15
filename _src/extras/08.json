@@ -1,0 +1,19 @@
+[
+  {"after": "4. 一个关键洞察", "kind": "viz", "id": "bptree", "scenes": [0], "pos": "end"},
+  {"after": "7. 插入与分裂 > 演示", "kind": "viz", "id": "bptree", "scenes": [1], "pos": "end"},
+  {"after": "8. 删除、借键与合并 > 演示：合并", "kind": "viz", "id": "bptree", "scenes": [2], "pos": "end"},
+  { "after": "7. 插入与分裂", "kind": "flow", "title": "插入一个键的决策流程", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a", "label": "走到目标叶子", "kind": "pill", "c": "blue" },
+        { "id": "b", "label": "叶子有空位？", "kind": "diamond" },
+        { "id": "c", "label": "直接插入", "c": "green" },
+        { "id": "d", "label": "分裂叶子\n中间键复制上推", "c": "amber" },
+        { "id": "e", "label": "父节点有空位？", "kind": "diamond" },
+        { "id": "f", "label": "插入路标，结束", "c": "green" },
+        { "id": "g", "label": "分裂父节点\n中间键推走", "c": "amber" },
+        { "id": "h", "label": "到根了：新建根\n树高 +1", "c": "red" }
+      ],
+      "edges": [ ["a","b"], ["b","c","有"], ["b","d","满了"], ["d","e"], ["e","f","有"], ["e","g","满了"], ["g","e","继续向上", {"back": true}], ["g","h","父节点是根"] ]
+  } }
+]

@@ -1,0 +1,42 @@
+[
+  { "after": "① 每个 worker 一个进程", "kind": "seq", "title": "进程模型：应用是怎么连上一个 worker 进程的", "pos": "end", "spec": {
+      "actors": ["应用", "Dispatcher", "worker 进程"],
+      "msgs": [
+        ["应用", "Dispatcher", "发起连接"],
+        ["Dispatcher", "worker 进程", "从进程池挑一个 / fork()"],
+        ["Dispatcher", "应用", "这个 worker 的地址和端口", {"dash": true}],
+        ["应用", "worker 进程", "重连到它，直接发 SQL", {"c": "blue"}],
+        ["worker 进程", "应用", "查询结果", {"dash": true, "c": "green"}],
+        {"note": "worker 之间靠共享内存通信（PostgreSQL），最差情况用 IPC"}
+      ]
+  } },
+  { "after": "三种模型对比", "kind": "layers", "title": "三种做法：worker 是谁、住在哪", "spec": {
+      "rows": [
+        { "tag": "进程 / worker", "label": "每个 worker 一个独立进程，各有地址空间", "desc": "靠共享内存 / IPC 通信，依赖 OS 调度；挂一个进程不影响别的。PostgreSQL 及其所有 fork、老牌企业系统", "c": "amber" },
+        { "tag": "线程 / worker", "label": "单进程里的多个线程，共享同一个地址空间", "desc": "开销小、能自己做调度；一个线程 segfault 整个进程全挂。过去 25 年几乎所有系统", "c": "green" },
+        { "tag": "嵌入式", "label": "数据库自己不创建 worker，用的是应用借给它的线程", "desc": "是库，不是服务器。SQLite、RocksDB、LevelDB、Berkeley DB", "c": "blue" }
+      ]
+  } },
+  { "after": "完整例子", "kind": "flow", "title": "算子内并行：两条流水线，各用一个 Exchange 收拢", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "w1", "label": "worker 1\n扫 A 的第 1 份 → 过滤", "c": "blue" },
+        { "id": "w2", "label": "worker 2\n扫 A 的第 2 份 → 过滤", "c": "blue" },
+        { "id": "w3", "label": "worker 3\n扫 A 的第 3 份 → 过滤", "c": "blue" },
+        { "id": "h", "label": "建哈希表\n（共用一张全局哈希表）", "c": "purple" },
+        { "id": "x1", "label": "Exchange（阻塞）\n三个 worker 全部完成才放行", "c": "red" },
+        { "id": "p1", "label": "worker 1\n扫 B 第 1 份\n过滤 → 探测 → 投影", "c": "blue" },
+        { "id": "p2", "label": "worker 2\n扫 B 第 2 份\n过滤 → 探测 → 投影", "c": "blue" },
+        { "id": "p3", "label": "worker 3\n扫 B 第 3 份\n过滤 → 探测 → 投影", "c": "blue" },
+        { "id": "x2", "label": "Exchange（阻塞）", "c": "red" },
+        { "id": "r", "label": "最终结果", "kind": "pill", "c": "green" }
+      ],
+      "edges": [ ["w1","h"], ["w2","h"], ["w3","h"], ["h","x1"], ["x1","p1"], ["x1","p2"], ["x1","p3"], ["p1","x2"], ["p2","x2"], ["p3","x2"], ["x2","r"] ]
+  } },
+  { "after": "条带化 vs 镜像", "kind": "layers", "title": "6 个页、3 块盘：两种摆法", "pos": "end", "spec": {
+      "rows": [
+        { "tag": "RAID 0 条带化", "label": "盘 1：页 1、4 ｜ 盘 2：页 2、5 ｜ 盘 3：页 3、6", "desc": "轮转摆放，每页只存一份。写快，读可并行；丢一块盘 = 丢一部分数据库", "c": "amber" },
+        { "tag": "RAID 1 镜像", "label": "盘 1、盘 2、盘 3：每块都存页 1–6", "desc": "每页在每块盘上都有一份。写慢（三块盘都要写并 fsync），读更好，完全冗余", "c": "green" }
+      ]
+  } }
+]

@@ -1,0 +1,51 @@
+[
+  { "after": "4. DSM 列存", "kind": "flow", "title": "同一条 OLAP 查询（只用 hostname 和 lastLogin 两列）：行存和列存各读了什么", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "按 .gov 域名统计每月登录次数", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "行存 NSM\n一个页里是完整的行"},
+        {"id": "e", "label": "列存 DSM\n一个页里只有一列"},
+        {"id": "c", "label": "没有可用的主键谓词\n只能扫描所有页", "c": "amber"},
+        {"id": "f", "label": "WHERE hostname LIKE '%.gov'\n只读 hostname 列的页", "c": "green"},
+        {"id": "d", "label": "userID / userName / userPass\n没用上也被迫读进来", "c": "red"},
+        {"id": "g", "label": "EXTRACT(month FROM lastLogin)\n只读 lastLogin 列的页", "c": "green"},
+        {"id": "h", "label": "超过一半的 I/O 白费", "kind": "pill", "c": "red"},
+        {"id": "i", "label": "其余三列的页从头到尾没碰", "kind": "pill", "c": "green"}
+      ],
+      "edges": [ ["a", "b"], ["a", "e"], ["b", "c"], ["e", "f"], ["c", "d"], ["f", "g"], ["d", "h"], ["g", "i"] ]
+  } },
+  { "after": "PAX 的折中", "kind": "layers", "title": "PAX 文件的结构：先按行切成 Row Group，组内再按列存放", "pos": "end", "spec": {
+      "rows": [
+        {"tag": "Row Group 1", "label": "A 列块 · B 列块 · C 列块", "desc": "一批元组；组内每一列的数据挨在一起（column chunk）", "c": "blue"},
+        {"tag": "", "label": "Row Group 1 的元数据", "desc": "压缩方式、字典……", "c": "purple"},
+        {"tag": "Row Group 2", "label": "A 列块 · B 列块 · C 列块", "desc": "同一条元组的各个属性不会离得太远", "c": "blue"},
+        {"tag": "", "label": "Row Group 2 的元数据", "desc": "", "c": "purple"},
+        {"tag": "Footer", "label": "全局元数据", "desc": "写在文件末尾 —— 写之前不知道里面会有什么，边写边记，最后才落盘", "c": "amber"}
+      ]
+  } },
+  { "after": "MySQL InnoDB 的做法", "kind": "flow", "title": "InnoDB 压缩页：什么时候可以不解压", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "w", "label": "写这个压缩页", "kind": "pill", "c": "blue"},
+        {"id": "r", "label": "读这个压缩页", "kind": "pill", "c": "blue"},
+        {"id": "w1", "label": "盲写（不需要知道旧值）\n不解压，往 mod log 追加一条", "c": "green"},
+        {"id": "r1", "label": "要的数据 mod log 里就有？", "kind": "diamond"},
+        {"id": "w2", "label": "mod log 写满了？", "kind": "diamond"},
+        {"id": "r2", "label": "直接读", "c": "green"},
+        {"id": "r3", "label": "解压回 16 KB + 应用 mod log\n同时保留压缩版本", "c": "amber"},
+        {"id": "w3", "label": "解压 → 应用所有变更\n→ 清空 mod log（会阻塞写入）", "c": "red"}
+      ],
+      "edges": [ ["w", "w1"], ["r", "r1"], ["w1", "w2"], ["r1", "r2", "有"], ["r1", "r3", "没有"], ["w2", "w3", "满了"] ]
+  } },
+  { "after": "字典编码 Dictionary Encoding 最常用", "kind": "flow", "title": "保序字典：把 LIKE 'And%' 改写成整数范围比较", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "WHERE name LIKE 'And%'", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "① 在字典上跑 LIKE\n字典比原始数据小得多"},
+        {"id": "c", "label": "② 得到编码范围 [10, 20]\n字典按原值排序，所以范围连续", "c": "purple"},
+        {"id": "d", "label": "③ 改写成\nname_code BETWEEN 10 AND 20", "c": "amber"},
+        {"id": "e", "label": "④ 扫描列时只做整数比较", "kind": "pill", "c": "green"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c"], ["c", "d"], ["d", "e"] ]
+  } }
+]

@@ -1,0 +1,155 @@
+[
+  {
+    "after": "1. 从 SQL 到物理计划的完整路径",
+    "kind": "flow",
+    "title": "一条 SQL 变成可执行计划要过的四道关",
+    "pos": "end",
+    "spec": {
+      "dir": "TB",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "应用发来 SQL 字符串",
+          "kind": "pill",
+          "c": "blue"
+        },
+        {
+          "id": "b",
+          "label": "① 解析器 Parser\n词法 + 语法分析",
+          "c": "blue"
+        },
+        {
+          "id": "c",
+          "label": "② 绑定器 Binder\n查目录：名字 → 内部对象 ID",
+          "c": "purple"
+        },
+        {
+          "id": "d",
+          "label": "③ 优化器 Optimizer\n成本模型 + 统计信息",
+          "c": "amber"
+        },
+        {
+          "id": "e",
+          "label": "④ 执行引擎",
+          "kind": "pill",
+          "c": "green"
+        }
+      ],
+      "edges": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "b",
+          "c",
+          "抽象语法树 AST"
+        ],
+        [
+          "c",
+          "d",
+          "逻辑计划：要做什么"
+        ],
+        [
+          "d",
+          "e",
+          "物理计划：怎么做"
+        ]
+      ]
+    }
+  },
+  {"after": "2. 优化能有多大威力 > 五步优化", "kind": "viz", "id": "optimizer", "scenes": [0], "pos": "end"},
+  {"after": "6. 逻辑到逻辑的变换 > 完整的四步演进", "kind": "viz", "id": "optimizer", "scenes": [1, 2], "pos": "end"},
+  {"after": "13. System R > 算法流程", "kind": "viz", "id": "optimizer", "scenes": [3], "pos": "end"},
+  {
+    "after": "四种停止条件",
+    "kind": "flow",
+    "title": "基于成本的搜索：一边枚举一边剪枝，直到触发停止条件",
+    "pos": "end",
+    "spec": {
+      "dir": "TB",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "应用变换规则\n枚举候选计划",
+          "c": "blue"
+        },
+        {
+          "id": "b",
+          "label": "问成本模型",
+          "c": "purple"
+        },
+        {
+          "id": "c",
+          "label": "比目前最好的差？",
+          "kind": "diamond"
+        },
+        {
+          "id": "d",
+          "label": "剪枝",
+          "c": "red"
+        },
+        {
+          "id": "e",
+          "label": "记为目前最好",
+          "c": "green"
+        },
+        {
+          "id": "f",
+          "label": "该停了吗？\n超时 / 成本阈值 / 穷尽 / 规则数用完",
+          "kind": "diamond"
+        },
+        {
+          "id": "g",
+          "label": "交出目前最好的计划",
+          "kind": "pill",
+          "c": "green"
+        },
+        {
+          "id": "h",
+          "label": "继续应用下一条规则",
+          "kind": "pill",
+          "c": "blue"
+        }
+      ],
+      "edges": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "b",
+          "c"
+        ],
+        [
+          "c",
+          "d",
+          "是"
+        ],
+        [
+          "c",
+          "e",
+          "否"
+        ],
+        [
+          "d",
+          "f"
+        ],
+        [
+          "e",
+          "f"
+        ],
+        [
+          "f",
+          "g",
+          "是"
+        ],
+        [
+          "f",
+          "h",
+          "否，继续搜"
+        ]
+      ]
+    }
+  }
+]

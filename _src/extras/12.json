@@ -1,0 +1,161 @@
+[
+  {"after": "块嵌套循环（Block Nested Loop Join）", "kind": "viz", "id": "joins", "scenes": [0], "pos": "end"},
+  {"after": "5. 排序归并连接 > 完整演练", "kind": "viz", "id": "joins", "scenes": [1], "pos": "end"},
+  {"after": "6. 哈希连接 > 基本算法", "kind": "viz", "id": "joins", "scenes": [2], "pos": "end"},
+  {"after": "8. Grace 哈希连接 > 两个阶段", "kind": "viz", "id": "joins", "scenes": [3], "pos": "end"},
+  {
+    "after": "块嵌套循环（Block Nested Loop Join）",
+    "kind": "layers",
+    "title": "块嵌套循环怎么分配 B 个缓冲页",
+    "pos": "end",
+    "spec": {
+      "rows": [
+        {
+          "tag": "B − 2 页",
+          "label": "缓存 outer 表 R 的页",
+          "desc": "一次装得越多，inner 表被完整扫描的遍数越少：⌈M / (B−2)⌉ 遍",
+          "c": "blue"
+        },
+        {
+          "tag": "1 页",
+          "label": "读 inner 表 S",
+          "desc": "S 的每一页轮流读进来，和内存里所有 outer 页比较",
+          "c": "amber"
+        },
+        {
+          "tag": "1 页",
+          "label": "写输出",
+          "desc": "匹配的结果先攒在这一页，满了再交出去",
+          "c": "green"
+        }
+      ]
+    }
+  },
+  {
+    "after": "递归分区",
+    "kind": "flow",
+    "title": "Grace 哈希连接：先分区，再逐对连接；撑爆内存的桶单独再分一层",
+    "pos": "end",
+    "spec": {
+      "dir": "TB",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "阶段 1：用 h₁ 扫 R 和 S\n各分成 k 个桶，写盘",
+          "kind": "pill",
+          "c": "blue"
+        },
+        {
+          "id": "c",
+          "label": "每个桶都装得下内存？",
+          "kind": "diamond"
+        },
+        {
+          "id": "k",
+          "label": "正常的桶\n原样带到下一阶段",
+          "c": "green"
+        },
+        {
+          "id": "d",
+          "label": "撑爆的那个桶\n换一个哈希函数再分一层",
+          "c": "amber"
+        },
+        {
+          "id": "b",
+          "label": "阶段 2：取一对桶 Rᵢ / Sᵢ",
+          "c": "blue"
+        },
+        {
+          "id": "e",
+          "label": "Rᵢ 读进内存建哈希表",
+          "c": "purple"
+        },
+        {
+          "id": "f",
+          "label": "读 Sᵢ 逐条探测\n输出匹配",
+          "c": "green"
+        },
+        {
+          "id": "g",
+          "label": "扔掉哈希表\n处理下一对桶",
+          "c": "red"
+        }
+      ],
+      "edges": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "c",
+          "k",
+          "装得下"
+        ],
+        [
+          "c",
+          "d",
+          "太大（数据倾斜）"
+        ],
+        [
+          "k",
+          "b"
+        ],
+        [
+          "d",
+          "b"
+        ],
+        [
+          "b",
+          "e"
+        ],
+        [
+          "e",
+          "f"
+        ],
+        [
+          "f",
+          "g"
+        ]
+      ]
+    }
+  },
+  {
+    "after": "10. 总账",
+    "kind": "layers",
+    "title": "五种算法的成本对比（R：M = 1,000 页、m = 100,000 条；S：N = 500 页；单次 I/O 0.1 ms）",
+    "spec": {
+      "rows": [
+        {
+          "tag": "朴素嵌套",
+          "label": "M + (m × N) = 50,001,000 次 I/O ≈ 1.3 小时",
+          "desc": "永远别用",
+          "c": "red"
+        },
+        {
+          "tag": "块嵌套",
+          "label": "M + ⌈M/(B−2)⌉ × N = 6,000 次 I/O ≈ 600 ms（B = 102）",
+          "desc": "全在内存时首选；实现最简单",
+          "c": "amber"
+        },
+        {
+          "tag": "索引嵌套",
+          "label": "M + (m × C)，C 取决于索引",
+          "desc": "已有合适索引时",
+          "c": "purple"
+        },
+        {
+          "tag": "排序归并",
+          "label": "排序 + (M + N) = 7,500 次 I/O ≈ 750 ms（B = 100）",
+          "desc": "数据已有序，或查询要 ORDER BY",
+          "c": "blue"
+        },
+        {
+          "tag": "Grace 哈希",
+          "label": "3 × (M + N) = 4,500 次 I/O ≈ 450 ms",
+          "desc": "默认最优",
+          "c": "green"
+        }
+      ]
+    }
+  }
+]

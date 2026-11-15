@@ -1,0 +1,25 @@
+[
+  {"after": "自编算例：从头算一遍", "kind": "viz", "id": "hw4-cost", "scenes": [0, 1, 2, 3], "pos": "end"},
+  {"after": "自编算例：四张表", "kind": "viz", "id": "hw4-cost", "scenes": [4], "pos": "end"},
+  { "after": "2. 题型一：连接算法的 I/O 成本 > 易错点", "kind": "flow", "pos": "end", "title": "外部排序 R（600 页，B = 22）：每一遍都读写整张表，变的只是 run 的个数", "wide": true, "spec": {
+      "dir": "LR",
+      "nodes": [
+        { "id": "a", "label": "R：600 页\n乱序", "kind": "pill", "c": "blue" },
+        { "id": "p0", "label": "Pass 0\n28 个 run\n（每个 22 页）", "c": "amber" },
+        { "id": "p1", "label": "Pass 1\n2 个 run\n（462 页 + 138 页）", "c": "amber" },
+        { "id": "p2", "label": "Pass 2\n1 个 run\n全部有序", "c": "green" }
+      ],
+      "edges": [ ["a","p0","每次读 22 页\n排好写回"], ["p0","p1","21 路归并"], ["p1","p2","2 路归并"] ]
+  } },
+  { "after": "3. 题型二", "kind": "flow", "pos": "end", "title": "迭代器模型里的两条流水线：哈希连接的 build 侧是流水线阻断点", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "out", "label": "投影 → 输出", "kind": "pill", "c": "green" },
+        { "id": "probe", "label": "哈希连接：probe\n每来一条 R 就查一次", "c": "blue" },
+        { "id": "build", "label": "哈希连接：build\n要等 S 全部吐完", "c": "red" },
+        { "id": "sS", "label": "扫描 S\n（流水线 ①）", "c": "purple" },
+        { "id": "sR", "label": "扫描 R\n（流水线 ②）", "c": "purple" }
+      ],
+      "edges": [ ["sS","build","逐条交上去"], ["build","probe","建好之后才开始 ②", {"dash": true, "c": "red"}], ["sR","probe","逐条交上去"], ["probe","out","命中就一路往上流"] ]
+  } }
+]

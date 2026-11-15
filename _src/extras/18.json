@@ -1,0 +1,11 @@
+[
+  {"after": "2. 锁管理器", "kind": "seq", "title": "锁管理器的基本流程：授予、拒绝并阻塞、释放后唤醒", "spec": {"actors": ["T1", "锁管理器", "T2"], "msgs": [["T1", "锁管理器", "我要 A 的锁"], ["锁管理器", "T1", "没人占 → 授予", {"dash": true, "c": "green"}], ["T2", "锁管理器", "我要 A 的锁"], ["锁管理器", "T2", "T1 占着 → 拒绝，T2 阻塞等待", {"dash": true, "c": "red"}], {"note": "A → { 持有者：T1；等待队列：[T2] }", "over": ["锁管理器"]}, ["T1", "锁管理器", "还 A 的锁"], ["锁管理器", "T2", "从等待队列唤醒 T2 → 授予", {"dash": true, "c": "green"}]]}},
+  {"after": "光有锁不等于可串行化", "kind": "seq", "title": "反例：每次读写都加了锁，T1 仍然读到两个不同的 A", "pos": "end", "spec": {"actors": ["T1", "数据库", "T2"], "msgs": [["T1", "数据库", "X-LOCK(A)，R(A)，W(A)"], ["T1", "数据库", "UNLOCK(A)", {"c": "amber"}], ["T2", "数据库", "X-LOCK(A)，W(A)，UNLOCK(A)"], ["T1", "数据库", "S-LOCK(A)，R(A)"], ["数据库", "T1", "读到的是 T2 写的值", {"dash": true, "c": "red"}], {"note": "同一个事务两次读 A 结果不同 —— 关键在于什么时候放锁、什么时候再拿锁"}]}},
+  {"after": "2. 锁管理器", "kind": "viz", "id": "twopl", "scenes": [1], "pos": "end"},
+  {"after": "4. 两阶段封锁协议", "kind": "viz", "id": "twopl", "scenes": [0], "pos": "intro"},
+  {"after": "Strong Strict 2PL 的两个好处", "kind": "viz", "id": "twopl", "scenes": [2], "pos": "end"},
+  {"after": "6. 死锁检测 > 等待图", "kind": "viz", "id": "twopl", "scenes": [3], "pos": "end"},
+  {"after": "8. 死锁预防 > 两个例子", "kind": "viz", "id": "twopl", "scenes": [4], "pos": "end"},
+  {"after": "等待图（Waits-For Graph）", "kind": "flow", "title": "死锁检测：建等待图 → 找环 → 牺牲一个事务", "pos": "end", "spec": {"dir": "TB", "nodes": [{"id": "a", "label": "锁管理器里的\n持有者 + 等待队列", "kind": "pill", "c": "blue"}, {"id": "b", "label": "建等待图\nTi 在等 Tj 持有的锁 → 边 Ti → Tj"}, {"id": "c", "label": "图里有环？", "kind": "diamond"}, {"id": "d", "label": "没有死锁\n过一段时间再查", "c": "green"}, {"id": "e", "label": "挑一个牺牲品中止\n释放全部锁 + 撤销全部改动", "c": "red"}, {"id": "f", "label": "系统自己重启它\n或抛异常给应用", "c": "amber"}], "edges": [["a", "b"], ["b", "c"], ["c", "d", "无"], ["c", "e", "有"], ["e", "f"]]}},
+  {"after": "锁的层次", "kind": "layers", "title": "锁的层次：在高层拿一把锁，隐含地锁住它下面的一切", "pos": "end", "spec": {"rows": [{"tag": "最粗", "label": "数据库", "desc": "进锁管理器的次数最少，但把所有人都挡住", "c": "red"}, {"tag": "", "label": "表", "desc": "表锁很常见", "c": "amber"}, {"tag": "", "label": "页", "desc": "部分系统支持"}, {"tag": "", "label": "元组", "desc": "最常见 —— 做 2PL 的系统基本都有", "c": "green"}, {"tag": "最细", "label": "属性（列）", "desc": "并行度最好，但锁的数量和管理开销最大", "c": "blue"}]}}
+]

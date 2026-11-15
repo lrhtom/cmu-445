@@ -1,0 +1,38 @@
+[
+  {"after": "3. 迭代器模型 > 执行过程", "kind": "viz", "id": "opmodel", "scenes": [0], "pos": "end"},
+  {"after": "4. 物化模型", "kind": "viz", "id": "opmodel", "scenes": [1], "pos": "intro"},
+  {"after": "5. 向量化", "kind": "viz", "id": "opmodel", "scenes": [2], "pos": "intro"},
+  { "after": "执行过程（伪代码）", "kind": "seq", "title": "迭代器模型：一次 Next() 调用怎么向下渗透、元组怎么向上冒", "pos": "end", "spec": {
+      "actors": ["引擎", "投影", "哈希连接", "扫描 R", "过滤 ← 扫描 S"],
+      "msgs": [
+        ["引擎", "投影", "Next()"],
+        ["投影", "哈希连接", "Next()"],
+        ["哈希连接", "扫描 R", "Next()（反复调）"],
+        ["扫描 R", "哈希连接", "每次一条元组，最后 null", {"dash": true, "c": "green"}],
+        {"note": "流水线 ①：哈希表建完，才能开始探测", "over": ["哈希连接", "扫描 R"]},
+        ["哈希连接", "过滤 ← 扫描 S", "Next()"],
+        ["过滤 ← 扫描 S", "哈希连接", "通过过滤的一条元组", {"dash": true, "c": "green"}],
+        ["哈希连接", "投影", "探测命中的一条", {"dash": true, "c": "green"}],
+        ["投影", "引擎", "一条输出", {"dash": true, "c": "green"}],
+        {"note": "流水线 ②：引擎每要一条，就把上面这半段再走一遍"}
+      ]
+  } },
+  { "after": "5. 向量化 / 批模型", "kind": "layers", "title": "三种处理模型：一次往上交多少", "pos": "end", "spec": {
+      "rows": [
+        { "tag": "迭代器", "label": "一次交一条元组", "desc": "接口极简、LIMIT 好实现；十亿条元组就是十亿次 Next()。适合 OLTP —— PostgreSQL、MySQL、SQLite、BusTub", "c": "blue" },
+        { "tag": "物化", "label": "一次交全部元组", "desc": "每个算子只被调用一次，但中间结果全要搬一遍；靠算子融合缓解。极其罕见 —— MonetDB、RavenDB", "c": "amber" },
+        { "tag": "向量化", "label": "一次交一批（常见 1024 条）", "desc": "摊薄函数调用、能用 SIMD、分支少。所有现代 OLAP —— DuckDB、Redshift、Firebolt、ClickHouse", "c": "green" }
+      ]
+  } },
+  { "after": "推模型是怎么跑的", "kind": "flow", "title": "推模型：调度器按依赖关系逐条流水线地跑", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "s", "label": "调度器\n任务清单 + 依赖关系", "kind": "pill", "c": "purple" },
+        { "id": "a", "label": "任务 ①\n扫 R → 建哈希表", "c": "blue" },
+        { "id": "m", "label": "任务 ① 的输出\n写到某个位置", "c": "amber" },
+        { "id": "b", "label": "任务 ②\n扫 S → 过滤 → 探测 → 投影", "c": "blue" },
+        { "id": "r", "label": "最终结果的位置\n返回给调用方", "kind": "pill", "c": "green" }
+      ],
+      "edges": [ ["s","a","先启动"], ["a","m"], ["m","b","调度器告诉它\n结果在这里", {"dash": true}], ["b","r"] ]
+  } }
+]

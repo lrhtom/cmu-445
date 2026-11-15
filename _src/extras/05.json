@@ -1,0 +1,45 @@
+[
+  { "after": "扫描共享 Scan Sharing", "kind": "seq", "title": "扫描共享：Q2 搭 Q1 的顺风车", "pos": "end", "spec": {
+      "actors": ["Q1", "共享的扫描游标", "Q2"],
+      "msgs": [
+        ["Q1", "共享的扫描游标", "全表扫描：从 page0 开始"],
+        {"note": "游标已经读过 page0、page1"},
+        ["Q2", "共享的扫描游标", "我也要扫这张表"],
+        ["共享的扫描游标", "Q1", "page2、page3", {"dash": true}],
+        ["共享的扫描游标", "Q2", "同一批页：page2、page3", {"dash": true, "c": "green"}],
+        {"note": "两个查询共用读到的页，各算各的聚合"},
+        ["Q1", "Q1", "扫完，退出"],
+        ["Q2", "共享的扫描游标", "回头补扫漏掉的 page0 ~ page1", {"c": "amber"}]
+      ]
+  } },
+  { "after": "2. 回顾：元组导向存储的代价", "kind": "flow", "title": "先看全貌：元组导向存储里，一次 UPDATE 的三种结局", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "UPDATE 一条元组", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "索引 → Record ID → page directory\n页读进内存，按槽号找到元组"},
+        {"id": "c", "label": "新值比旧值大吗？", "kind": "diamond"},
+        {"id": "d", "label": "直接覆盖，完事", "c": "green"},
+        {"id": "e", "label": "页内重组后塞得下吗？", "kind": "diamond"},
+        {"id": "f", "label": "重组这一页，完事", "c": "amber"},
+        {"id": "g", "label": "删除旧元组 + 插入新元组\n很贵", "c": "red"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c"], ["c", "d", "不大"], ["c", "e", "大"], ["e", "f", "能"], ["e", "g", "怎么都塞不下"] ]
+  } },
+  {"after": "5. LSM 的两个核心结构 > 落盘流程", "kind": "viz", "id": "lsm", "scenes": [0], "pos": "end"},
+  {"after": "6. 读、写、删 > 删除：墓碑", "kind": "viz", "id": "lsm", "scenes": [1], "pos": "end"},
+  {"after": "7. 压实 Compaction > 合并算法", "kind": "viz", "id": "lsm", "scenes": [2], "pos": "end"},
+  {"after": "分层压实 Level Compaction", "kind": "viz", "id": "lsm", "scenes": [3], "pos": "end"},
+  { "after": "用过滤器加速读", "kind": "flow", "title": "LSM 的读路径：由新到旧，过滤器帮忙跳过文件", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "读 key", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "MemTable 里有？", "kind": "diamond"},
+        {"id": "c", "label": "直接返回\n最新的改动就在这", "c": "green"},
+        {"id": "d", "label": "从 Level 0 起\n取下一个更旧的 SSTable", "c": "purple"},
+        {"id": "e", "label": "过滤器怎么说？", "kind": "diamond"},
+        {"id": "f", "label": "真的去读这个文件\n（过滤器可能假阳性，读了也可能没有）", "c": "amber"},
+        {"id": "g", "label": "找到了：返回这个版本\n更旧的不用再看", "c": "green"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c", "有"], ["b", "d", "没有"], ["d", "e"], ["e", "f", "可能存在"], ["e", "d", "一定不存在：跳过", {"back": true}], ["f", "g", "找到"] ]
+  } }
+]

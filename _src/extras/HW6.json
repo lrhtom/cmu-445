@@ -1,0 +1,206 @@
+[
+  {
+    "after": "先记住四条推理规则",
+    "kind": "seq",
+    "pos": "end",
+    "title": "模糊检查点：END 记录里写的是 BEGIN 那一刻的快照（以本篇日志的第一个检查点为例）",
+    "spec": {
+      "actors": [
+        "日志",
+        "ATT / DPT 快照",
+        "后台刷盘线程"
+      ],
+      "msgs": [
+        [
+          "日志",
+          "ATT / DPT 快照",
+          "15 CHECKPOINT-BEGIN：拍快照\nATT={T1,T2}　DPT={Q}",
+          {
+            "c": "purple"
+          }
+        ],
+        [
+          "日志",
+          "日志",
+          "16–18：T3 开始，R、S 变脏\n（都不进这次快照）"
+        ],
+        [
+          "后台刷盘线程",
+          "日志",
+          "随时可能把任何脏页刷掉",
+          {
+            "dash": true
+          }
+        ],
+        [
+          "ATT / DPT 快照",
+          "日志",
+          "19 CHECKPOINT-END：把快照写进去",
+          {
+            "c": "purple"
+          }
+        ],
+        {
+          "note": "MasterRecord 指向 15（BEGIN），不是 19",
+          "over": [
+            "日志",
+            "ATT / DPT 快照"
+          ]
+        }
+      ]
+    }
+  },
+  {"after": "情形 B：LSN 26 刚落盘就崩溃", "kind": "viz", "id": "hw6-aries", "scenes": [0], "pos": "end"},
+  {"after": "情形 C：LSN 31 落盘后崩溃，并假设 LSN 26 里的 DPT 是空的", "kind": "viz", "id": "hw6-aries", "scenes": [1, 2, 3], "pos": "end"},
+  {
+    "after": "情形 C：LSN 31 落盘后崩溃，并假设 LSN 26 里的 DPT 是空的",
+    "kind": "flow",
+    "pos": "end",
+    "title": "一条 UPDATE / CLR 记录在重做阶段会落进哪一类（有后台刷盘线程时）",
+    "spec": {
+      "dir": "TB",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "一条 UPDATE / CLR",
+          "kind": "pill",
+          "c": "blue"
+        },
+        {
+          "id": "q1",
+          "label": "LSN 在重做起点\n（最小 recLSN）之后？",
+          "kind": "diamond"
+        },
+        {
+          "id": "q2",
+          "label": "页在 DPT 里\n且 recLSN ≤ LSN？",
+          "kind": "diamond"
+        },
+        {
+          "id": "maybe",
+          "label": "可能重做\n要看 pageLSN",
+          "c": "amber"
+        },
+        {
+          "id": "no",
+          "label": "一定不重做",
+          "c": "gray"
+        }
+      ],
+      "edges": [
+        [
+          "a",
+          "q1"
+        ],
+        [
+          "q1",
+          "q2",
+          "是"
+        ],
+        [
+          "q2",
+          "maybe",
+          "是"
+        ],
+        [
+          "q2",
+          "no",
+          "否"
+        ],
+        [
+          "q1",
+          "no",
+          "否"
+        ]
+      ]
+    }
+  },
+  {
+    "after": "分布式连接：谁该动、怎么动",
+    "kind": "flow",
+    "pos": "end",
+    "title": "分布式连接：先看谁已经按连接键分区（或全复制），再决定剩下的表怎么搬",
+    "spec": {
+      "dir": "TB",
+      "nodes": [
+        {
+          "id": "a",
+          "label": "R ⋈ S 按连接键 k",
+          "kind": "pill",
+          "c": "blue"
+        },
+        {
+          "id": "q1",
+          "label": "两张表都按 k 分区\n或其中一张全复制？",
+          "kind": "diamond"
+        },
+        {
+          "id": "z",
+          "label": "都不动\n各节点本地连接再合并",
+          "c": "green"
+        },
+        {
+          "id": "q2",
+          "label": "有一张已按 k 分区？",
+          "kind": "diamond"
+        },
+        {
+          "id": "m1",
+          "label": "它不动；另一张\n按 k shuffle 或广播",
+          "c": "amber"
+        },
+        {
+          "id": "q3",
+          "label": "有一张很小？",
+          "kind": "diamond"
+        },
+        {
+          "id": "b",
+          "label": "广播小表\n大表原地不动",
+          "c": "amber"
+        },
+        {
+          "id": "s",
+          "label": "两张都按 k shuffle",
+          "c": "red"
+        }
+      ],
+      "edges": [
+        [
+          "a",
+          "q1"
+        ],
+        [
+          "q1",
+          "z",
+          "是"
+        ],
+        [
+          "q1",
+          "q2",
+          "否"
+        ],
+        [
+          "q2",
+          "m1",
+          "是"
+        ],
+        [
+          "q2",
+          "q3",
+          "否"
+        ],
+        [
+          "q3",
+          "b",
+          "是"
+        ],
+        [
+          "q3",
+          "s",
+          "否"
+        ]
+      ]
+    }
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {"after": "3. 版本可见性怎么判断 > 走一遍", "kind": "viz", "id": "mvcc", "scenes": [0], "pos": "end"},
+  {"after": "3. 版本可见性怎么判断 > 写冲突的检测", "kind": "viz", "id": "mvcc", "scenes": [1], "pos": "end"},
+  {"after": "5. 写偏斜：Jim Gray 的弹珠", "kind": "viz", "id": "mvcc", "scenes": [2], "pos": "intro"},
+  {"after": "③ 增量式", "kind": "viz", "id": "mvcc", "scenes": [3], "pos": "end"},
+  {"after": "10. 决策三：垃圾回收 > A. 元组级 GC", "kind": "viz", "id": "mvcc", "scenes": [4], "pos": "end"},
+  {"after": "但光靠时间戳还不够", "kind": "flow", "title": "一个版本对事务可不可见：时间戳区间 + 创建者是否已提交", "pos": "end", "spec": {"dir": "TB", "nodes": [{"id": "a", "label": "事务 T 要读对象 A", "kind": "pill", "c": "blue"}, {"id": "b", "label": "逐个看 A 的物理版本\n每个版本头部有 begin-ts / end-ts"}, {"id": "c", "label": "① T 的时间戳落在 [begin-ts, end-ts) 里\n② 创建它的事务已提交（查事务状态表）", "c": "amber"}, {"id": "d", "label": "两条都满足？", "kind": "diamond"}, {"id": "e", "label": "这个版本对 T 可见\n读它", "c": "green"}, {"id": "f", "label": "对 T 不可见\n换下一个版本再判断", "c": "red"}], "edges": [["a", "b"], ["b", "c"], ["c", "d"], ["d", "e", "是"], ["d", "f", "否"]]}},
+  {"after": "三种方案", "kind": "layers", "title": "版本存储的三种方案：旧版本放在哪、存多少", "pos": "end", "spec": {"rows": [{"tag": "①", "label": "追加式（Append-Only）", "desc": "每次更新完整复制整条元组，追加到同一个表空间 —— PostgreSQL", "c": "amber"}, {"tag": "②", "label": "时间旅行式（Time-Travel）", "desc": "同样完整复制，但旧版本存进一张独立的“旧版本表” —— SQL Server", "c": "blue"}, {"tag": "③", "label": "增量式（Delta）", "desc": "只存被修改列的旧值，主表直接覆盖成最新版 —— MySQL、Oracle", "c": "green"}]}},
+  {"after": "两大类做法", "kind": "flow", "title": "垃圾回收的做法：谁去找过期版本", "pos": "end", "spec": {"dir": "TB", "nodes": [{"id": "a", "label": "要回收的版本\n过期旧版本 + 中止事务留下的版本", "kind": "pill", "c": "blue"}, {"id": "b", "label": "A. 元组级 GC", "c": "amber"}, {"id": "c", "label": "B. 事务级 GC", "c": "purple"}, {"id": "d", "label": "专职 VACUUM\n顺序扫表，看每个版本的 begin / end"}, {"id": "e", "label": "协作式清理\n事务沿版本链找数据时顺手清掉"}, {"id": "f", "label": "事务自己记下作废了哪些版本\n提交时把清单交给 vacuum"}], "edges": [["a", "b"], ["a", "c"], ["b", "d"], ["b", "e"], ["c", "f"]]}}
+]

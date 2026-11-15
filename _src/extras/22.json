@@ -1,0 +1,38 @@
+[
+  { "after": "缓冲池怎么用它们", "kind": "flow", "pos": "end", "title": "淘汰脏页前的检查：把 WAL 规则变成一行代码", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a", "label": "要淘汰一个脏页", "kind": "pill", "c": "blue" },
+        { "id": "q", "label": "pageLSN ≤ flushedLSN？", "kind": "diamond" },
+        { "id": "y", "label": "可以刷盘\n对应日志已在磁盘上", "c": "green" },
+        { "id": "n", "label": "先让日志缓冲区\n提前 flush 一次", "c": "amber" }
+      ],
+      "edges": [ ["a","q"], ["q","y","是"], ["q","n","否"], ["n","q","拿到确认后再查", {"back": true}] ]
+  } },
+  {"after": "4. 正常中止与 CLR > 补偿日志记录", "kind": "viz", "id": "aries", "scenes": [0], "pos": "end"},
+  {"after": "8. 阶段一：分析", "kind": "viz", "id": "aries", "scenes": [1], "pos": "end"},
+  {"after": "9. 阶段二：重做", "kind": "viz", "id": "aries", "scenes": [2], "pos": "end"},
+  {"after": "10. 阶段三：撤销", "kind": "viz", "id": "aries", "scenes": [3], "pos": "end"},
+  { "after": "7. ARIES 三阶段", "kind": "flow", "pos": "end", "wide": true, "title": "三个阶段的起点一个比一个靠前", "spec": {
+      "dir": "LR",
+      "nodes": [
+        { "id": "a", "label": "① 分析\n从 MasterRecord 指向的\n检查点扫到日志末尾\n重建 ATT 和 DPT", "c": "blue" },
+        { "id": "b", "label": "② 重做\n从 DPT 里最小的 recLSN 起\n重放一切（含 CLR）", "c": "green" },
+        { "id": "c", "label": "③ 撤销\n从待撤销事务的 lastLSN 起\n反向走，每撤一条写一条 CLR", "c": "red" }
+      ],
+      "edges": [ ["a","b"], ["b","c"] ]
+  } },
+  { "after": "9. 阶段二：重做", "kind": "flow", "pos": "end", "title": "重做阶段：对每条 UPDATE / CLR 记录的三道判断", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a", "label": "扫到一条 UPDATE 或 CLR", "kind": "pill", "c": "blue" },
+        { "id": "q1", "label": "这个页在 DPT 里？", "kind": "diamond" },
+        { "id": "q2", "label": "recLSN ≤ 当前 LSN？", "kind": "diamond" },
+        { "id": "rd", "label": "把页读进内存\n看它的 pageLSN", "c": "amber" },
+        { "id": "q3", "label": "pageLSN < 当前 LSN？", "kind": "diamond" },
+        { "id": "redo", "label": "重做\npageLSN ← 当前 LSN\n不写新日志、不 fsync", "c": "green" },
+        { "id": "skip", "label": "跳过\n改动已经在盘上", "c": "gray" }
+      ],
+      "edges": [ ["a","q1"], ["q1","q2","在"], ["q1","skip","不在"], ["q2","rd","是"], ["q2","skip","否"], ["rd","q3"], ["q3","redo","是"], ["q3","skip","否"] ]
+  } }
+]

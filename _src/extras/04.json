@@ -1,0 +1,43 @@
+[
+  {"after": "3. Page Table、Pin 计数与 Latch > Pin 计数", "kind": "viz", "id": "bufferpool", "scenes": [0], "pos": "end"},
+  {"after": "CLOCK（1969）：近似 LRU", "kind": "viz", "id": "bufferpool", "scenes": [1], "pos": "end"},
+  {"after": "致命缺陷：顺序泛洪 Sequential Flooding", "kind": "viz", "id": "bufferpool", "scenes": [2], "pos": "end"},
+  {"after": "LRU-K（1990s）：实用方案", "kind": "viz", "id": "bufferpool", "scenes": [3], "pos": "end"},
+  {"after": "7. 脏页写回 > 后台写线程", "kind": "viz", "id": "bufferpool", "scenes": [4], "pos": "end"},
+  { "after": "MySQL 的近似 LRU-K", "kind": "flow", "title": "MySQL 的 young / old 两区：一个页的去向", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "新读进来的页", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "先放到 old 区入口", "c": "amber"},
+        {"id": "c", "label": "之后又被访问了？", "kind": "diamond"},
+        {"id": "d", "label": "提升到 young 区头部\n证明它确实重要", "c": "green"},
+        {"id": "e", "label": "比如全表扫描的页：很快被挤出 old 区\n碰不到 young 区的热数据", "c": "red"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c"], ["c", "d", "是"], ["c", "e", "再没人访问"] ]
+  } },
+  { "after": "7. 脏页写回", "kind": "flow", "title": "把前面几节串起来：一次取页请求的完整决策", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "上层要 page P", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "页表里有 P？", "kind": "diamond"},
+        {"id": "c", "label": "命中：pin 计数 +1\n直接返回帧的内存指针", "c": "green"},
+        {"id": "d", "label": "还有空闲帧？", "kind": "diamond"},
+        {"id": "e", "label": "替换策略选一个牺牲帧\n只能挑 pin = 0 的", "c": "amber"},
+        {"id": "g", "label": "脏页：先刷日志记录，再写回磁盘\n干净页：直接丢弃", "c": "red"},
+        {"id": "h", "label": "把 P 从磁盘读进这个帧\n登记页表，pin = 1", "c": "purple"},
+        {"id": "i", "label": "返回帧的内存指针", "kind": "pill", "c": "green"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c", "有"], ["b", "d", "没有：缺页"], ["d", "e", "没有"], ["e", "g"], ["g", "h"], ["d", "h", "有"], ["h", "i"] ]
+  } },
+  { "after": "双份拷贝问题与 Direct I/O", "kind": "seq", "title": "普通 read() 与 Direct I/O：同一页在内存里存几份", "pos": "end", "spec": {
+      "actors": ["磁盘", "OS page cache", "buffer pool"],
+      "msgs": [
+        {"note": "普通 read()"},
+        ["磁盘", "OS page cache", "读出这一页（第 1 份拷贝）"],
+        ["OS page cache", "buffer pool", "经用户态缓冲区再拷一次（第 2 份拷贝）", {"c": "red"}],
+        {"note": "同一个页在内存里存了两遍"},
+        {"note": "Direct I/O：告诉文件系统别放 page cache"},
+        ["磁盘", "buffer pool", "直接读进缓冲池，只有 1 份", {"c": "green"}]
+      ]
+  } }
+]

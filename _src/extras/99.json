@@ -1,0 +1,12 @@
+[
+  { "after": "5. 贯穿全课的主线", "kind": "layers", "title": "整门课自底向上重建一个 DBMS：每一层对应哪几讲", "spec": { "rows": [
+      { "tag": "#15–16", "label": "查询优化器 Query Optimizer", "desc": "怎么把 SQL 变成最快的执行计划", "c": "purple" },
+      { "tag": "#13–14", "label": "执行引擎 Execution Engine", "desc": "算子模型、并行、向量化", "c": "blue" },
+      { "tag": "#11–12", "label": "算子实现 Operator Algorithms", "desc": "排序、聚合、连接", "c": "blue" },
+      { "tag": "#07–10", "label": "访问方法 Access Methods", "desc": "哈希表、B+ 树、过滤器、latching", "c": "green" },
+      { "tag": "#03–06", "label": "存储管理 Storage Manager", "desc": "页、元组、缓冲池、行列存、压缩", "c": "green" },
+      { "tag": "#17–20", "label": "横切：并发控制 Concurrency Control", "desc": "2PL / T-O / OCC / MVCC", "c": "amber" },
+      { "tag": "#21–22", "label": "横切：日志与恢复 Logging & Recovery", "desc": "WAL / ARIES", "c": "amber" },
+      { "tag": "#23–24", "label": "横切：分布式 Distributed", "desc": "分片、2PC、共识", "c": "red" }
+  ] } }
+]

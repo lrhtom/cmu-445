@@ -1,0 +1,46 @@
+[
+  { "after": "缓冲池的两个策略", "kind": "flow", "pos": "end", "title": "两个问题决定恢复时要不要 undo / redo，也决定了用哪种方案", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "q1", "label": "未提交事务的脏页\n允许写盘吗？", "kind": "diamond" },
+        { "id": "q2", "label": "提交前必须把\n脏页全部刷盘吗？", "kind": "diamond" },
+        { "id": "s", "label": "STEAL\n必须有 undo", "c": "amber" },
+        { "id": "ns", "label": "NO-STEAL\n不需要 undo", "c": "green" },
+        { "id": "nf", "label": "NO-FORCE\n必须有 redo", "c": "amber" },
+        { "id": "f", "label": "FORCE\n不需要 redo", "c": "green" },
+        { "id": "wal", "label": "STEAL + NO-FORCE\n预写日志 WAL\n运行时最快", "c": "blue" },
+        { "id": "sp", "label": "NO-STEAL + FORCE\n影子分页\n恢复最简单", "c": "gray" }
+      ],
+      "edges": [ ["q1","s","允许"], ["q1","ns","不允许"], ["q2","nf","不必"], ["q2","f","必须"], ["s","wal"], ["nf","wal"], ["ns","sp"], ["f","sp"] ]
+  } },
+  {"after": "6. 预写日志 WAL > 核心规则", "kind": "viz", "id": "wal", "scenes": [1], "pos": "end"},
+  {"after": "6. 预写日志 WAL > 日志记录的内容", "kind": "viz", "id": "wal", "scenes": [0], "pos": "end"},
+  {"after": "7. 组提交", "kind": "viz", "id": "wal", "scenes": [2], "pos": "intro"},
+  { "after": "日志记录的内容", "kind": "seq", "pos": "end", "title": "一次提交的完整时序：日志先落盘，才能回复应用", "spec": {
+      "actors": ["应用", "事务 T1", "日志缓冲区", "缓冲池", "磁盘"],
+      "msgs": [
+        ["应用", "事务 T1", "BEGIN"],
+        ["事务 T1", "日志缓冲区", "<BEGIN, T1>"],
+        ["应用", "事务 T1", "W(A)"],
+        ["事务 T1", "日志缓冲区", "① 先追加日志记录"],
+        ["事务 T1", "缓冲池", "② 再改内存里的页", {"c": "amber"}],
+        ["应用", "事务 T1", "COMMIT"],
+        ["事务 T1", "日志缓冲区", "<COMMIT, T1>"],
+        ["日志缓冲区", "磁盘", "fsync：整批顺序写", {"c": "purple"}],
+        ["磁盘", "日志缓冲区", "硬件确认", {"dash": true, "c": "green"}],
+        ["事务 T1", "应用", "提交成功", {"dash": true, "c": "green"}],
+        { "note": "脏页可以以后再写回 —— 恢复所需的一切都在日志里", "over": ["缓冲池", "磁盘"] }
+      ]
+  } },
+  { "after": "7. 组提交", "kind": "flow", "pos": "end", "title": "组提交：一次 fsync 服务一批事务", "spec": {
+      "dir": "LR",
+      "nodes": [
+        { "id": "a", "label": "事务要提交", "kind": "pill", "c": "blue" },
+        { "id": "b", "label": "COMMIT 记录\n进日志缓冲区" },
+        { "id": "c", "label": "等一个很短的超时\n或缓冲区写满", "c": "amber" },
+        { "id": "d", "label": "整批一次\n顺序写盘", "c": "purple" },
+        { "id": "e", "label": "这一批事务\n同时返回", "kind": "pill", "c": "green" }
+      ],
+      "edges": [ ["a","b"], ["b","c"], ["c","d"], ["d","e"] ]
+  } }
+]

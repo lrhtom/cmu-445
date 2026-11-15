@@ -1,0 +1,41 @@
+[
+  {"after": "4. 静态哈希：线性探测 > 算法", "kind": "viz", "id": "hashing", "scenes": [0], "pos": "end"},
+  {"after": "5. 删除的坑与墓碑 > 方案二：墓碑", "kind": "viz", "id": "hashing", "scenes": [1], "pos": "end"},
+  {"after": "8. 动态哈希：可扩展哈希 > 流程", "kind": "viz", "id": "hashing", "scenes": [2], "pos": "end"},
+  {"after": "9. 动态哈希：线性哈希 > 机制", "kind": "viz", "id": "hashing", "scenes": [3], "pos": "end"},
+  { "after": "6. 静态哈希：布谷鸟哈希", "kind": "flow", "title": "布谷鸟哈希的插入：占位、踢出、连锁重哈希", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "插入一个 key", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "用多个哈希函数\n算出几个候选位置"},
+        {"id": "c", "label": "有空着的候选位置？", "kind": "diamond"},
+        {"id": "d", "label": "放进去，完成", "c": "green"},
+        {"id": "e", "label": "挑一个受害者踢出来\n新 key 占它的位置", "c": "amber"},
+        {"id": "f", "label": "检测到循环\n只能扩容重建", "c": "red"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c"], ["c", "d", "有"], ["c", "e", "全被占了"], ["e", "b", "受害者变成\n“要插入的 key”", {"back": true}], ["e", "f", "又踢回起点"] ]
+  } },
+  { "after": "优化：桶级过滤器", "kind": "flow", "title": "链式哈希 + 桶级过滤器：先问一句再决定扫不扫", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "查 key：hash 到一个槽", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "问槽里的过滤器：\n这条链里可能有吗？", "kind": "diamond"},
+        {"id": "c", "label": "直接跳过，连扫都不用扫\n过滤器绝不假阴性", "c": "green"},
+        {"id": "d", "label": "顺着桶链逐个扫描", "c": "amber"},
+        {"id": "e", "label": "找到，或者扫完才发现\n是过滤器的假阳性", "kind": "pill"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c", "说没有"], ["b", "d", "说可能有"], ["d", "e"] ]
+  } },
+  { "after": "9. 动态哈希：线性哈希", "kind": "flow", "title": "线性哈希的查找：什么时候要用第二个哈希函数", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        {"id": "a", "label": "查 key", "kind": "pill", "c": "blue"},
+        {"id": "b", "label": "第一个哈希函数\nkey mod N → 位置 i"},
+        {"id": "c", "label": "位置 i 在 split pointer 上方？", "kind": "diamond"},
+        {"id": "d", "label": "还没分裂过\n直接扫桶 i", "c": "green"},
+        {"id": "e", "label": "这个桶已经被分裂过\n再用第二个哈希函数 key mod 2N", "c": "amber"},
+        {"id": "f", "label": "得到它现在的真实位置\n去那个桶里扫", "c": "green"}
+      ],
+      "edges": [ ["a", "b"], ["b", "c"], ["c", "d", "否（在下方）"], ["c", "e", "是"], ["e", "f"] ]
+  } }
+]

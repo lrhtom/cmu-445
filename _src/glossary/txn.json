@@ -1,0 +1,1473 @@
+[
+ {
+  "t": "ACID",
+  "full": "Atomicity, Consistency, Isolation, Durability · 原子性、一致性、隔离性、持久性",
+  "desc": "事务要满足的四条保证：全做或全不做、状态合法、互不干扰、提交后不丢。",
+  "see": "L17"
+ },
+ {
+  "t": "原子性",
+  "full": "Atomicity · 原子性",
+  "alias": [
+   "Atomicity"
+  ],
+  "desc": "事务的操作要么全部生效，要么全部撤销，不存在只做了一半的结果。",
+  "see": "L17"
+ },
+ {
+  "t": "隔离性",
+  "full": "Isolation · 隔离性",
+  "desc": "每个事务跑起来都像系统里只有它一个，不必操心别人同时在改什么。",
+  "see": "L17"
+ },
+ {
+  "t": "持久性",
+  "full": "Durability · 持久性",
+  "alias": [
+   "Durability"
+  ],
+  "desc": "事务一旦提交，机器崩溃或断电后改动也还在。",
+  "see": "L17"
+ },
+ {
+  "t": "完整性约束",
+  "full": "Integrity Constraint · 完整性约束",
+  "alias": [
+   "integrity constraint"
+  ],
+  "desc": "应用提前声明、数据库强制执行的规则，比如年龄不能为负，挡住非法状态。",
+  "see": "L17"
+ },
+ {
+  "t": "可串行化",
+  "full": "Serializability · 可串行化",
+  "alias": [
+   "可串行",
+   "可串行化调度",
+   "Serializable Schedule"
+  ],
+  "desc": "事务虽有交错，结果却等价于某个串行顺序。这是并发控制要守住的正确性标准。",
+  "see": "L17"
+ },
+ {
+  "t": "冲突等价",
+  "full": "Conflict Equivalence · 冲突等价",
+  "desc": "两个调度操作相同，且每一对冲突操作的先后顺序都一样。",
+  "see": "L17"
+ },
+ {
+  "t": "冲突可串行化",
+  "full": "Conflict Serializability · 冲突可串行化",
+  "alias": [
+   "冲突可串行",
+   "Conflict Serializability"
+  ],
+  "desc": "调度冲突等价于某个串行调度，依赖图无环即成立。真实系统用的都是这个标准。",
+  "see": "L17"
+ },
+ {
+  "t": "视图可串行化",
+  "full": "View Serializability · 视图可串行化",
+  "alias": [
+   "视图可串行",
+   "View Serializability"
+  ],
+  "desc": "比冲突可串行更宽：读到的值和最终值与某串行顺序相同即可。没有系统能实现。",
+  "see": "L17"
+ },
+ {
+  "t": "依赖图",
+  "full": "Dependency Graph · 依赖图（优先图）",
+  "alias": [
+   "优先图",
+   "Dependency Graph",
+   "Precedence Graph"
+  ],
+  "desc": "事务是节点，冲突操作从先发生的连向后发生的。无环才是冲突可串行。",
+  "see": "L17"
+ },
+ {
+  "t": "盲写",
+  "full": "Blind Write · 盲写",
+  "alias": [
+   "blind write"
+  ],
+  "desc": "不读旧值就直接覆盖。视图可串行能容忍这种写，冲突可串行不能。",
+  "see": "L17"
+ },
+ {
+  "t": "脏读",
+  "full": "Dirty Read · 脏读",
+  "alias": [
+   "Dirty Read"
+  ],
+  "desc": "读到别的事务还没提交的值；对方一旦中止，读到的就是从未存在过的数据。",
+  "see": "L17"
+ },
+ {
+  "t": "不可重复读",
+  "full": "Unrepeatable Read · 不可重复读",
+  "alias": [
+   "Unrepeatable Read"
+  ],
+  "desc": "同一事务读同一对象两次，中间被别人改了，两次的值不一样。",
+  "see": "L17"
+ },
+ {
+  "t": "丢失更新",
+  "full": "Lost Update · 丢失更新",
+  "alias": [
+   "Lost Update"
+  ],
+  "desc": "两个事务的写互相覆盖、交错落地，最终结果不等于任何串行顺序。",
+  "see": "L17"
+ },
+ {
+  "t": "撕裂写",
+  "full": "Torn Write · 撕裂写",
+  "alias": [
+   "撕裂的写",
+   "torn write"
+  ],
+  "desc": "一次写只完成了一部分，比如页只落盘一半，留下半新半旧的内容。",
+  "see": "L21"
+ },
+ {
+  "t": "强一致性",
+  "full": "Strong Consistency · 强一致性",
+  "alias": [
+   "强一致"
+  ],
+  "desc": "在一个节点提交后，立刻去别的节点读，也能看到这次写。",
+  "see": "L17"
+ },
+ {
+  "t": "最终一致性",
+  "full": "Eventual Consistency · 最终一致性",
+  "alias": [
+   "最终一致",
+   "Eventual Consistency"
+  ],
+  "desc": "改动传播有个时间窗口，期间可能读到旧版本，之后各副本才趋于一致。",
+  "see": "L17"
+ },
+ {
+  "t": "NoSQL",
+  "full": "NoSQL · 非关系型数据库",
+  "desc": "没有严格定义的一类系统，早期放弃事务和 SQL，如今基本都绕回来了。",
+  "see": "L17"
+ },
+ {
+  "t": "外部一致性",
+  "full": "External Consistency · 外部一致性",
+  "alias": [
+   "external consistency",
+   "严格可串行化",
+   "严格一致性"
+  ],
+  "desc": "比可串行化更强：事务生效顺序还要和真实先后一致。极少系统支持，如 Spanner。",
+  "see": "L17"
+ },
+ {
+  "t": "Strict 2PL",
+  "full": "Strict Two-Phase Locking · 严格两阶段封锁",
+  "alias": [
+   "strict 2PL"
+  ],
+  "desc": "比基本 2PL 严、比 Strong Strict 松：X 锁留到事务结束，S 锁可以在收缩期放掉。",
+  "see": "L18"
+ },
+ {
+  "t": "Strong Strict 2PL",
+  "full": "Strong Strict Two-Phase Locking · 强严格两阶段封锁",
+  "alias": [
+   "Rigorous 2PL",
+   "强严格"
+  ],
+  "desc": "所有锁都持有到事务结束才一次放完。没有级联中止，但死锁照样会发生。",
+  "see": "L18"
+ },
+ {
+  "t": "增长期",
+  "full": "Growing Phase · 增长期",
+  "alias": [
+   "Growing"
+  ],
+  "desc": "2PL 的前半段：事务只申请锁，不释放。",
+  "see": "L18"
+ },
+ {
+  "t": "收缩期",
+  "full": "Shrinking Phase · 收缩期",
+  "alias": [
+   "Shrinking"
+  ],
+  "desc": "2PL 的后半段：放掉任何一把锁就进入，此后不能再申请新锁。",
+  "see": "L18"
+ },
+ {
+  "t": "级联中止",
+  "full": "Cascading Abort · 级联中止",
+  "alias": [
+   "Cascading Aborts",
+   "Cascading Abort"
+  ],
+  "desc": "读过某事务未提交数据的事务要跟着它一起中止，可能牵连一大片。",
+  "see": "L18"
+ },
+ {
+  "t": "锁管理器",
+  "full": "Lock Manager · 锁管理器",
+  "alias": [
+   "Lock Manager",
+   "lock manager"
+  ],
+  "desc": "集中记录谁持有什么锁、谁在排队的哈希表。有全局视野，所以能检测死锁。",
+  "see": "L18"
+ },
+ {
+  "t": "S 锁",
+  "full": "Shared Lock · 共享锁",
+  "alias": [
+   "共享锁"
+  ],
+  "desc": "读对象时拿的锁。多个事务可以同时持有，但和 X 锁互斥。",
+  "see": "L18"
+ },
+ {
+  "t": "X 锁",
+  "full": "Exclusive Lock · 排他锁",
+  "alias": [
+   "排他锁"
+  ],
+  "desc": "写对象时拿的锁。持有期间别的事务既拿不到 S 锁，也拿不到 X 锁。",
+  "see": "L18"
+ },
+ {
+  "t": "意向锁",
+  "full": "Intention Lock · 意向锁",
+  "alias": [
+   "Intention Lock"
+  ],
+  "desc": "在上层留个提示，说明下面某处会加什么锁，别的事务不必遍历下层来确认。",
+  "see": "L18"
+ },
+ {
+  "t": "Intention-Shared",
+  "full": "IS 锁 · 意向共享锁",
+  "desc": "IS：声明下面某处会拿共享锁。除 X 以外都兼容。",
+  "see": "L18"
+ },
+ {
+  "t": "IX",
+  "full": "Intention-Exclusive · 意向排他锁",
+  "alias": [
+   "Intention-Exclusive"
+  ],
+  "desc": "声明下面某处会拿排他锁。与 IS、IX 兼容，与 S、SIX、X 不兼容。",
+  "see": "L18"
+ },
+ {
+  "t": "SIX",
+  "full": "Shared + Intention-Exclusive · 共享意向排他锁",
+  "alias": [
+   "Shared + Intention-Exclusive"
+  ],
+  "desc": "这一层整个读、下面某处要改：隐含全部 S 锁，只在要改处取 X。只和 IS 兼容。",
+  "see": "L18"
+ },
+ {
+  "t": "层次封锁",
+  "full": "Hierarchical Locking · 层次封锁",
+  "desc": "按库、表、页、元组分层加锁，在高层拿一把就覆盖下面全部，省去大量细锁。",
+  "see": "L18"
+ },
+ {
+  "t": "锁升级",
+  "full": "Lock Escalation · 锁升级",
+  "alias": [
+   "Lock Escalation"
+  ],
+  "desc": "细锁太多时换成上层一把粗锁，顶掉下面所有细锁；S 锁升成 X 锁也叫升级。",
+  "see": "L18"
+ },
+ {
+  "t": "死锁检测",
+  "full": "Deadlock Detection · 死锁检测",
+  "desc": "定期在等待图里找环，找到就中止一个事务。查太勤费 CPU，太稀事务白等。",
+  "see": "L18"
+ },
+ {
+  "t": "死锁预防",
+  "full": "Deadlock Prevention · 死锁预防",
+  "desc": "锁被占时立刻按事务年龄决定等待或中止，让死锁不发生，不需要等待图。",
+  "see": "L18"
+ },
+ {
+  "t": "等待图",
+  "full": "Waits-For Graph · 等待图",
+  "alias": [
+   "Waits-For Graph"
+  ],
+  "desc": "事务是节点，Ti 在等 Tj 持有的锁就连边 Ti→Tj。有环就是死锁。",
+  "see": "L18"
+ },
+ {
+  "t": "牺牲品",
+  "full": "Victim · 牺牲品",
+  "desc": "死锁时被挑出来中止的事务，常按年龄、已做工作量、持锁数来选。",
+  "see": "L18"
+ },
+ {
+  "t": "保存点",
+  "full": "Savepoint · 保存点",
+  "alias": [
+   "Savepoint"
+  ],
+  "desc": "事务内部的回滚点，只退到这里，不必整个事务重来。由应用显式创建。",
+  "see": "L18"
+ },
+ {
+  "t": "Wait-Die",
+  "full": "Wait-Die · 老的等年轻的",
+  "alias": [
+   "wait-die"
+  ],
+  "desc": "死锁预防：申请者更老就等，更年轻就自杀。等待只朝一个方向，不会成环。",
+  "see": "L18"
+ },
+ {
+  "t": "Wound-Wait",
+  "full": "Wound-Wait · 年轻的等老的",
+  "alias": [
+   "wound-wait"
+  ],
+  "desc": "死锁预防：申请者更老就抢锁、杀掉持有者，更年轻就等。等待方向单一，不成环。",
+  "see": "L18"
+ },
+ {
+  "t": "饿死",
+  "full": "Starvation · 饿死",
+  "alias": [
+   "starvation"
+  ],
+  "desc": "某个事务或线程一直拿不到资源，永远做不完。",
+  "see": "L18"
+ },
+ {
+  "t": "OCC",
+  "full": "Optimistic Concurrency Control · 乐观并发控制",
+  "alias": [
+   "乐观并发控制",
+   "Optimistic Concurrency Control"
+  ],
+  "desc": "不加锁，先把活干完，提交时再验证有没有冲突。冲突少时快，高竞争时全白干。",
+  "see": "L19"
+ },
+ {
+  "t": "时间戳排序",
+  "full": "Timestamp Ordering · 时间戳排序",
+  "alias": [
+   "Timestamp Ordering"
+  ],
+  "desc": "不用锁，靠时间戳决定事务的串行顺序。OCC 是其中最主流的协议。",
+  "see": "L19"
+ },
+ {
+  "t": "私有工作区",
+  "full": "Private Workspace · 私有工作区",
+  "alias": [
+   "Private Workspace",
+   "private workspace"
+  ],
+  "desc": "OCC 给每个事务的专属空间，改动都关在里面，验证通过才装进全局数据库。",
+  "see": "L19"
+ },
+ {
+  "t": "读阶段",
+  "full": "Read Phase · 读阶段",
+  "desc": "OCC 第一阶段。名字叫读，其实读写都在这里做，全部发生在私有工作区。",
+  "see": "L19"
+ },
+ {
+  "t": "验证阶段",
+  "full": "Validation Phase · 验证阶段",
+  "desc": "OCC 第二阶段。此刻才分配时间戳，检查自己的改动会不会破坏串行顺序。",
+  "see": "L19"
+ },
+ {
+  "t": "写阶段",
+  "full": "Write Phase · 写阶段",
+  "desc": "OCC 第三阶段。验证通过后，把私有工作区的改动原子地装进全局数据库。",
+  "see": "L19"
+ },
+ {
+  "t": "前向验证",
+  "full": "Forward Validation · 前向验证",
+  "desc": "和还在跑的活跃事务比读写集，看我改的东西有没有别人正在读。",
+  "see": "L19"
+ },
+ {
+  "t": "后向验证",
+  "full": "Backward Validation · 后向验证",
+  "alias": [
+   "Backward Validation"
+  ],
+  "desc": "和已提交的事务比，看它们的改动我有没有漏读。实现简单，是主流做法。",
+  "see": "L19"
+ },
+ {
+  "t": "读写集",
+  "full": "Read Set / Write Set · 读集 / 写集",
+  "alias": [
+   "读集",
+   "写集",
+   "Write Set",
+   "write set"
+  ],
+  "desc": "事务读过、写过的对象集合，OCC 比对它们判冲突。Latch 那边的写集用于自己回滚。",
+  "see": "L19"
+ },
+ {
+  "t": "事务状态表",
+  "full": "Transaction Status Table · 事务状态表",
+  "desc": "内存里记录各事务时间戳和状态的表。判断版本可见性、提交与否都要查它。",
+  "see": "L20"
+ },
+ {
+  "t": "时间戳回绕",
+  "full": "Timestamp Wraparound · 时间戳回绕",
+  "alias": [
+   "回绕"
+  ],
+  "desc": "计数器位数有限，用尽后绕回小值，造成逻辑上的过去和未来错乱。",
+  "see": "L19"
+ },
+ {
+  "t": "幻读",
+  "full": "Phantom Read · 幻读",
+  "alias": [
+   "Phantom Read"
+  ],
+  "desc": "同一事务里重复做范围查询，别人插入或删除的行凭空出现或消失。",
+  "see": "L19"
+ },
+ {
+  "t": "谓词封锁",
+  "full": "Predicate Locking · 谓词封锁",
+  "desc": "不锁元组，锁 WHERE 条件划出的区域，区域相交即冲突。能防幻读但 NP-hard。",
+  "see": "L19"
+ },
+ {
+  "t": "精确封锁",
+  "full": "Precision Locking · 精确封锁",
+  "alias": [
+   "Precision Locking"
+  ],
+  "desc": "谓词封锁的可行近似：拿 WHERE 条件去查读写集，看有没有重叠。",
+  "see": "L19"
+ },
+ {
+  "t": "索引封锁",
+  "full": "Index Locking · 索引封锁",
+  "desc": "用索引当锁的载体来表达范围，连不存在的键也能锁住。防幻读最常见的办法。",
+  "see": "L19"
+ },
+ {
+  "t": "键值锁",
+  "full": "Key-Value Lock · 键值锁",
+  "alias": [
+   "Key-Value Lock"
+  ],
+  "desc": "锁住索引里一个确定存在的键，是索引封锁最基础的一层。",
+  "see": "L19"
+ },
+ {
+  "t": "间隙锁",
+  "full": "Gap Lock · 间隙锁",
+  "alias": [
+   "Gap Lock"
+  ],
+  "desc": "锁住两个相邻键之间的空隙，挡住往里插入新值，从而防幻读。",
+  "see": "L19"
+ },
+ {
+  "t": "键范围锁",
+  "full": "Key-Range Lock · 键范围锁",
+  "alias": [
+   "Key-Range Lock"
+  ],
+  "desc": "把一个键和它后面的间隙合成一把锁，防止别人往这个范围里插入。",
+  "see": "L19"
+ },
+ {
+  "t": "侦察事务",
+  "full": "Reconnaissance Transaction · 侦察事务",
+  "alias": [
+   "reconnaissance transaction"
+  ],
+  "desc": "先把事务跑一遍但不改数据，记下扫描集、查出约束违规，真正提交时再跑。",
+  "see": "L19"
+ },
+ {
+  "t": "隔离级别",
+  "full": "Isolation Level · 隔离级别",
+  "desc": "事务之间隔离到什么程度。级别越低，允许的异常越多，并行度越高。",
+  "see": "L19"
+ },
+ {
+  "t": "SERIALIZABLE",
+  "full": "SERIALIZABLE · 可串行化级别",
+  "desc": "最高隔离级别，脏读、不可重复读、幻读都不会出现。多数系统默认不是它。",
+  "see": "L19"
+ },
+ {
+  "t": "REPEATABLE READ",
+  "full": "REPEATABLE READ · 可重复读",
+  "alias": [
+   "可重复读"
+  ],
+  "desc": "同一事务重复读同一对象，值不变；但范围查询仍可能有幻读。",
+  "see": "L19"
+ },
+ {
+  "t": "READ COMMITTED",
+  "full": "READ COMMITTED · 读已提交",
+  "desc": "只读得到已提交的数据，但同一事务两次读可能不同。多数系统的默认级别。",
+  "see": "L19"
+ },
+ {
+  "t": "READ UNCOMMITTED",
+  "full": "READ UNCOMMITTED · 读未提交",
+  "desc": "最低隔离级别，不取共享锁，可能读到别人没提交的值，三种异常都可能出现。",
+  "see": "L19"
+ },
+ {
+  "t": "快照隔离",
+  "full": "Snapshot Isolation · 快照隔离",
+  "alias": [
+   "Snapshot Isolation"
+  ],
+  "desc": "事务看到它开始那一刻已提交数据的一致快照。写冲突先写者胜，但有写偏斜。",
+  "see": "L20"
+ },
+ {
+  "t": "写偏斜",
+  "full": "Write Skew · 写偏斜",
+  "alias": [
+   "Write Skew"
+  ],
+  "desc": "两个事务读同一快照、各改不同对象，单看没冲突，合起来却不等于任何串行结果。",
+  "see": "L20"
+ },
+ {
+  "t": "SSI",
+  "full": "Serializable Snapshot Isolation · 可串行化快照隔离",
+  "alias": [
+   "可串行化快照隔离"
+  ],
+  "desc": "在快照隔离上多维护一张依赖图，杀掉会造成写偏斜的事务，做到可串行化。",
+  "see": "L25"
+ },
+ {
+  "t": "First Writer Wins",
+  "full": "First Writer Wins · 先写者胜",
+  "alias": [
+   "先写者胜"
+  ],
+  "desc": "快照隔离的写冲突规则：第一个写的事务赢，后来者中止。",
+  "see": "L20"
+ },
+ {
+  "t": "逻辑元组",
+  "full": "Logical Tuple · 逻辑元组",
+  "desc": "应用眼里的一条记录，由主键标识。MVCC 下它对应多个物理版本。",
+  "see": "L20"
+ },
+ {
+  "t": "物理版本",
+  "full": "Physical Version · 物理版本",
+  "desc": "逻辑元组的一份实际副本。每次更新都新建一个，事务任一时刻只看到其中一个。",
+  "see": "L20"
+ },
+ {
+  "t": "版本链",
+  "full": "Version Chain · 版本链",
+  "alias": [
+   "Version Chain",
+   "version chain"
+  ],
+  "desc": "把同一逻辑元组的各版本用指针串成链表，索引指向链头，沿链找可见版本。",
+  "see": "L20"
+ },
+ {
+  "t": "N2O",
+  "full": "Newest-to-Oldest · 新到旧",
+  "desc": "版本链从最新版本开始。读最新版最快，但每次更新都要改索引指针。",
+  "see": "L20"
+ },
+ {
+  "t": "O2N",
+  "full": "Oldest-to-Newest · 旧到新",
+  "desc": "版本链从最旧版本开始。找最新版要走到底，但更新时索引不用改。PostgreSQL 用它。",
+  "see": "L20"
+ },
+ {
+  "t": "版本存储",
+  "full": "Version Storage · 版本存储",
+  "desc": "MVCC 把旧版本放在哪，有追加式、时间旅行式、增量式三种方案。",
+  "see": "L20"
+ },
+ {
+  "t": "GC",
+  "full": "Garbage Collection · 垃圾回收",
+  "alias": [
+   "垃圾回收"
+  ],
+  "desc": "清理不再需要的内容。MVCC 里指回收无人可见的旧版本和中止事务留下的版本。",
+  "see": "L20"
+ },
+ {
+  "t": "begin-ts",
+  "full": "Begin Timestamp · 版本起始时间戳",
+  "desc": "版本可见区间的左端，也就是创建这个版本的事务的时间戳。",
+  "see": "L20"
+ },
+ {
+  "t": "end-ts",
+  "full": "End Timestamp · 版本结束时间戳",
+  "desc": "版本可见区间的右端，∞ 表示最新版本。判断版本能否回收也靠它。",
+  "see": "L20"
+ },
+ {
+  "t": "可见性判断",
+  "full": "Visibility Check · 可见性判断",
+  "desc": "看时间戳区间和创建者的提交状态，决定某个版本对当前事务是否可见。",
+  "see": "L20"
+ },
+ {
+  "t": "时间旅行查询",
+  "full": "Time-Travel Query · 时间旅行查询",
+  "alias": [
+   "Time-Travel Query"
+  ],
+  "desc": "不回收旧版本，就能查数据库在过去某一时刻的状态，常用于审计。",
+  "see": "L20"
+ },
+ {
+  "t": "追加式",
+  "full": "Append-Only Storage · 追加式存储",
+  "alias": [
+   "Append-Only"
+  ],
+  "desc": "每次更新把整条元组复制一份，追加到同一个表空间。PostgreSQL 的做法。",
+  "see": "L20"
+ },
+ {
+  "t": "时间旅行式",
+  "full": "Time-Travel Storage · 时间旅行式存储",
+  "alias": [
+   "Time-Travel"
+  ],
+  "desc": "更新时完整复制，存进一张独立的旧版本表，回收时不打扰主表。",
+  "see": "L20"
+ },
+ {
+  "t": "增量式",
+  "full": "Delta Storage · 增量式存储",
+  "alias": [
+   "Delta Storage"
+  ],
+  "desc": "主表直接覆盖成最新版，只把被改列的旧值存到别处，读旧版本时倒着打补丁。",
+  "see": "L20"
+ },
+ {
+  "t": "delta record",
+  "full": "Delta Record · 增量记录",
+  "alias": [
+   "增量记录",
+   "delta 记录"
+  ],
+  "desc": "增量式存储里的一条旧值记录，只含被改列的旧值，省去整条拷贝。",
+  "see": "L20"
+ },
+ {
+  "t": "回滚段",
+  "full": "Rollback Segment · 回滚段",
+  "alias": [
+   "Rollback Segment",
+   "rollback segment"
+  ],
+  "desc": "MySQL、Oracle 存增量记录的地方，水位线一过就能整块丢弃。",
+  "see": "L20"
+ },
+ {
+  "t": "VACUUM",
+  "full": "VACUUM · 垃圾回收进程",
+  "alias": [
+   "vacuum"
+  ],
+  "desc": "回收无人能看到的旧版本的后台任务。PostgreSQL 的 VACUUM 不把空间还给操作系统。",
+  "see": "L20"
+ },
+ {
+  "t": "水位线",
+  "full": "Watermark · 水位线",
+  "alias": [
+   "watermark"
+  ],
+  "desc": "活跃事务里最小的时间戳。早于它的旧版本没人能看到，可以回收。",
+  "see": "L20"
+ },
+ {
+  "t": "协作式清理",
+  "full": "Cooperative Cleaning · 协作式清理",
+  "alias": [
+   "协作式回收",
+   "Cooperative Cleaning"
+  ],
+  "desc": "事务沿版本链查找时，顺手清掉谁都看不到的旧版本，让 SELECT 也会写数据。",
+  "see": "L20"
+ },
+ {
+  "t": "落灰的角落",
+  "full": "Dusty Corners · 落灰的角落",
+  "alias": [
+   "Dusty Corners"
+  ],
+  "desc": "从没人读的旧版本，协作式清理碰不到，所以还得定期跑全面的 VACUUM。",
+  "see": "L20"
+ },
+ {
+  "t": "物理指针",
+  "full": "Physical Pointer · 物理指针",
+  "desc": "直接记录数据物理位置的指针，如 RecordID。位置一变，所有指向它的索引都得改。",
+  "see": "L20"
+ },
+ {
+  "t": "逻辑指针",
+  "full": "Logical Pointer · 逻辑指针",
+  "desc": "二级索引存主键值而不是物理位置。多一跳间接，但版本链头变化时索引不用改。",
+  "see": "L20"
+ },
+ {
+  "t": "xmin",
+  "full": "xmin · PostgreSQL 的 begin-ts",
+  "desc": "PostgreSQL 暴露的版本元数据：创建这个版本的事务 ID。",
+  "see": "L20"
+ },
+ {
+  "t": "xmax",
+  "full": "xmax · PostgreSQL 的 end-ts",
+  "desc": "PostgreSQL 暴露的版本元数据：相当于 end-ts，0 表示这是最新版本。",
+  "see": "L20"
+ },
+ {
+  "t": "ctid",
+  "full": "ctid · PostgreSQL 的 RecordID",
+  "desc": "PostgreSQL 里版本的物理位置（页号, 槽号），扫描时推导，建新版本后会变。",
+  "see": "L20"
+ },
+ {
+  "t": "read_ts",
+  "full": "Read Timestamp · 读时间戳",
+  "alias": [
+   "读时间戳"
+  ],
+  "desc": "P4 里事务开始时拿到的时间戳，决定它能看见哪些版本。",
+  "see": "P4"
+ },
+ {
+  "t": "commit_ts",
+  "full": "Commit Timestamp · 提交时间戳",
+  "alias": [
+   "提交时间戳"
+  ],
+  "desc": "P4 里事务提交时拿到的时间戳，决定它写的东西对谁可见。",
+  "see": "P4"
+ },
+ {
+  "t": "undo 日志",
+  "full": "Undo Log · undo 日志",
+  "alias": [
+   "Undo 日志"
+  ],
+  "desc": "记录怎样撤回改动。BusTub 用它串成版本链，读旧版本就是逐条打补丁退回去。",
+  "see": "P4"
+ },
+ {
+  "t": "STEAL",
+  "full": "STEAL · 偷取",
+  "alias": [
+   "Steal"
+  ],
+  "desc": "缓冲池可以把未提交事务改脏的页写回磁盘。运行快，但恢复时必须能 undo。",
+  "see": "L21"
+ },
+ {
+  "t": "NO-STEAL",
+  "full": "NO-STEAL · 不偷取",
+  "desc": "未提交事务改脏的页不许写盘，磁盘上只有已提交数据，所以不需要 undo。",
+  "see": "L21"
+ },
+ {
+  "t": "FORCE",
+  "full": "FORCE · 强制刷盘",
+  "alias": [
+   "Force"
+  ],
+  "desc": "事务提交前必须把它改的脏页全部刷盘。不需要 redo，但运行时慢。",
+  "see": "L21"
+ },
+ {
+  "t": "NO-FORCE",
+  "full": "NO-FORCE · 不强制刷盘",
+  "desc": "提交时不必刷脏页，只要日志落盘。运行快，但恢复时必须能 redo。",
+  "see": "L21"
+ },
+ {
+  "t": "Undo",
+  "full": "Undo · 撤销",
+  "alias": [
+   "undo",
+   "UNDO"
+  ],
+  "desc": "抹掉未完成或已中止事务的影响。STEAL 策略下必须支持。",
+  "see": "L21"
+ },
+ {
+  "t": "Redo",
+  "full": "Redo · 重做",
+  "alias": [
+   "redo",
+   "REDO"
+  ],
+  "desc": "重新应用已提交事务的改动，确保它们真的在。NO-FORCE 策略下必须支持。",
+  "see": "L21"
+ },
+ {
+  "t": "影子分页",
+  "full": "Shadow Paging · 影子分页",
+  "alias": [
+   "Shadow Paging"
+  ],
+  "desc": "改动写在页的副本上，提交时原子翻转主指针。恢复瞬间完成，但运行慢、有碎片。",
+  "see": "L21"
+ },
+ {
+  "t": "主指针",
+  "full": "Master Pointer · 主指针",
+  "desc": "影子分页里指向当前页目录的记录。对它的一次原子写，让整个事务一键生效。",
+  "see": "L21"
+ },
+ {
+  "t": "回滚日志",
+  "full": "Rollback Journal · 回滚日志",
+  "alias": [
+   "rollback mode"
+  ],
+  "desc": "SQLite 的影子分页变体：改页前先把旧页存进日志文件，崩溃后写回去恢复。",
+  "see": "L21"
+ },
+ {
+  "t": "组提交",
+  "full": "Group Commit · 组提交",
+  "alias": [
+   "Group Commit"
+  ],
+  "desc": "把一小段时间内多个事务的日志打包，一次 fsync 写盘，大幅提高提交吞吐。",
+  "see": "L21"
+ },
+ {
+  "t": "同步提交",
+  "full": "Synchronous Commit · 同步提交",
+  "alias": [
+   "synchronous commit"
+  ],
+  "desc": "等日志真正落盘才回复提交成功。不开的话，崩溃时可能丢已提交的数据。",
+  "see": "L21"
+ },
+ {
+  "t": "提交点",
+  "full": "Commit Point · 提交点",
+  "desc": "事务真正算提交的那一刻：COMMIT 记录连同之前的日志落盘时。",
+  "see": "L21"
+ },
+ {
+  "t": "物理日志",
+  "full": "Physical Logging · 物理日志",
+  "desc": "记字节级 diff：某页某偏移的旧值和新值。恢复快，但改多少条就记多少条。",
+  "see": "L21"
+ },
+ {
+  "t": "逻辑日志",
+  "full": "Logical Logging · 逻辑日志",
+  "desc": "只记 SQL 语句本身，日志量极小，但恢复要重新执行，还怕非确定性函数。",
+  "see": "L21"
+ },
+ {
+  "t": "物理逻辑日志",
+  "full": "Physiological Logging · 物理逻辑日志",
+  "alias": [
+   "Physiological Logging",
+   "Physiological"
+  ],
+  "desc": "记哪个页的哪个槽改成了什么，页内可以自由重组。多数系统用它。",
+  "see": "L21"
+ },
+ {
+  "t": "CDC",
+  "full": "Change Data Capture · 变更数据捕获",
+  "alias": [
+   "变更数据捕获",
+   "Change Data Capture"
+  ],
+  "desc": "读取数据库的 WAL，把变更流式发给其他系统，如数据仓库。",
+  "see": "L21"
+ },
+ {
+  "t": "检查点",
+  "full": "Checkpoint · 检查点",
+  "alias": [
+   "Checkpoint",
+   "checkpoint",
+   "CHECKPOINT"
+  ],
+  "desc": "把脏页刷盘并在日志里留记号，恢复时只需回看到这里，日志也不用无限增长。",
+  "see": "L21"
+ },
+ {
+  "t": "阻塞式检查点",
+  "full": "Blocking Checkpoint · 阻塞式检查点",
+  "desc": "暂停所有事务、刷完全部脏页再继续。简单，但缓冲池大时停顿不可接受。",
+  "see": "L21"
+ },
+ {
+  "t": "ARIES",
+  "full": "Algorithms for Recovery and Isolation Exploiting Semantics",
+  "desc": "崩溃恢复的黄金标准：WAL、重放历史、给撤销记日志，分析重做撤销三阶段。",
+  "see": "L22"
+ },
+ {
+  "t": "模糊检查点",
+  "full": "Fuzzy Checkpoint · 模糊检查点",
+  "alias": [
+   "Fuzzy Checkpoint",
+   "fuzzy checkpoint"
+  ],
+  "desc": "不暂停事务打检查点，记下开始那一刻的 ATT 和 DPT，靠它们去日志里还原真相。",
+  "see": "L22"
+ },
+ {
+  "t": "CHECKPOINT-BEGIN",
+  "full": "模糊检查点的开始记录",
+  "desc": "模糊检查点的起点日志。MasterRecord 指向它，分析阶段从这里开始。",
+  "see": "L22"
+ },
+ {
+  "t": "CHECKPOINT-END",
+  "full": "模糊检查点的结束记录",
+  "desc": "模糊检查点的结束日志，里面放着 BEGIN 那一刻的 ATT 和 DPT 快照。",
+  "see": "L22"
+ },
+ {
+  "t": "DPT",
+  "full": "Dirty Page Table · 脏页表",
+  "alias": [
+   "脏页表",
+   "Dirty Page Table"
+  ],
+  "desc": "记录当前有哪些脏页、各自最早让它变脏的日志，恢复时据此决定重做起点。",
+  "see": "L22"
+ },
+ {
+  "t": "ATT",
+  "full": "Active Transaction Table · 活跃事务表",
+  "alias": [
+   "活跃事务表",
+   "Active Transaction Table"
+  ],
+  "desc": "记录活跃事务的状态和 lastLSN，恢复时据此找出要回滚的事务。",
+  "see": "L22"
+ },
+ {
+  "t": "CLR",
+  "full": "Compensation Log Record · 补偿日志记录",
+  "alias": [
+   "补偿日志记录",
+   "Compensation Log Record"
+  ],
+  "desc": "撤销一个改动时写的日志，让撤销本身也可恢复、可续做。CLR 不会再被撤销。",
+  "see": "L22"
+ },
+ {
+  "t": "recLSN",
+  "full": "Recovery LSN · 页变脏的起始 LSN",
+  "desc": "自这页上次刷盘以来，第一条修改它的日志的 LSN，存在 DPT 里。",
+  "see": "L22"
+ },
+ {
+  "t": "flushedLSN",
+  "full": "Flushed LSN · 已落盘的最大 LSN",
+  "desc": "已经刷到磁盘的最大 LSN。页的 pageLSN 不超过它，这页才能刷盘。",
+  "see": "L22"
+ },
+ {
+  "t": "prevLSN",
+  "full": "Previous LSN · 同事务的上一条 LSN",
+  "desc": "把同一事务的日志记录串成反向链表，回滚时不用在交织的日志里找。",
+  "see": "L22"
+ },
+ {
+  "t": "lastLSN",
+  "full": "Last LSN · 事务最近一条 LSN",
+  "desc": "某事务最近一条日志的 LSN，存在 ATT 里，中止时从这里开始往回走。",
+  "see": "L22"
+ },
+ {
+  "t": "undoNext",
+  "full": "undoNextLSN · 下一条待撤销记录",
+  "desc": "CLR 里的字段，指向下一条还要撤销的日志。恢复中再崩，也能从这里接着撤。",
+  "see": "L22"
+ },
+ {
+  "t": "MasterRecord",
+  "full": "Master Record · 主记录",
+  "desc": "存在磁盘上，记录最后一次成功检查点的起点，恢复从这里开始找。",
+  "see": "L22"
+ },
+ {
+  "t": "TXN-END",
+  "full": "Transaction End · 事务结束记录",
+  "desc": "表示事务彻底完结，可从 ATT 里删掉。提交和中止都要写，不需要立即刷盘。",
+  "see": "L22"
+ },
+ {
+  "t": "重放历史",
+  "full": "Repeating History · 重放历史",
+  "alias": [
+   "Repeating History"
+  ],
+  "desc": "恢复时把日志里的改动全部重做一遍，包括 CLR，宁可多做不能漏做。",
+  "see": "L22"
+ },
+ {
+  "t": "分析阶段",
+  "full": "Analysis Phase · 分析阶段",
+  "desc": "ARIES 第一步：从最近的检查点扫到日志末尾，重建 ATT 和 DPT。",
+  "see": "L22"
+ },
+ {
+  "t": "重做阶段",
+  "full": "Redo Phase · 重做阶段",
+  "desc": "ARIES 第二步：从 DPT 最小的 recLSN 开始重放，靠 pageLSN 跳过已应用的改动。",
+  "see": "L22"
+ },
+ {
+  "t": "撤销阶段",
+  "full": "Undo Phase · 撤销阶段",
+  "desc": "ARIES 第三步：反向回滚崩溃时没提交的事务，每撤一步写一条 CLR。",
+  "see": "L22"
+ },
+ {
+  "t": "幂等",
+  "full": "Idempotent · 幂等",
+  "desc": "同一操作重复做多次，结果和做一次一样。所以重做阶段崩了重跑即可。",
+  "see": "L22"
+ },
+ {
+  "t": "逻辑正确性",
+  "full": "Logical Correctness · 逻辑正确性",
+  "alias": [
+   "Logical Correctness"
+  ],
+  "desc": "我该看到的数据看到了吗。由 Lock 保护，是事务并发控制要解决的问题。",
+  "see": "L10"
+ },
+ {
+  "t": "物理正确性",
+  "full": "Physical Correctness · 物理正确性",
+  "alias": [
+   "Physical Correctness"
+  ],
+  "desc": "数据结构内部是否自洽、指针有没有指错。由 Latch 保护，和事务无关。",
+  "see": "L10"
+ },
+ {
+  "t": "Shared-Nothing",
+  "full": "Shared-Nothing · 无共享架构",
+  "alias": [
+   "shared-nothing",
+   "Shared-nothing"
+  ],
+  "desc": "每个节点有自己的内存和磁盘，只靠网络通信。性能好，但扩容要搬数据。",
+  "see": "L23"
+ },
+ {
+  "t": "Shared-Disk",
+  "full": "Shared-Disk · 共享磁盘架构",
+  "alias": [
+   "shared-disk",
+   "Shared-disk"
+  ],
+  "desc": "节点有各自的 CPU 和内存，数据都在共享存储上。扩容只改目录，云时代主流。",
+  "see": "L23"
+ },
+ {
+  "t": "Shared-Everything",
+  "full": "Shared-Everything · 共享一切架构",
+  "alias": [
+   "shared-everything"
+  ],
+  "desc": "CPU、内存、磁盘都在本地，也就是单机数据库。",
+  "see": "L23"
+ },
+ {
+  "t": "水平分区",
+  "full": "Horizontal Partitioning · 水平分区（分片）",
+  "alias": [
+   "分片",
+   "Sharding",
+   "sharding",
+   "Horizontal Partitioning"
+  ],
+  "desc": "按分区键把一张表的行切到不同节点，最常见的分区方式。",
+  "see": "L23"
+ },
+ {
+  "t": "分区键",
+  "full": "Partition Key · 分区键",
+  "desc": "决定一行归属哪个分区的列。查询不带它，就只能广播给所有节点。",
+  "see": "L23"
+ },
+ {
+  "t": "哈希分区",
+  "full": "Hash Partitioning · 哈希分区",
+  "desc": "按 hash(key) 分配数据。分布式下范围查询要广播，增删节点几乎全要搬。",
+  "see": "L23"
+ },
+ {
+  "t": "范围分区",
+  "full": "Range Partitioning · 范围分区",
+  "desc": "按连续的值区间切分数据。增删节点时要重新洗牌。",
+  "see": "L23"
+ },
+ {
+  "t": "一致性哈希",
+  "full": "Consistent Hashing · 一致性哈希",
+  "alias": [
+   "Consistent Hashing"
+  ],
+  "desc": "键和节点都映射到环上，键归顺时针遇到的第一个节点。增删节点只搬一段弧。",
+  "see": "L23"
+ },
+ {
+  "t": "Rendezvous 哈希",
+  "full": "Rendezvous Hashing · 汇合哈希（最高随机权重）",
+  "alias": [
+   "Rendezvous Hashing",
+   "Rendezvous",
+   "汇合哈希",
+   "最高随机权重"
+  ],
+  "desc": "键和每个节点 ID 拼起来分别哈希，分数最高的节点拥有它。增删节点只搬少量键。",
+  "see": "L23"
+ },
+ {
+  "t": "主-副本",
+  "full": "Primary-Replica · 主-副本",
+  "alias": [
+   "Primary-Replica"
+  ],
+  "desc": "每个对象有一个主节点，写都先到它，再由它扩散给副本。最常见的复制配置。",
+  "see": "L23"
+ },
+ {
+  "t": "多主",
+  "full": "Multi-Primary · 多主",
+  "alias": [
+   "Multi-Primary"
+  ],
+  "desc": "任意节点都能写，之后再解决冲突，比主-副本少见。",
+  "see": "L23"
+ },
+ {
+  "t": "K-Safety",
+  "full": "K-Safety · K 安全性",
+  "desc": "系统保持可用所需的最少存活副本数。低于 K 就停止更新，宁可停机也不丢数据。",
+  "see": "L23"
+ },
+ {
+  "t": "领导者选举",
+  "full": "Leader Election · 领导者选举",
+  "desc": "主节点挂了或没有主时，节点们选出新的主。本身就像一次事务。",
+  "see": "L23"
+ },
+ {
+  "t": "计划片段",
+  "full": "Plan Fragment · 计划片段",
+  "alias": [
+   "plan fragment"
+  ],
+  "desc": "查询计划切下的一段，发到数据所在节点执行，只把结果传回来。",
+  "see": "L23"
+ },
+ {
+  "t": "TP Monitor",
+  "full": "Transaction Processing Monitor · 事务处理监视器",
+  "desc": "老式集中式协调者：维护全局锁表和事务视图，协调跨节点事务的提交。",
+  "see": "L23"
+ },
+ {
+  "t": "中间件",
+  "full": "Middleware · 中间件",
+  "desc": "架在各分区前面的一层，所有查询走它路由并管锁表，对应用就像一个数据库实例。",
+  "see": "L23"
+ },
+ {
+  "t": "原子提交协议",
+  "full": "Atomic Commit Protocol · 原子提交协议",
+  "alias": [
+   "原子提交",
+   "Atomic Commit Protocol"
+  ],
+  "desc": "让所有节点对事务提交还是中止达成同一决定，2PC、Paxos、Raft 都是。",
+  "see": "L24"
+ },
+ {
+  "t": "共识协议",
+  "full": "Consensus Protocol · 共识协议",
+  "alias": [
+   "Consensus Protocol"
+  ],
+  "desc": "让多个节点就同一决定达成一致。在事务场景里它就是原子提交协议。",
+  "see": "L24"
+ },
+ {
+  "t": "2PC",
+  "full": "Two-Phase Commit · 两阶段提交",
+  "alias": [
+   "两阶段提交",
+   "Two-Phase Commit"
+  ],
+  "desc": "协调者先问参与者能否提交，全票通过才下令提交。一个节点挂了就会阻塞。",
+  "see": "L24"
+ },
+ {
+  "t": "3PC",
+  "full": "Three-Phase Commit · 三阶段提交",
+  "alias": [
+   "三阶段提交"
+  ],
+  "desc": "为解决 2PC 的阻塞问题提出的协议，太复杂，没人用。",
+  "see": "L24"
+ },
+ {
+  "t": "协调者",
+  "full": "Coordinator · 协调者",
+  "alias": [
+   "Coordinator"
+  ],
+  "desc": "负责统筹的节点。在 2PC 里主持提交：问所有参与者能否提交，再宣布结果。",
+  "see": "L24"
+ },
+ {
+  "t": "参与者",
+  "full": "Participant · 参与者",
+  "alias": [
+   "Participant"
+  ],
+  "desc": "事务读写过数据的节点，投票决定能否提交。2PC 只在这些节点上跑。",
+  "see": "L24"
+ },
+ {
+  "t": "提前投票",
+  "full": "Early Prepare Voting · 提前投票",
+  "alias": [
+   "Early Prepare Voting"
+  ],
+  "desc": "发最后一条查询时捎带提交投票。要求应用确知这是最后一条，所以罕见。",
+  "see": "L24"
+ },
+ {
+  "t": "提前确认",
+  "full": "Early Acknowledgement · 提前确认",
+  "alias": [
+   "Early Acknowledgement"
+  ],
+  "desc": "第一阶段全票后就告诉应用已提交，再去跑第二阶段。",
+  "see": "L24"
+ },
+ {
+  "t": "Paxos",
+  "desc": "只要多数派同意就能提交的共识协议，部分节点掉线也不阻塞。",
+  "see": "L24"
+ },
+ {
+  "t": "Multi-Paxos",
+  "desc": "先选出 leader，之后只由它提议提交，避免多个提议者互相打断。",
+  "see": "L24"
+ },
+ {
+  "t": "Raft",
+  "desc": "以好理解为设计目标的共识协议，高层类似 Multi-Paxos，选主看谁的日志最新。",
+  "see": "L24"
+ },
+ {
+  "t": "提议者",
+  "full": "Proposer · 提议者",
+  "alias": [
+   "Proposer"
+  ],
+  "desc": "Paxos 里发起提议的角色，对应 2PC 的协调者。",
+  "see": "L24"
+ },
+ {
+  "t": "接受者",
+  "full": "Acceptor · 接受者",
+  "alias": [
+   "Acceptor"
+  ],
+  "desc": "Paxos 里对提议投票的角色，对应 2PC 的参与者。",
+  "see": "L24"
+ },
+ {
+  "t": "学习者",
+  "full": "Learner · 学习者",
+  "alias": [
+   "Learner"
+  ],
+  "desc": "Paxos 里只观察状态机变化、没有投票权的节点。",
+  "see": "L24"
+ },
+ {
+  "t": "活性",
+  "full": "Liveness · 活性",
+  "alias": [
+   "liveness"
+  ],
+  "desc": "假设总有足够的节点活着，让系统能往前推进；不保证事务一定能提交。",
+  "see": "L24"
+ },
+ {
+  "t": "BFT",
+  "full": "Byzantine Fault Tolerance · 拜占庭容错",
+  "alias": [
+   "拜占庭容错",
+   "拜占庭"
+  ],
+  "desc": "节点可能恶意作假时仍能达成一致的协议。区块链要用它，代价是慢得多。",
+  "see": "L24"
+ },
+ {
+  "t": "租约",
+  "full": "Lease · 租约",
+  "desc": "leader 身份的有效期，要定期续。续太勤浪费，太稀则 leader 挂了发现得慢。",
+  "see": "L24"
+ },
+ {
+  "t": "CAP",
+  "full": "Consistency, Availability, Partition Tolerance · CAP 定理",
+  "desc": "一致性、可用性、分区容忍最多得二。实际问题是网络分区时保哪个。",
+  "see": "L24"
+ },
+ {
+  "t": "PACELC",
+  "full": "Partition: Availability / Consistency; Else: Latency / Consistency",
+  "desc": "在 CAP 上加入延迟：没有网络分区时，也要在延迟和一致性之间取舍。",
+  "see": "L24"
+ },
+ {
+  "t": "网络分区",
+  "full": "Network Partition · 网络分区",
+  "desc": "网络断开，节点分成互不相通的几部分，彼此都以为对方挂了。",
+  "see": "L24"
+ },
+ {
+  "t": "脑裂",
+  "full": "Split Brain · 脑裂",
+  "alias": [
+   "Split Brain",
+   "split brain"
+  ],
+  "desc": "网络分区后两边都认为自己是主库，各自提交，恢复后数据冲突。",
+  "see": "L24"
+ },
+ {
+  "t": "最后写入者胜",
+  "full": "Last Writer Wins · 最后写入者胜",
+  "alias": [
+   "Last Writer Wins",
+   "last writer wins"
+  ],
+  "desc": "合并冲突时比时间戳，最新的赢。多数 NoSQL 用这个。",
+  "see": "L24"
+ },
+ {
+  "t": "向量时钟",
+  "full": "Vector Clocks · 向量时钟",
+  "alias": [
+   "Vector Clocks"
+  ],
+  "desc": "合并冲突的一种办法：读时返回整条版本链，由客户端决定用哪个。Andy 不推荐。",
+  "see": "L24"
+ },
+ {
+  "t": "广播连接",
+  "full": "Broadcast Join · 广播连接",
+  "alias": [
+   "Broadcast Join",
+   "broadcast join",
+   "broadcast hash join"
+  ],
+  "desc": "把足够小的表复制到每个参与节点，退化成本地连接再合并。",
+  "see": "L24"
+ },
+ {
+  "t": "Shuffle 连接",
+  "full": "Shuffle Join · Shuffle 连接",
+  "alias": [
+   "Shuffle Join",
+   "shuffle join",
+   "shuffle hash join"
+  ],
+  "desc": "两张表都按连接键在线重新分区，让相同的键落到同一节点，再本地连接。",
+  "see": "L24"
+ },
+ {
+  "t": "Shuffle",
+  "full": "Shuffle · 数据重分布",
+  "alias": [
+   "shuffle"
+  ],
+  "desc": "查询中途按键把数据重新分布到各节点。分布式 OLAP 最大的瓶颈，也能解决倾斜。",
+  "see": "L24"
+ },
+ {
+  "t": "半连接",
+  "full": "Semi-Join · 半连接",
+  "alias": [
+   "Semi-Join"
+  ],
+  "desc": "不搬整张表，只传连接必需的那点信息，比如过滤后的列或 Bloom Filter。",
+  "see": "L24"
+ },
+ {
+  "t": "事实表",
+  "full": "Fact Table · 事实表",
+  "alias": [
+   "Fact Table"
+  ],
+  "desc": "巨大的主表，一行一笔业务记录，比如每一笔订单。",
+  "see": "L24"
+ },
+ {
+  "t": "维度表",
+  "full": "Dimension Table · 维度表",
+  "alias": [
+   "Dimension Table"
+  ],
+  "desc": "小的、通常只读的旁表，放商品名、邮编这类描述信息。",
+  "see": "L24"
+ }
+]

@@ -1,0 +1,1869 @@
+[
+ {
+  "t": "关系代数",
+  "full": "Relational Algebra · 关系代数",
+  "alias": [
+   "Relational Algebra"
+  ],
+  "desc": "一组操作关系的算子，如选择、投影、连接，规定每一步怎么做。查询计划就长这样。",
+  "see": "L01"
+ },
+ {
+  "t": "schema",
+  "full": "Schema · 模式",
+  "alias": [
+   "Schema"
+  ],
+  "desc": "用某种数据模型描述一个具体数据库：有哪些表、哪些列、什么类型。",
+  "see": "L01"
+ },
+ {
+  "t": "数据独立性",
+  "full": "Data Independence · 数据独立性",
+  "alias": [
+   "物理数据独立性",
+   "逻辑数据独立性"
+  ],
+  "desc": "应用只面对逻辑层，不依赖数据怎么存。所以数据库能换存储布局，应用不用改。",
+  "see": "L01"
+ },
+ {
+  "t": "笛卡尔积",
+  "full": "Cartesian Product · 笛卡尔积",
+  "alias": [
+   "Cartesian Product",
+   "交叉连接"
+  ],
+  "desc": "两张表的行两两配对，结果行数是两表之积。除非明确要求，优化器绝不该产生它。",
+  "see": "L01"
+ },
+ {
+  "t": "声明式",
+  "full": "Declarative · 声明式",
+  "desc": "只说要什么结果，不说怎么算。SQL 是声明式的，数据库才有自由选择执行方式。",
+  "see": "L01"
+ },
+ {
+  "t": "谓词",
+  "full": "Predicate · 谓词",
+  "desc": "结果为真或假的条件，比如 WHERE 里的 age > 30，决定哪些元组留下。",
+  "see": "L01"
+ },
+ {
+  "t": "DML",
+  "full": "Data Manipulation Language · 数据操纵语言",
+  "desc": "读写数据的语言，包括 INSERT、UPDATE、DELETE，只读的 SELECT 也算。",
+  "see": "L01"
+ },
+ {
+  "t": "相关子查询",
+  "full": "Correlated Subquery · 相关子查询",
+  "alias": [
+   "Correlated Subquery"
+  ],
+  "desc": "内层引用了外层的列，外层每一行都要重算一次内层。优化器不改写时就是嵌套循环。",
+  "see": "L02"
+ },
+ {
+  "t": "CTE",
+  "full": "Common Table Expression · 公用表表达式",
+  "alias": [
+   "公用表表达式"
+  ],
+  "desc": "用 WITH 在查询内定义一张临时结果表，后面像真表一样引用，查询结束就扔。",
+  "see": "L02"
+ },
+ {
+  "t": "窗口函数",
+  "full": "Window Function · 窗口函数",
+  "desc": "对每一行算一个基于相关行的值，比如组内排名、移动平均，不把多行合成一行。",
+  "see": "L02"
+ },
+ {
+  "t": "LATERAL",
+  "full": "LATERAL JOIN",
+  "alias": [
+   "LATERAL JOIN",
+   "JOIN LATERAL",
+   "CROSS APPLY"
+  ],
+  "desc": "让后面的子查询引用前面子查询的结果，像两层 for 循环：外层每行跑一次内层。",
+  "see": "L02"
+ },
+ {
+  "t": "QUALIFY",
+  "full": "QUALIFY 子句",
+  "desc": "直接过滤窗口函数的结果，不用再套一层子查询。DuckDB 支持。",
+  "see": "HW1"
+ },
+ {
+  "t": "UPSERT",
+  "full": "Update + Insert · 有则更新、无则插入",
+  "alias": [
+   "ON CONFLICT"
+  ],
+  "desc": "插入时撞上已有的键就改成更新，否则正常插入。常写成 INSERT … ON CONFLICT。",
+  "see": "HW1"
+ },
+ {
+  "t": "磁盘导向架构",
+  "full": "Disk-Oriented DBMS · 磁盘导向架构",
+  "alias": [
+   "Disk-Oriented DBMS"
+  ],
+  "desc": "主数据放在磁盘上，用到时先读进内存才能处理。全课的设计都围绕这个假设展开。",
+  "see": "L03"
+ },
+ {
+  "t": "块可寻址",
+  "full": "Block-Addressable · 块可寻址",
+  "alias": [
+   "字节可寻址",
+   "block-addressable",
+   "byte-addressable"
+  ],
+  "desc": "最小访问单位是块，要一个字节也得读整块。内存才是字节可寻址，所以数据库按页组织。",
+  "see": "L03"
+ },
+ {
+  "t": "顺序 I/O",
+  "full": "Sequential I/O · 顺序 I/O",
+  "desc": "连续读写相邻的块，比跳来跳去快得多。数据库总想把随机 I/O 换成它。",
+  "see": "L03"
+ },
+ {
+  "t": "随机 I/O",
+  "full": "Random I/O · 随机 I/O",
+  "desc": "读写位置分散、来回跳转，比顺序 I/O 慢得多。磁盘上的算法首先要减少它。",
+  "see": "L03"
+ },
+ {
+  "t": "系统目录",
+  "full": "System Catalog · 系统目录",
+  "alias": [
+   "catalog"
+  ],
+  "desc": "数据库自己的元数据：有哪些表、列、类型、索引。读页时靠它解释字节的含义。",
+  "see": "L03"
+ },
+ {
+  "t": "堆文件",
+  "full": "Heap File · 堆文件",
+  "alias": [
+   "Heap File"
+  ],
+  "desc": "页的无序集合，元组可以放在任何地方，要靠页目录找到某一页。",
+  "see": "L03"
+ },
+ {
+  "t": "页目录",
+  "full": "Page Directory · 页目录",
+  "alias": [
+   "Page Directory",
+   "page directory"
+  ],
+  "desc": "记录每个页在磁盘上的位置和空闲空间，必须持久化。别和内存里的页表搞混。",
+  "see": "L03"
+ },
+ {
+  "t": "Slotted Page",
+  "full": "Slotted Page · 槽页",
+  "alias": [
+   "Slotted Pages",
+   "slotted page",
+   "槽页"
+  ],
+  "desc": "页头后是槽数组，元组从页尾往前长。元组可在页内挪动而不影响外部引用，行存的标准布局。",
+  "see": "L03"
+ },
+ {
+  "t": "槽数组",
+  "full": "Slot Array · 槽数组",
+  "alias": [
+   "Slot Array",
+   "slot array"
+  ],
+  "desc": "slotted page 里的定长数组，记录每条元组在页内的偏移。有这层间接，元组才能随便挪。",
+  "see": "L03"
+ },
+ {
+  "t": "Record ID",
+  "full": "Record ID · 记录标识",
+  "alias": [
+   "Tuple ID",
+   "Row ID",
+   "rowid"
+  ],
+  "desc": "元组的物理位置，通常是文件、页号加槽号。压实时会变，所以应用不该依赖它。",
+  "see": "L03"
+ },
+ {
+  "t": "溢出页",
+  "full": "Overflow Page · 溢出页",
+  "alias": [
+   "Overflow Page"
+  ],
+  "desc": "值太大放不进普通页时单独存放的页，原元组只留指针和长度。",
+  "see": "L03"
+ },
+ {
+  "t": "German Strings",
+  "full": "German Strings · 德式字符串",
+  "alias": [
+   "德式字符串"
+  ],
+  "desc": "元组里除长度和指针外再存一小段前缀，先比前缀，不匹配就不用读溢出页。",
+  "see": "L03"
+ },
+ {
+  "t": "TOAST",
+  "full": "The Oversized-Attribute Storage Technique · 超大属性存储",
+  "desc": "PostgreSQL 把超大属性移到单独的表并压缩存放的机制。",
+  "see": "L03"
+ },
+ {
+  "t": "double write buffer",
+  "full": "Doublewrite Buffer · 双写缓冲区",
+  "desc": "MySQL 刷脏页时先顺序写进专用缓冲区，再写回原位。防页损坏，也把随机写换成顺序写。",
+  "see": "L03"
+ },
+ {
+  "t": "torn page",
+  "full": "Torn Page · 页损坏",
+  "alias": [
+   "页损坏"
+  ],
+  "desc": "数据库页比硬件的原子写单位大，断电时可能只写成一半，页就坏了。",
+  "see": "L03"
+ },
+ {
+  "t": "页表",
+  "full": "Page Table · 页表",
+  "alias": [
+   "Page Table",
+   "page table"
+  ],
+  "desc": "缓冲池里的哈希表，把页号映射到内存中的帧。只在内存里，不用持久化。",
+  "see": "L04"
+ },
+ {
+  "t": "frame",
+  "full": "Frame · 帧",
+  "desc": "缓冲池切成的定长内存槽，一帧正好放一个页。",
+  "see": "L04"
+ },
+ {
+  "t": "Pin 计数",
+  "full": "Pin Count · Pin 计数",
+  "alias": [
+   "Pin",
+   "pin",
+   "pin count",
+   "unpin"
+  ],
+  "desc": "记录多少线程正在用这一页。计数大于零就不能淘汰，用完要 unpin。",
+  "see": "L04"
+ },
+ {
+  "t": "Latch",
+  "full": "Latch · 闩",
+  "alias": [
+   "latch",
+   "Latching",
+   "latching"
+  ],
+  "desc": "保护内存数据结构的短期互斥手段，防线程把结构改坏。和保护逻辑内容的 Lock 是两回事。",
+  "see": "L10"
+ },
+ {
+  "t": "脏页",
+  "full": "Dirty Page · 脏页",
+  "alias": [
+   "dirty page",
+   "dirty flag",
+   "dirty bit",
+   "脏标记"
+  ],
+  "desc": "内存里改过、还没写回磁盘的页，靠页上的脏标记识别，淘汰前必须先写盘。",
+  "see": "L04"
+ },
+ {
+  "t": "Evictable",
+  "full": "Evictable · 可淘汰",
+  "alias": [
+   "可淘汰"
+  ],
+  "desc": "pin 计数降到零的帧，替换器可以考虑换掉。页脏不脏无关，脏页只是要先写盘。",
+  "see": "P1"
+ },
+ {
+  "t": "替换策略",
+  "full": "Replacement Policy · 替换策略",
+  "alias": [
+   "替换算法",
+   "替换器"
+  ],
+  "desc": "缓冲池满了时决定淘汰哪一页的规则，比如 LRU、CLOCK、ARC。",
+  "see": "L04"
+ },
+ {
+  "t": "LRU",
+  "full": "Least Recently Used · 最近最少使用",
+  "desc": "淘汰最久没被访问的页。简单，但一次全表扫描就能把热页全冲掉。",
+  "see": "L04"
+ },
+ {
+  "t": "CLOCK",
+  "full": "CLOCK · 时钟算法",
+  "desc": "LRU 的近似：每页一个访问位，指针绕圈清位，碰到 0 就淘汰。开销更小。",
+  "see": "L04"
+ },
+ {
+  "t": "LFU",
+  "full": "Least Frequently Used · 最不经常使用",
+  "desc": "淘汰访问次数最少的页。缺点是老热点计数太高，永远换不出去。",
+  "see": "L04"
+ },
+ {
+  "t": "LRU-K",
+  "full": "LRU-K · 看第 K 次最近访问的 LRU",
+  "desc": "比较每页第 K 次最近访问距今多久，最久的淘汰。能区分偶尔一次和反复访问。",
+  "see": "L04"
+ },
+ {
+  "t": "ARC",
+  "full": "Adaptive Replacement Cache · 自适应替换缓存",
+  "desc": "同时维护最近和频繁两个列表，按访问模式自动调大小，兼顾 LRU 和 LFU 的长处。",
+  "see": "L04"
+ },
+ {
+  "t": "Ghost Cache",
+  "full": "Ghost Cache · 幽灵列表",
+  "alias": [
+   "ghost list",
+   "ghost 列表",
+   "幽灵列表"
+  ],
+  "desc": "保留已换出页的访问历史，这些页重新读入时不用从零再学。",
+  "see": "L04"
+ },
+ {
+  "t": "young/old",
+  "full": "Young / Old 区 · MySQL 的近似 LRU-K",
+  "alias": [
+   "young 区",
+   "old 区"
+  ],
+  "desc": "MySQL 把 LRU 链表切成两段：新页进 old 区，再被访问才升到 young 区，扫描冲不掉热页。",
+  "see": "L04"
+ },
+ {
+  "t": "顺序泛洪",
+  "full": "Sequential Flooding · 顺序泛洪",
+  "alias": [
+   "Sequential Flooding"
+  ],
+  "desc": "一次全表扫描读入大量只用一次的页，把缓冲池里的热页全部挤掉。LRU 的致命缺陷。",
+  "see": "L04"
+ },
+ {
+  "t": "Direct I/O",
+  "full": "Direct I/O · 直接 I/O",
+  "desc": "读写绕过 OS 页缓存，磁盘数据直接进缓冲池，省掉内存里的第二份拷贝。",
+  "see": "L04"
+ },
+ {
+  "t": "Background Writer",
+  "full": "Background Writer · 后台写线程",
+  "alias": [
+   "后台写线程",
+   "page cleaning",
+   "buffer flushing"
+  ],
+  "desc": "后台把脏页提前写盘、清掉脏标记，这样淘汰时候选页多是干净的。",
+  "see": "L04"
+ },
+ {
+  "t": "预取",
+  "full": "Prefetching · 预取",
+  "alias": [
+   "Prefetching"
+  ],
+  "desc": "提前把接下来要用的页读进内存。数据库知道查询计划，比只会顺序预取的 OS 聪明。",
+  "see": "L05"
+ },
+ {
+  "t": "页守卫",
+  "full": "Page Guard · 页守卫",
+  "alias": [
+   "Page Guard"
+  ],
+  "desc": "用 RAII 包住页：出作用域自动 unpin、释放 latch，避免忘记放。",
+  "see": "P1"
+ },
+ {
+  "t": "缓冲池旁路",
+  "full": "Buffer Pool Bypass · 缓冲池旁路",
+  "alias": [
+   "Buffer Pool Bypass"
+  ],
+  "desc": "扫描的页直接拷进 worker 自己的内存，不进缓冲池，免得污染它。",
+  "see": "L13"
+ },
+ {
+  "t": "扫描共享",
+  "full": "Scan Sharing · 扫描共享",
+  "alias": [
+   "Scan Sharing",
+   "同步扫描",
+   "synchronized scans",
+   "游标共享"
+  ],
+  "desc": "后来的扫描搭上进行中的扫描，共用读到的页，走完再回头补上开头漏掉的部分。",
+  "see": "L05"
+ },
+ {
+  "t": "元组导向存储",
+  "full": "Tuple-Oriented Storage · 元组导向存储",
+  "alias": [
+   "Tuple-Oriented",
+   "元组导向"
+  ],
+  "desc": "页里存完整元组、原地更新，也就是 slotted page 这条路。对立面是日志结构存储。",
+  "see": "L05"
+ },
+ {
+  "t": "索引组织存储",
+  "full": "Index-Organized Storage · 索引组织存储",
+  "alias": [
+   "Index-Organized",
+   "索引组织"
+  ],
+  "desc": "让索引本身就是表：B+ 树叶子里直接放元组，查一次索引就拿到数据。",
+  "see": "L05"
+ },
+ {
+  "t": "日志结构存储",
+  "full": "Log-Structured Storage · 日志结构存储",
+  "alias": [
+   "Log-Structured",
+   "日志结构"
+  ],
+  "desc": "不存元组本身，只追加记录变更，同一元组可能有多份。写快，读要找最新版本。",
+  "see": "L05"
+ },
+ {
+  "t": "LSM 树",
+  "full": "Log-Structured Merge Tree · 日志结构合并树",
+  "alias": [
+   "LSM",
+   "LSM Tree",
+   "日志结构合并树"
+  ],
+  "desc": "写入先进内存表，写满后落成不可变的有序文件，后台再合并。写快，读要查多层。",
+  "see": "L05"
+ },
+ {
+  "t": "MemTable",
+  "full": "MemTable · 内存表",
+  "alias": [
+   "内存表"
+  ],
+  "desc": "LSM 在内存里的可变有序结构，写入先到这里，写满就刷成 SSTable。",
+  "see": "L05"
+ },
+ {
+  "t": "SSTable",
+  "full": "Sorted String Table · 有序串表",
+  "alias": [
+   "Sorted String Table",
+   "有序串表"
+  ],
+  "desc": "LSM 落在磁盘上的不可变文件，内部按 key 排序。只能靠压实合并，不能原地改。",
+  "see": "L05"
+ },
+ {
+  "t": "压实",
+  "full": "Compaction · 压实",
+  "alias": [
+   "Compaction",
+   "compaction",
+   "页内压实"
+  ],
+  "desc": "重新整理数据让它变紧凑。LSM 里是合并 SSTable 只留最新版本，页内是挪元组填空洞。",
+  "see": "L05"
+ },
+ {
+  "t": "分层压实",
+  "full": "Level Compaction · 分层压实",
+  "alias": [
+   "Level Compaction",
+   "level compaction"
+  ],
+  "desc": "LSM 分多层，第 1 层起 key 范围不重叠。读快，但常要重写整层，写放大严重。",
+  "see": "L05"
+ },
+ {
+  "t": "通用压实",
+  "full": "Universal Compaction · 通用压实",
+  "alias": [
+   "Universal Compaction"
+  ],
+  "desc": "只有一层，挑相邻的 SSTable 局部合并。写放大小、读慢些，适合只查最新数据的时序场景。",
+  "see": "L05"
+ },
+ {
+  "t": "写放大",
+  "full": "Write Amplification · 写放大",
+  "alias": [
+   "Write Amplification"
+  ],
+  "desc": "实际写盘量比用户改的数据多。比如 LSM 里同一份数据每下沉一层就重写一次。",
+  "see": "L05"
+ },
+ {
+  "t": "墓碑",
+  "full": "Tombstone · 墓碑",
+  "alias": [
+   "Tombstone"
+  ],
+  "desc": "不真删，只留一个「已删除」标记。LSM 靠它盖住旧值，线性探测靠它保住探测链。",
+  "see": "L07"
+ },
+ {
+  "t": "OLTP",
+  "full": "Online Transaction Processing · 联机事务处理",
+  "alias": [
+   "联机事务处理"
+  ],
+  "desc": "大量短小的读写，每次只碰少数几条记录，要求极快。新应用一开始都是这种负载。",
+  "see": "L06"
+ },
+ {
+  "t": "OLAP",
+  "full": "Online Analytical Processing · 联机分析处理",
+  "alias": [
+   "联机分析处理"
+  ],
+  "desc": "在积累的海量数据上做分析：跨大量记录、多表连接、聚合，以读为主。",
+  "see": "L06"
+ },
+ {
+  "t": "HTAP",
+  "full": "Hybrid Transactional/Analytical Processing · 混合事务分析处理",
+  "alias": [
+   "混合事务分析处理"
+  ],
+  "desc": "同一份数据既要快速写入，又要能直接分析，不用再导到别的系统。",
+  "see": "L06"
+ },
+ {
+  "t": "NSM",
+  "full": "N-Ary Storage Model · 行存",
+  "alias": [
+   "N-Ary Storage Model",
+   "行存",
+   "row store"
+  ],
+  "desc": "一条元组的所有属性连续存放。点查和写入方便，适合 OLTP；分析时要读一堆无关列。",
+  "see": "L06"
+ },
+ {
+  "t": "DSM",
+  "full": "Decomposition Storage Model · 列存",
+  "alias": [
+   "Decomposition Storage Model",
+   "列存",
+   "column store"
+  ],
+  "desc": "同一属性的值连续存放，一页只放一列。不读无关列、压缩率高，适合 OLAP。",
+  "see": "L06"
+ },
+ {
+  "t": "PAX",
+  "full": "Partition Attributes Across · 跨属性分区",
+  "alias": [
+   "Partition Attributes Across"
+  ],
+  "desc": "先按行切成块，块内再按列存。有列存的好处，同一元组的属性又不离太远。",
+  "see": "L06"
+ },
+ {
+  "t": "Row Group",
+  "full": "Row Group · 行组",
+  "alias": [
+   "row group",
+   "Column Chunk",
+   "column chunk"
+  ],
+  "desc": "PAX 里一批元组组成的水平分块，内部每列一个 Column Chunk。Parquet 的术语。",
+  "see": "L06"
+ },
+ {
+  "t": "隐式偏移",
+  "full": "Implicit Offset · 隐式偏移",
+  "alias": [
+   "固定长度偏移"
+  ],
+  "desc": "列存里每列定长，第 i 条元组就在每列第 i 个位置，不用存元组 ID 就能拼回去。",
+  "see": "L06"
+ },
+ {
+  "t": "mod log",
+  "full": "Modification Log · 修改日志",
+  "desc": "MySQL 压缩页里的一小块区域，记录改了什么。盲写时不用解压，写满才解压合并。",
+  "see": "L06"
+ },
+ {
+  "t": "RLE",
+  "full": "Run-Length Encoding · 游程编码",
+  "alias": [
+   "Run-Length Encoding",
+   "游程编码"
+  ],
+  "desc": "连续重复的值只存一次加出现次数。排过序效果最好，值交替出现时反而变大。",
+  "see": "L06"
+ },
+ {
+  "t": "游程",
+  "full": "Run · 游程",
+  "desc": "连续的一段数据。外部排序里指排好序的一段，RLE 里指连续重复的一段值。",
+  "see": "L11"
+ },
+ {
+  "t": "Bit Packing",
+  "full": "Bit Packing · 位打包",
+  "alias": [
+   "Bit-packing",
+   "位打包"
+  ],
+  "desc": "声明的类型往往比实际大，只用够放下值的位数来存。有离群值就不好使。",
+  "see": "L06"
+ },
+ {
+  "t": "Patching",
+  "full": "Patching / Mostly Encoding · 补丁编码",
+  "alias": [
+   "Mostly Encoding",
+   "Mostly 编码",
+   "补丁表"
+  ],
+  "desc": "大多数值按小位宽存，离群值用哨兵标记，真实值放进单独的补丁表。",
+  "see": "L06"
+ },
+ {
+  "t": "位图编码",
+  "full": "Bitmap Encoding · 位图编码",
+  "alias": [
+   "Bitmap Encoding"
+  ],
+  "desc": "每个不同的值配一个位图，第 i 位表示第 i 条元组是否取该值。只适合基数很低的列。",
+  "see": "L06"
+ },
+ {
+  "t": "增量编码",
+  "full": "Delta Encoding · 增量编码",
+  "alias": [
+   "Delta Encoding",
+   "Frame of Reference"
+  ],
+  "desc": "值彼此接近时存差值而不是绝对值，比如时序数据。差值还能再套一层 RLE。",
+  "see": "L06"
+ },
+ {
+  "t": "字典编码",
+  "full": "Dictionary Encoding · 字典编码",
+  "alias": [
+   "Dictionary Encoding",
+   "字典压缩"
+  ],
+  "desc": "把频繁出现的值换成定长小整数，另存映射表。列存最常用，可不解压直接比较。",
+  "see": "L06"
+ },
+ {
+  "t": "保序字典编码",
+  "full": "Order-Preserving Dictionary Encoding · 保序字典编码",
+  "alias": [
+   "保序字典",
+   "保序",
+   "order-preserving"
+  ],
+  "desc": "字典按原值排序，编码大小关系等于原值大小关系，范围查询能直接在编码上做。",
+  "see": "L06"
+ },
+ {
+  "t": "开放寻址",
+  "full": "Open Addressing · 开放寻址",
+  "alias": [
+   "Open Addressing"
+  ],
+  "desc": "key 的位置不固定，哈希函数只给起点，冲突了就往后找。线性探测属于这一类。",
+  "see": "L07"
+ },
+ {
+  "t": "线性探测",
+  "full": "Linear Probing · 线性探测",
+  "alias": [
+   "Linear Probing",
+   "Linear Probe Hashing",
+   "线性探测哈希"
+  ],
+  "desc": "key 冲突时顺着往下找空槽。简单又快，连接里几乎都用它。别和线性哈希搞混。",
+  "see": "L07"
+ },
+ {
+  "t": "布谷鸟哈希",
+  "full": "Cuckoo Hashing · 布谷鸟哈希",
+  "alias": [
+   "Cuckoo Hashing"
+  ],
+  "desc": "每个 key 有多个候选位置，都占满就踢走一个让它重新落位。查找 O(1)，实际比线性探测慢。",
+  "see": "L07"
+ },
+ {
+  "t": "链式哈希",
+  "full": "Chained Hashing · 链式哈希",
+  "alias": [
+   "Chained Hashing"
+  ],
+  "desc": "每个槽指向一条桶链表，冲突的 key 追加到链尾。链可以无限长，最坏退化成 O(n)。",
+  "see": "L07"
+ },
+ {
+  "t": "可扩展哈希",
+  "full": "Extendible Hashing · 可扩展哈希",
+  "alias": [
+   "Extendible Hashing",
+   "Extendible"
+  ],
+  "desc": "桶满了就分裂并重分 key，必要时让桶指针数组翻倍，其他桶不动。",
+  "see": "L07"
+ },
+ {
+  "t": "全局深度",
+  "full": "Global Depth · 全局深度",
+  "alias": [
+   "全局位计数器"
+  ],
+  "desc": "可扩展哈希里要看哈希值的几位才能定位桶，决定桶指针数组的大小。",
+  "see": "L07"
+ },
+ {
+  "t": "局部深度",
+  "full": "Local Depth · 局部深度",
+  "alias": [
+   "局部位计数器"
+  ],
+  "desc": "可扩展哈希里某个桶实际用了几位。满桶的局部深度等于全局深度时，目录才翻倍。",
+  "see": "L07"
+ },
+ {
+  "t": "线性哈希",
+  "full": "Linear Hashing · 线性哈希",
+  "alias": [
+   "Linear Hashing"
+  ],
+  "desc": "桶溢出时不分裂它，而是分裂 split pointer 指向的桶，指针依次下移，最终铺匀。",
+  "see": "L07"
+ },
+ {
+  "t": "split pointer",
+  "full": "Split Pointer · 分裂指针",
+  "desc": "线性哈希里指向下一个要分裂的桶。在它上方的桶已分裂过，要用第二个哈希函数。",
+  "see": "L07"
+ },
+ {
+  "t": "B+ 树",
+  "full": "B+Tree · B+ 树",
+  "alias": [
+   "B+树",
+   "B+Tree"
+  ],
+  "desc": "自平衡的有序多路树，值只在叶子，叶子连成链。查找 O(log n)，是索引的默认选择。",
+  "see": "L08"
+ },
+ {
+  "t": "B-Tree",
+  "full": "B-Tree · B 树",
+  "alias": [
+   "B 树"
+  ],
+  "desc": "原始版 B 树，值可以存在任何节点。如今系统说的 B-Tree 几乎都是 B+ 树。",
+  "see": "L08"
+ },
+ {
+  "t": "扇出",
+  "full": "Fan-out · 扇出",
+  "alias": [
+   "fan-out",
+   "Fan-out"
+  ],
+  "desc": "B+ 树节点的出边数，越大树越矮。连接里的扇出则指一行匹配出多行。",
+  "see": "L08"
+ },
+ {
+  "t": "路标",
+  "full": "Guide Post · 路标",
+  "alias": [
+   "Guide Post",
+   "导航键"
+  ],
+  "desc": "B+ 树内部节点里的键，只负责指路。看到它不代表这个键存在，要走到叶子才知道。",
+  "see": "L08"
+ },
+ {
+  "t": "半满",
+  "full": "Half-Full · 半满",
+  "desc": "B+ 树的不变式：除根外每个节点至少半满，低于它就要借键或合并。",
+  "see": "L08"
+ },
+ {
+  "t": "借键",
+  "full": "Redistribution · 借键",
+  "alias": [
+   "重分配"
+  ],
+  "desc": "删除后节点不足半满时，从相邻兄弟借一个键并更新父节点路标。借不了才合并。",
+  "see": "L08"
+ },
+ {
+  "t": "聚簇索引",
+  "full": "Clustered Index · 聚簇索引",
+  "alias": [
+   "聚簇",
+   "Clustered"
+  ],
+  "desc": "元组的物理顺序和索引顺序一致，沿叶子扫就是顺序 I/O。InnoDB 的主键索引就是。",
+  "see": "L11"
+ },
+ {
+  "t": "非聚簇索引",
+  "full": "Unclustered Index · 非聚簇索引",
+  "alias": [
+   "非聚簇",
+   "Unclustered"
+  ],
+  "desc": "索引顺序和元组物理顺序无关，沿索引取元组几乎每条一次随机 I/O。",
+  "see": "L11"
+ },
+ {
+  "t": "二级索引",
+  "full": "Secondary Index · 二级索引",
+  "desc": "主键索引之外的索引。MySQL 里叶子存主键值，要再回主索引查一次。",
+  "see": "L08"
+ },
+ {
+  "t": "跳跃扫描",
+  "full": "Skip Scan · 跳跃扫描",
+  "alias": [
+   "Skip Scan",
+   "skip scan"
+  ],
+  "desc": "复合索引 (A, B) 上只给 B：没有前缀可走，所有叶子都得看，但可以并行扫。",
+  "see": "L08"
+ },
+ {
+  "t": "后缀截断",
+  "full": "Suffix Truncation · 后缀截断",
+  "alias": [
+   "Suffix Truncation",
+   "前缀比较"
+  ],
+  "desc": "比较时只用键的前缀，截掉后面。前缀不同立刻出结果，相同才比完整的键。",
+  "see": "L11"
+ },
+ {
+  "t": "过滤器",
+  "full": "Filter · 过滤器",
+  "desc": "只回答「有没有」，不告诉你在哪。常放在索引前面，省掉无谓的查找。",
+  "see": "L09"
+ },
+ {
+  "t": "Bloom Filter",
+  "full": "Bloom Filter · 布隆过滤器",
+  "alias": [
+   "Bloom filter",
+   "布隆过滤器"
+  ],
+  "desc": "用位数组和多个哈希函数判断 key 在不在。说没有就一定没有，说有可能是误报。",
+  "see": "L09"
+ },
+ {
+  "t": "假阳性",
+  "full": "False Positive · 假阳性",
+  "desc": "说有其实没有。Bloom Filter 允许这种误报，代价只是多查一次。",
+  "see": "L09"
+ },
+ {
+  "t": "假阴性",
+  "full": "False Negative · 假阴性",
+  "desc": "说没有其实有，等于漏了数据。Bloom Filter 绝不允许出现。",
+  "see": "L09"
+ },
+ {
+  "t": "Counting Bloom Filter",
+  "full": "Counting Bloom Filter · 计数布隆过滤器",
+  "alias": [
+   "Counting Bloom"
+  ],
+  "desc": "把 Bloom Filter 的位换成计数器，减到 0 才算删掉，因此支持删除。",
+  "see": "L09"
+ },
+ {
+  "t": "Cuckoo Filter",
+  "full": "Cuckoo Filter · 布谷鸟过滤器",
+  "desc": "存 key 的指纹，删除时精确移除指纹，所以支持删除。",
+  "see": "L09"
+ },
+ {
+  "t": "SuRF",
+  "full": "Succinct Range Filter · 紧凑范围过滤器",
+  "desc": "基于紧凑基数树的过滤器，能回答「这个范围内有没有 key」，其他过滤器做不到。",
+  "see": "L09"
+ },
+ {
+  "t": "跳表",
+  "full": "Skip List · 跳表",
+  "alias": [
+   "Skip List"
+  ],
+  "desc": "多层有序链表，抛硬币决定节点升几层，查找期望 O(log n)，不用再平衡。MemTable 常用。",
+  "see": "L09"
+ },
+ {
+  "t": "字典树",
+  "full": "Trie / Radix Tree · 字典树 / 基数树",
+  "alias": [
+   "Trie",
+   "Radix Tree",
+   "基数树"
+  ],
+  "desc": "每层只存 key 的一小段，路径拼出 key。查找只看 key 长度，第一层就可能判定不存在。",
+  "see": "L09"
+ },
+ {
+  "t": "倒排索引",
+  "full": "Inverted Index · 倒排索引",
+  "alias": [
+   "Inverted Index"
+  ],
+  "desc": "把「文档→内容」反过来，变成「词→包含它的文档列表」，用来做全文检索。",
+  "see": "L09"
+ },
+ {
+  "t": "posting list",
+  "full": "Posting List · 倒排列表",
+  "desc": "倒排索引里一个词对应的记录列表，通常还带词频等信息。",
+  "see": "L09"
+ },
+ {
+  "t": "GIN",
+  "full": "Generalized Inverted Index · 通用倒排索引",
+  "alias": [
+   "Generalized Inverted Index"
+  ],
+  "desc": "PostgreSQL 的倒排索引：复用 B+ 树做词典，叶子存 posting list。",
+  "see": "L09"
+ },
+ {
+  "t": "FST",
+  "full": "Finite State Transducer · 有限状态转换器",
+  "alias": [
+   "有限状态转换器"
+  ],
+  "desc": "Lucene 的词典结构，像边上带权重的字典树。权重靠全部 key 算出，所以必须不可变。",
+  "see": "L09"
+ },
+ {
+  "t": "BM25",
+  "full": "Best Matching 25",
+  "desc": "经典的文本相关性打分算法。PostgreSQL 自带的只看词频，要用它得装扩展。",
+  "see": "L09"
+ },
+ {
+  "t": "n-gram",
+  "full": "n-gram",
+  "desc": "把文本切成所有连续 n 个字符的片段，让倒排索引能模糊匹配拼错的词。",
+  "see": "L09"
+ },
+ {
+  "t": "ANN",
+  "full": "Approximate Nearest Neighbor · 近似最近邻",
+  "desc": "在向量里找最相近的若干个，允许不绝对精确以换速度。向量索引干的就是这个。",
+  "see": "L09"
+ },
+ {
+  "t": "IVFFlat",
+  "full": "Inverted File Flat · 倒排式向量索引",
+  "desc": "先用 K-means 把向量聚成簇，查询时只在离得最近的几个簇里搜索。",
+  "see": "L09"
+ },
+ {
+  "t": "HNSW",
+  "full": "Hierarchical Navigable Small Worlds · 分层可导航小世界图",
+  "desc": "多层图式向量索引，上层稀疏下层密，从顶层逐层逼近，思路和跳表一样。",
+  "see": "L09"
+ },
+ {
+  "t": "Test-and-Set",
+  "full": "Test-and-Set / Compare-and-Swap · 原子指令",
+  "alias": [
+   "Compare-and-Swap",
+   "CAS"
+  ],
+  "desc": "原子 CPU 指令：检查内存值，符合预期才改写。自旋 latch 就靠它实现。",
+  "see": "L10"
+ },
+ {
+  "t": "自旋 Latch",
+  "full": "Spin Latch · 自旋 Latch",
+  "alias": [
+   "自旋 latch",
+   "自旋锁"
+  ],
+  "desc": "拿不到就在循环里反复重试，不让出 CPU。实现简单，但竞争时白耗 CPU，NUMA 上更糟。",
+  "see": "L10"
+ },
+ {
+  "t": "读写 Latch",
+  "full": "Reader-Writer Latch · 读写 Latch",
+  "alias": [
+   "读写 latch",
+   "reader-writer latch"
+  ],
+  "desc": "读模式可多人同时持有，写模式独占。有写者排队时，新来的读者也要等。",
+  "see": "L10"
+ },
+ {
+  "t": "Latch Crabbing",
+  "full": "Latch Crabbing / Latch Coupling · 闩耦合",
+  "alias": [
+   "Latch Coupling",
+   "latch crabbing",
+   "Crabbing",
+   "crabbing",
+   "闩耦合",
+   "螃蟹步"
+  ],
+  "desc": "下行时先拿孩子的 latch，孩子安全才放开上面的，像螃蟹一样交替挪步。",
+  "see": "L10"
+ },
+ {
+  "t": "乐观 Latch Crabbing",
+  "full": "Optimistic Latch Crabbing · 乐观 Latch Crabbing",
+  "alias": [
+   "乐观 latch crabbing",
+   "乐观 crabbing",
+   "Bayer-Schkolnick"
+  ],
+  "desc": "一路读 latch 下去，到叶子才拿写 latch。赌不用分裂合并，赌错就从根走悲观版。",
+  "see": "L10"
+ },
+ {
+  "t": "安全节点",
+  "full": "Safe Node · 安全节点",
+  "alias": [
+   "Safe Node"
+  ],
+  "desc": "本次操作不会让它分裂或合并的节点：插入时未满，删除时超过半满。",
+  "see": "L10"
+ },
+ {
+  "t": "No-Wait",
+  "full": "No-Wait · 不等待",
+  "alias": [
+   "no-wait"
+  ],
+  "desc": "拿不到 latch 就立刻放弃、撤销改动、从头重试。不等待就不会死锁。",
+  "see": "L10"
+ },
+ {
+  "t": "外部归并排序",
+  "full": "External Merge Sort · 外部归并排序",
+  "alias": [
+   "External Merge Sort"
+  ],
+  "desc": "数据放不进内存时用：先分块排好写盘，再一趟趟归并。尽量走顺序 I/O。",
+  "see": "L11"
+ },
+ {
+  "t": "Top-N 堆排序",
+  "full": "Top-N Heap Sort · Top-N 堆排序",
+  "alias": [
+   "Top-N"
+  ],
+  "desc": "查询既排序又限条数时，只用一个容量 N 的堆扫一遍，不用全排。",
+  "see": "L11"
+ },
+ {
+  "t": "双缓冲",
+  "full": "Double Buffering · 双缓冲",
+  "alias": [
+   "Double Buffering"
+  ],
+  "desc": "缓冲区一分为二、乒乓切换：一半在干活，一半在后台做 I/O，把磁盘停顿藏起来。",
+  "see": "L11"
+ },
+ {
+  "t": "代码特化",
+  "full": "Code Specialization · 代码特化",
+  "alias": [
+   "Code Specialization"
+  ],
+  "desc": "为具体类型生成专用的比较代码，省掉函数指针调用。C++ 模板、JIT 都能做到。",
+  "see": "L11"
+ },
+ {
+  "t": "归一化键",
+  "full": "Normalized Keys · 归一化键",
+  "alias": [
+   "Normalized Keys"
+  ],
+  "desc": "把 key 变成定长二进制，字节序等于原值顺序，之后全用 memcmp 比较，很快。",
+  "see": "L11"
+ },
+ {
+  "t": "外部哈希聚合",
+  "full": "External Hash Aggregation · 外部哈希聚合",
+  "alias": [
+   "ReHash"
+  ],
+  "desc": "内存放不下时先按哈希分区写盘，再逐个分区读入，用另一个哈希函数建表聚合。",
+  "see": "L11"
+ },
+ {
+  "t": "早期物化",
+  "full": "Early Materialization · 早期物化",
+  "alias": [
+   "Early Materialization"
+  ],
+  "desc": "算子之间传完整元组，上层不用回表。行存常用，代价是管道里搬的数据多。",
+  "see": "L11"
+ },
+ {
+  "t": "晚期物化",
+  "full": "Late Materialization · 晚期物化",
+  "alias": [
+   "Late Materialization"
+  ],
+  "desc": "只传 RecordID 和必要的列，用到时才回表取。列存常用，不搬最后要扔的数据。",
+  "see": "L11"
+ },
+ {
+  "t": "物化",
+  "full": "Materialization · 物化",
+  "desc": "把中间结果或元组真正算出来存好，而不是只留引用、边算边传。",
+  "see": "L11"
+ },
+ {
+  "t": "回表",
+  "full": "Table Lookup · 回表",
+  "alias": [
+   "回基表"
+  ],
+  "desc": "索引或中间结果里没有要的列，只好拿 RecordID 回原表再取一次。",
+  "see": "L12"
+ },
+ {
+  "t": "溢写",
+  "full": "Spill to Disk · 溢写到磁盘",
+  "alias": [
+   "溢出到磁盘"
+  ],
+  "desc": "内存放不下时把中间结果写到磁盘。哈希表溢出尤其糟，探测会变成随机 I/O。",
+  "see": "L12"
+ },
+ {
+  "t": "外表",
+  "full": "Outer / Inner Table · 外表 / 内表",
+  "alias": [
+   "内表"
+  ],
+  "desc": "嵌套循环里外层扫的是外表，内层被反复扫的是内表。小表放外层更省 I/O。",
+  "see": "L12"
+ },
+ {
+  "t": "嵌套循环连接",
+  "full": "Nested Loop Join · 嵌套循环连接",
+  "alias": [
+   "Nested Loop Join"
+  ],
+  "desc": "外表的每条元组都去内表找匹配。写起来最简单，靠分块或索引才用得上。",
+  "see": "L12"
+ },
+ {
+  "t": "朴素嵌套循环",
+  "full": "Simple Nested Loop Join · 朴素嵌套循环",
+  "alias": [
+   "Simple Nested Loop Join"
+  ],
+  "desc": "外表每来一条元组，就把内表每一页重读一遍。成本极高，只作对比的起点。",
+  "see": "L12"
+ },
+ {
+  "t": "块嵌套循环",
+  "full": "Block Nested Loop Join · 块嵌套循环",
+  "alias": [
+   "Block Nested Loop Join",
+   "块嵌套循环连接"
+  ],
+  "desc": "外表一次读入一批页，这批只扫一遍内表。内存够大时成本降到 M + N。",
+  "see": "L12"
+ },
+ {
+  "t": "索引嵌套循环",
+  "full": "Index Nested Loop Join · 索引嵌套循环",
+  "alias": [
+   "Index Nested Loop Join",
+   "索引嵌套循环连接"
+  ],
+  "desc": "内表上有索引时，外表每条元组直接查索引，不用全扫内表。",
+  "see": "L12"
+ },
+ {
+  "t": "排序归并连接",
+  "full": "Sort-Merge Join · 排序归并连接",
+  "alias": [
+   "Sort-Merge Join",
+   "排序归并"
+  ],
+  "desc": "两表先按连接键排序，再用双游标归并匹配。数据本来有序时最合算。",
+  "see": "L12"
+ },
+ {
+  "t": "哈希连接",
+  "full": "Hash Join · 哈希连接",
+  "alias": [
+   "Hash Join"
+  ],
+  "desc": "一张表建哈希表，另一张逐条探测，两步不再嵌套。等值连接里通常最快。",
+  "see": "L12"
+ },
+ {
+  "t": "build 侧",
+  "full": "Build / Probe Side · 构建侧 / 探测侧",
+  "alias": [
+   "probe 侧"
+  ],
+  "desc": "哈希连接里建哈希表的一边叫 build，拿元组去查的一边叫 probe。",
+  "see": "L12"
+ },
+ {
+  "t": "Bloom Join",
+  "full": "Bloom Join / Sideways Information Passing · 侧向信息传递",
+  "alias": [
+   "Sideways Information Passing",
+   "侧向信息传递",
+   "半连接优化"
+  ],
+  "desc": "build 侧顺手建 Bloom Filter 递给 probe 侧，不匹配的元组直接丢，不用碰哈希表。",
+  "see": "L12"
+ },
+ {
+  "t": "Grace 哈希连接",
+  "full": "Grace Hash Join · 分区哈希连接",
+  "alias": [
+   "Grace Hash Join",
+   "Grace 哈希",
+   "GRACE",
+   "分区哈希连接",
+   "Partitioned Hash Join"
+  ],
+  "desc": "哈希表放不下内存时，先把两表按哈希分区写盘，再逐对分区建表探测。",
+  "see": "L12"
+ },
+ {
+  "t": "递归分区",
+  "full": "Recursive Partitioning · 递归分区",
+  "desc": "某个分区还是放不下内存时，换个哈希函数只对它再分一层。",
+  "see": "L12"
+ },
+ {
+  "t": "混合哈希连接",
+  "full": "Hybrid Hash Join · 混合哈希连接",
+  "alias": [
+   "Hybrid Hash Join"
+  ],
+  "desc": "Grace 的改良：特别热的分区留在内存里直接处理，其余照常写盘。难在提前知道谁热。",
+  "see": "L12"
+ },
+ {
+  "t": "流水线",
+  "full": "Pipeline · 流水线",
+  "alias": [
+   "Pipeline"
+  ],
+  "desc": "一段连续的算子，元组可不停顿地一路往上流，到阻断算子为止。CPU 的流水线是另一回事。",
+  "see": "L13"
+ },
+ {
+  "t": "流水线阻断算子",
+  "full": "Pipeline Breaker · 流水线阻断算子",
+  "alias": [
+   "Pipeline Breaker",
+   "流水线阻断"
+  ],
+  "desc": "必须收齐全部输入才能吐出结果的算子，比如排序、聚合、哈希连接的 build。",
+  "see": "L13"
+ },
+ {
+  "t": "火山模型",
+  "full": "Iterator / Volcano Model · 迭代器模型",
+  "alias": [
+   "迭代器模型",
+   "Volcano Model",
+   "Volcano",
+   "Iterator",
+   "火山"
+  ],
+  "desc": "每个算子实现 next()，一次交一条元组，从根往下调。简单通用，但函数调用开销大。",
+  "see": "L13"
+ },
+ {
+  "t": "物化模型",
+  "full": "Materialization Model · 物化模型",
+  "desc": "算子一次把全部结果交给上层。OLTP 上合理；LIMIT 时要搬大量用不上的元组。",
+  "see": "L13"
+ },
+ {
+  "t": "向量化模型",
+  "full": "Vectorized / Batch Model · 向量化模型",
+  "alias": [
+   "向量化",
+   "批模型",
+   "Vectorized",
+   "vectorized model",
+   "Batch Model"
+  ],
+  "desc": "算子一次传一批元组，摊薄函数调用，还能用 SIMD。现代 OLAP 系统的标配。",
+  "see": "L13"
+ },
+ {
+  "t": "算子融合",
+  "full": "Operator Fusion · 算子融合",
+  "alias": [
+   "Operator Fusion"
+  ],
+  "desc": "把上层逻辑塞进下层算子，比如边扫描边过滤。只能在同一条流水线内做。",
+  "see": "L13"
+ },
+ {
+  "t": "拉模型",
+  "full": "Pull-Based · 拉模型",
+  "alias": [
+   "Pull-Based"
+  ],
+  "desc": "根节点调 next() 把数据一层层拉上来，控制流和数据流混在一起。实现容易，是主流。",
+  "see": "L13"
+ },
+ {
+  "t": "推模型",
+  "full": "Push-Based · 推模型",
+  "alias": [
+   "Push-Based"
+  ],
+  "desc": "没有 next()，由调度器安排流水线任务，数据自下而上推。控制流和数据流分离。",
+  "see": "L13"
+ },
+ {
+  "t": "多索引扫描",
+  "full": "Multi-Index Scan · 多索引扫描",
+  "alias": [
+   "Multi-Index Scan",
+   "Bitmap Scan",
+   "位图扫描",
+   "Index Merge",
+   "索引归并"
+  ],
+  "desc": "同时探测多个索引，把 RecordID 集合求交或并，再去取元组。PostgreSQL 叫 Bitmap Scan。",
+  "see": "L13"
+ },
+ {
+  "t": "DAG",
+  "full": "Directed Acyclic Graph · 有向无环图",
+  "desc": "没有环的有向图。查询计划本质是算子的 DAG，多数系统实现成树。",
+  "see": "L13"
+ },
+ {
+  "t": "物化视图",
+  "full": "Materialized View · 物化视图",
+  "desc": "预先算好并存下来的查询结果。高端系统能增量更新，PostgreSQL 要手动刷新。",
+  "see": "L13"
+ },
+ {
+  "t": "Zone Map",
+  "full": "Zone Map / Small Materialized Aggregates · 区域图",
+  "alias": [
+   "Zone map",
+   "zone map",
+   "区域图",
+   "SMA",
+   "Small Materialized Aggregates"
+  ],
+  "desc": "给一块数据预先算好 MIN、MAX 等摘要，看摘要就知道这块不用读。是过滤器不是索引。",
+  "see": "L13"
+ },
+ {
+  "t": "万圣节问题",
+  "full": "Halloween Problem · 万圣节问题",
+  "alias": [
+   "Halloween Problem"
+  ],
+  "desc": "更新让元组在扫描路径上挪了位置，同一条逻辑元组被看到多次、反复修改。",
+  "see": "L13"
+ },
+ {
+  "t": "JIT",
+  "full": "Just-In-Time Compilation · 即时编译",
+  "alias": [
+   "JIT 编译"
+  ],
+  "desc": "运行时把表达式或整个计划编译成机器码，省掉遍历表达式树的开销。",
+  "see": "L13"
+ },
+ {
+  "t": "Prepared Statement",
+  "full": "Prepared Statement · 预编译语句",
+  "alias": [
+   "prepared statement"
+  ],
+  "desc": "查询只编译一次、缓存计划，之后带参数反复执行。风险是计划不一定适合每个参数。",
+  "see": "L13"
+ },
+ {
+  "t": "常量折叠",
+  "full": "Constant Folding · 常量折叠",
+  "alias": [
+   "Constant Folding"
+  ],
+  "desc": "能提前算出的常量表达式只算一次，把结果当常量塞回去。",
+  "see": "L13"
+ },
+ {
+  "t": "worker",
+  "full": "Worker · 工作单元",
+  "desc": "数据库里的计算单元，可以是进程或线程，执行查询或压实这类后台任务。",
+  "see": "L14"
+ },
+ {
+  "t": "进程模型",
+  "full": "Process per Worker · 每 worker 一个进程",
+  "alias": [
+   "Process per Worker"
+  ],
+  "desc": "系统怎么组织 worker。狭义指每个 worker 一个 OS 进程，靠共享内存通信，PostgreSQL 如此。",
+  "see": "L14"
+ },
+ {
+  "t": "线程模型",
+  "full": "Thread per Worker · 每 worker 一个线程",
+  "alias": [
+   "Thread per Worker"
+  ],
+  "desc": "一个进程里多线程当 worker，共享地址空间、开销小，但一个线程崩了整个进程全挂。",
+  "see": "L14"
+ },
+ {
+  "t": "查询间并行",
+  "full": "Inter-Query Parallelism · 查询间并行",
+  "alias": [
+   "Inter-Query Parallelism",
+   "Inter-Query"
+  ],
+  "desc": "不同查询在不同 worker 上同时跑。单个查询本身不一定并行。",
+  "see": "L14"
+ },
+ {
+  "t": "查询内并行",
+  "full": "Intra-Query Parallelism · 查询内并行",
+  "alias": [
+   "Intra-Query Parallelism",
+   "Intra-Query"
+  ],
+  "desc": "一个查询内部用多个 worker，分算子内、算子间和浓密三种形态。",
+  "see": "L14"
+ },
+ {
+  "t": "算子内并行",
+  "full": "Intra-Operator Parallelism · 算子内并行",
+  "alias": [
+   "Intra-Operator",
+   "水平并行"
+  ],
+  "desc": "多个 worker 跑同一段流水线，各处理一部分数据。最常见的并行方式。",
+  "see": "L14"
+ },
+ {
+  "t": "算子间并行",
+  "full": "Inter-Operator Parallelism · 算子间并行",
+  "alias": [
+   "Inter-Operator",
+   "垂直并行"
+  ],
+  "desc": "多个 worker 同时跑计划的不同部分，上游边出下游边接。比融合贵，换来并行度。",
+  "see": "L14"
+ },
+ {
+  "t": "浓密并行",
+  "full": "Bushy Parallelism · 浓密并行",
+  "alias": [
+   "Bushy Parallelism",
+   "Bushy"
+  ],
+  "desc": "算子内和算子间并行同时上，只有少数高端企业系统支持。",
+  "see": "L14"
+ },
+ {
+  "t": "浓密连接树",
+  "full": "Bushy Join Tree · 浓密连接树",
+  "alias": [
+   "Bushy Join Tree",
+   "浓密树"
+  ],
+  "desc": "连接树两侧都可以是子连接的结果。搜索空间太大，大多数优化器不生成。",
+  "see": "L15"
+ },
+ {
+  "t": "Exchange 算子",
+  "full": "Exchange Operator · 交换算子",
+  "alias": [
+   "Exchange",
+   "Exchange Operator",
+   "交换算子",
+   "Gather",
+   "Distribute",
+   "Repartition"
+  ],
+  "desc": "在 worker 之间传数据的算子：Gather 多合一，Distribute 一分多，Repartition 多到多。",
+  "see": "L14"
+ },
+ {
+  "t": "RAID 0",
+  "full": "RAID 0 · 条带化",
+  "alias": [
+   "条带化",
+   "Striping"
+  ],
+  "desc": "页轮流写到不同的盘。读写都能并行，但丢一块盘就丢一部分数据。",
+  "see": "L14"
+ },
+ {
+  "t": "RAID 1",
+  "full": "RAID 1 · 镜像",
+  "alias": [
+   "Mirroring",
+   "RAID 1 镜像"
+  ],
+  "desc": "每页在每块盘上都存一份。读能并行、完全冗余，但写要等所有盘成功。",
+  "see": "L14"
+ },
+ {
+  "t": "垂直分区",
+  "full": "Vertical Partitioning · 垂直分区",
+  "desc": "按列把表切开分别存放。列存 DSM 就是一种垂直分区。",
+  "see": "L14"
+ },
+ {
+  "t": "UDF",
+  "full": "User-Defined Function · 用户自定义函数",
+  "desc": "用户自己写、在 SQL 里调用的函数。可能很贵，下推时要小心。",
+  "see": "L14"
+ },
+ {
+  "t": "绑定器",
+  "full": "Binder · 绑定器",
+  "desc": "把 SQL 里的表名、列名换成内部对象 ID，顺便拿到类型和 schema，找不到就报错。",
+  "see": "L15"
+ },
+ {
+  "t": "逻辑计划",
+  "full": "Logical Plan · 逻辑计划",
+  "desc": "只说要做什么，比如访问哪张表、做什么聚合，不说用什么算法。",
+  "see": "L15"
+ },
+ {
+  "t": "物理计划",
+  "full": "Physical Plan · 物理计划",
+  "desc": "说清具体怎么执行：用哈希连接还是排序归并、走哪个索引。",
+  "see": "L15"
+ },
+ {
+  "t": "物理属性",
+  "full": "Physical Property · 物理属性",
+  "desc": "数据的物理特征，最典型的是排序顺序。优化器不跟踪就可能满足不了 ORDER BY。",
+  "see": "L15"
+ },
+ {
+  "t": "谓词下推",
+  "full": "Predicate Pushdown · 谓词下推",
+  "alias": [
+   "Predicate Pushdown"
+  ],
+  "desc": "把过滤条件挪到计划下层先做，少搬元组。通常更快，谓词很贵时不一定。",
+  "see": "L15"
+ },
+ {
+  "t": "投影下推",
+  "full": "Projection Pushdown · 投影下推",
+  "alias": [
+   "Projection Pushdown"
+  ],
+  "desc": "在连接等操作之前就把用不到的列扔掉，少搬数据。",
+  "see": "L15"
+ },
+ {
+  "t": "启发式优化器",
+  "full": "Heuristic / Rule-Based Optimizer · 启发式优化器",
+  "alias": [
+   "规则优化器"
+  ],
+  "desc": "只应用固定规则，不用成本模型。简单好调试，但连接超过两张表就不行。",
+  "see": "L15"
+ },
+ {
+  "t": "魔法常数",
+  "full": "Magic Constant · 魔法常数",
+  "desc": "硬编码的经验数字，比如顺序扫描比随机 I/O 快几倍。换了硬件或数据就可能不对。",
+  "see": "L15"
+ },
+ {
+  "t": "Hints",
+  "full": "Query Hints · 查询提示",
+  "desc": "写在 SQL 里指挥优化器用哪个索引或连接顺序。等于把计划写死，数据变了就过时。",
+  "see": "L15"
+ },
+ {
+  "t": "Sargable",
+  "full": "Search ARGument ABLE · 可作搜索参数的",
+  "alias": [
+   "sargable"
+  ],
+  "desc": "谓词能被索引用上。这样优化器才能把逻辑扫描换成索引扫描。",
+  "see": "L15"
+ },
+ {
+  "t": "左深树",
+  "full": "Left-Deep Tree · 左深树",
+  "alias": [
+   "Left-Deep Tree",
+   "Left-Deep"
+  ],
+  "desc": "先连两张表，结果再逐张往上连的连接树形状。System R 只搜它，砍掉大量搜索空间。",
+  "see": "L15"
+ },
+ {
+  "t": "合取",
+  "full": "Conjunction · 合取",
+  "alias": [
+   "合取子句",
+   "合取分解"
+  ],
+  "desc": "用 AND 连接的条件。优化器先把它拆成独立谓词，才能分别下推。",
+  "see": "L15"
+ },
+ {
+  "t": "Cascades",
+  "full": "Cascades Optimizer Framework · Cascades 优化器框架",
+  "desc": "自顶向下的优化器框架，做分支限界搜索，物理属性从一开始就写进搜索目标。",
+  "see": "L16"
+ },
+ {
+  "t": "记忆化表",
+  "full": "Memo Table · 记忆化表",
+  "alias": [
+   "Memo Table",
+   "memo 表"
+  ],
+  "desc": "Cascades 里记下已算过成本的子问题，重复访问时直接查表。",
+  "see": "L16"
+ },
+ {
+  "t": "强制器节点",
+  "full": "Enforcer Node · 强制器节点",
+  "alias": [
+   "Enforcer Node",
+   "Enforcer",
+   "强制器"
+  ],
+  "desc": "专门插进计划、保证数据满足某物理属性的算子，比如为满足有序要求加的排序。",
+  "see": "L16"
+ },
+ {
+  "t": "GEQO",
+  "full": "Genetic Query Optimizer · 遗传查询优化器",
+  "alias": [
+   "遗传算法"
+  ],
+  "desc": "PostgreSQL 在连接的表很多时放弃动态规划，改用遗传算法随机搜索，不保证结果好。",
+  "see": "L16"
+ },
+ {
+  "t": "基数估算",
+  "full": "Cardinality Estimation · 基数估算",
+  "alias": [
+   "连接基数"
+  ],
+  "desc": "预测每个算子输出多少条元组。优化器选计划全靠它，连接越多错得越离谱。",
+  "see": "L16"
+ },
+ {
+  "t": "基数",
+  "full": "Cardinality · 基数",
+  "alias": [
+   "cardinality"
+  ],
+  "desc": "个数。列的基数指不同值的个数，算子的基数指它输出多少条元组。",
+  "see": "L16"
+ },
+ {
+  "t": "选择性",
+  "full": "Selectivity · 选择性",
+  "alias": [
+   "selectivity"
+  ],
+  "desc": "一条元组满足谓词的概率。说条件很有选择性，是指它能筛掉绝大多数元组。",
+  "see": "L16"
+ },
+ {
+  "t": "成本模型",
+  "full": "Cost Model · 成本模型",
+  "alias": [
+   "Cost Model"
+  ],
+  "desc": "给计划打分的内部模型，不预测实际耗时，只判断 A 是否比 B 好，不能跨系统比。",
+  "see": "L16"
+ },
+ {
+  "t": "物理成本",
+  "full": "Physical Cost · 物理成本",
+  "alias": [
+   "Physical Cost"
+  ],
+  "desc": "算子消耗的资源，如磁盘 I/O、网络包、CPU 周期，依赖具体硬件。",
+  "see": "L16"
+ },
+ {
+  "t": "逻辑成本",
+  "full": "Logical Cost · 逻辑成本",
+  "alias": [
+   "Logical Cost"
+  ],
+  "desc": "算子输出多少条元组，与用哪种物理算子无关，所以能提前用来剪枝。",
+  "see": "L16"
+ },
+ {
+  "t": "ANALYZE",
+  "full": "ANALYZE 命令",
+  "desc": "收集表的统计信息，如不同值个数、直方图，供优化器估算。会把旧的整个重算。",
+  "see": "L16"
+ },
+ {
+  "t": "直方图",
+  "full": "Histogram · 直方图",
+  "alias": [
+   "Histogram"
+  ],
+  "desc": "记录每个值或每段值出现多少次的统计结构，优化器最常用的估算依据。",
+  "see": "L16"
+ },
+ {
+  "t": "等宽直方图",
+  "full": "Equi-Width Histogram · 等宽直方图",
+  "alias": [
+   "Equi-Width"
+  ],
+  "desc": "每个桶的值域宽度相同。简单，但高频值会和低频值混在一个桶里。",
+  "see": "L16"
+ },
+ {
+  "t": "等深直方图",
+  "full": "Equi-Depth Histogram · 等深直方图",
+  "alias": [
+   "Equi-Depth"
+  ],
+  "desc": "每个桶的计数相同，宽度自适应，高频值不容易淹没低频值。比等宽更好。",
+  "see": "L16"
+ },
+ {
+  "t": "N 偏直方图",
+  "full": "N-Biased Histogram · N 偏直方图",
+  "alias": [
+   "N-Biased",
+   "重击者",
+   "heavy hitters"
+  ],
+  "desc": "为最频繁的值（重击者）各存精确计数，其余值扔进一个桶，只留粗略计数。",
+  "see": "L16"
+ },
+ {
+  "t": "MCV",
+  "full": "Most Common Values · 最常见值",
+  "desc": "一列里出现最多的值。PostgreSQL 的统计信息里单独存它们及其频率。",
+  "see": "L16"
+ },
+ {
+  "t": "Sketch",
+  "full": "Sketch · 概览",
+  "alias": [
+   "sketch",
+   "概览"
+  ],
+  "desc": "概率型数据结构，用很小的空间近似回答频次、不同值个数这类问题，容易合并。",
+  "see": "L16"
+ },
+ {
+  "t": "Count-Min Sketch",
+  "full": "Count-Min Sketch",
+  "desc": "估算元素频次的 Sketch，能回答哪些元素最频繁。Project 0 写过它。",
+  "see": "L16"
+ },
+ {
+  "t": "HyperLogLog",
+  "full": "HyperLogLog",
+  "desc": "估算一列有多少个不同值的 Sketch。",
+  "see": "L16"
+ },
+ {
+  "t": "相关列统计",
+  "full": "Correlated Statistics · 相关列统计",
+  "alias": [
+   "Correlated Statistics"
+  ],
+  "desc": "为相关的多列建联合统计，比如邮编和城市，避免当成独立变量估错。",
+  "see": "L16"
+ },
+ {
+  "t": "独立性假设",
+  "full": "Independence Assumption · 独立性假设",
+  "alias": [
+   "谓词独立"
+  ],
+  "desc": "假设多个谓词互不相关，选择性直接相乘。遇到相关列会严重低估。",
+  "see": "L16"
+ },
+ {
+  "t": "包含原则",
+  "full": "Containment Principle · 包含原则",
+  "alias": [
+   "Containment Principle"
+  ],
+  "desc": "估连接时假设内表的键总能在外表里找到匹配，否则公式写不出来。",
+  "see": "L16"
+ },
+ {
+  "t": "Join Order Benchmark",
+  "full": "Join Order Benchmark · 连接顺序基准",
+  "desc": "用 IMDb 真实数据测优化器的基准，暴露了各系统基数估算错得多厉害。",
+  "see": "L16"
+ },
+ {
+  "t": "自适应查询处理",
+  "full": "Adaptive Query Processing · 自适应查询处理",
+  "alias": [
+   "Adaptive Query Processing",
+   "AQP"
+  ],
+  "desc": "运行中发现估计错了就换算子或重新规划。只有少数高端系统做。",
+  "see": "L16"
+ }
+]

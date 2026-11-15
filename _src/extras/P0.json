@@ -1,0 +1,13 @@
+[
+  { "after": "1. 这个 Project 存在的意义", "kind": "flow", "pos": "end", "wide": true, "title": "五个 Project 与对应的讲次", "spec": {
+      "dir": "LR",
+      "nodes": [
+        { "id": "p0", "label": "P0\nC++ Primer", "c": "gray" },
+        { "id": "p1", "label": "P1 缓冲池管理器\n#03 #04", "c": "green" },
+        { "id": "p2", "label": "P2 B+ 树索引\n#08 #10", "c": "green" },
+        { "id": "p3", "label": "P3 查询执行\n#11 #12 #13", "c": "blue" },
+        { "id": "p4", "label": "P4 并发控制\n#17–#20", "c": "amber" }
+      ],
+      "edges": [ ["p0","p1"], ["p1","p2"], ["p2","p3"], ["p3","p4"] ]
+  } }
+]

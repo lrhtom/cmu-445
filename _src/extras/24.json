@@ -1,0 +1,27 @@
+[
+  { "after": "提交成功的流程", "kind": "seq", "pos": "end", "title": "2PC 提交成功：第一阶段必须全票", "spec": {
+      "actors": ["应用", "协调者", "所有参与者"],
+      "msgs": [
+        ["应用", "协调者", "COMMIT"],
+        ["协调者", "所有参与者", "第一阶段 Prepare：事务 X 能提交吗？", {"c": "blue"}],
+        ["所有参与者", "协调者", "OK（投票）", {"dash": true}],
+        { "note": "必须全票通过", "over": ["协调者"] },
+        ["协调者", "所有参与者", "第二阶段 Commit：提交它", {"c": "green"}],
+        ["所有参与者", "协调者", "已提交", {"dash": true}],
+        ["协调者", "应用", "提交成功", {"dash": true, "c": "green"}]
+      ]
+  } },
+  {"after": "3. 两阶段提交 2PC > 提交成功的流程", "kind": "viz", "id": "twopc", "scenes": [0], "pos": "end"},
+  {"after": "3. 两阶段提交 2PC > 中止的流程", "kind": "viz", "id": "twopc", "scenes": [1], "pos": "end"},
+  {"after": "3. 两阶段提交 2PC > 节点挂了怎么办", "kind": "viz", "id": "twopc", "scenes": [2], "pos": "end"},
+  {"after": "5. Paxos > 角色与流程", "kind": "viz", "id": "twopc", "scenes": [3], "pos": "end"},
+  { "after": "Multi-Paxos（来自 Google）", "kind": "flow", "pos": "end", "title": "Multi-Paxos：先选主，再由主来提议", "spec": {
+      "dir": "LR",
+      "nodes": [
+        { "id": "a", "label": "用一轮 Paxos\n做领导者选举", "c": "blue" },
+        { "id": "b", "label": "之后只有 leader\n能提议提交事务", "c": "green" },
+        { "id": "c", "label": "leader 挂了\n或租约到期", "c": "red" }
+      ],
+      "edges": [ ["a","b"], ["b","c"], ["c","a","再选一次", {"back": true}] ]
+  } }
+]

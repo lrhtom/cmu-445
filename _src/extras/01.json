@@ -1,0 +1,35 @@
+[
+  { "after": "7. 三级模式与数据独立性", "kind": "layers", "title": "三级模式：每往下一层，上面就少操心一件事", "pos": "end", "spec": {
+      "rows": [
+        { "tag": "应用程序", "label": "用 SQL 这类声明式语言访问", "desc": "这一层以下全都是 DBMS", "c": "blue" },
+        { "tag": "外部模式", "label": "External Schema（视图）", "desc": "暴露给不同应用的不同“版本”的数据。它和逻辑模式之间 = 逻辑数据独立性", "c": "purple" },
+        { "tag": "逻辑模式", "label": "Logical Schema", "desc": "有哪些表、哪些属性、什么名字、什么类型。它和物理模式之间 = 物理数据独立性", "c": "green" },
+        { "tag": "物理模式", "label": "Physical Schema", "desc": "文件、页、区段（extent），字节怎么摆", "c": "amber" },
+        { "tag": "存储介质", "label": "Database Storage", "desc": "", "c": "" }
+      ]
+  } },
+  { "after": "9. 关系代数：七个算子", "kind": "layers", "title": "七个算子和 SQL 的对应关系", "pos": "end", "spec": {
+      "rows": [
+        { "tag": "σ 选择", "label": "WHERE", "desc": "按谓词过滤掉不想要的元组 —— 注意它不是 SQL 的 SELECT 关键字", "c": "blue" },
+        { "tag": "π 投影", "label": "SELECT 后面的列清单", "desc": "重排属性、删掉属性、计算新值", "c": "blue" },
+        { "tag": "∪ 并", "label": "UNION", "desc": "两个关系必须有完全相同的属性", "c": "purple" },
+        { "tag": "∩ 交", "label": "INTERSECT", "desc": "同上", "c": "purple" },
+        { "tag": "− 差", "label": "EXCEPT", "desc": "同上", "c": "purple" },
+        { "tag": "× 笛卡尔积", "label": "CROSS JOIN（或 FROM R, S）", "desc": "R 的每一行配 S 的每一行 —— 几乎不是我们想要的", "c": "red" },
+        { "tag": "⋈ 连接", "label": "JOIN … ON …", "desc": "可以理解成“笛卡尔积 + 一个过滤谓词”", "c": "green" }
+      ]
+  } },
+  { "after": "10. 算子顺序决定性能", "kind": "flow", "title": "同一个答案的两种算法顺序（一张表 5 条记录，另一张一万亿条）", "pos": "end", "spec": {
+      "dir": "TB",
+      "nodes": [
+        { "id": "a1", "label": "方案 A：先连接，再过滤", "kind": "pill", "c": "red" },
+        { "id": "b1", "label": "方案 B：先过滤，再连接", "kind": "pill", "c": "green" },
+        { "id": "a2", "label": "R ⋈ S\n先做一万亿行的连接", "c": "red" },
+        { "id": "b2", "label": "σ b_id = 102 (S)\n先把 S 过滤到 2 行", "c": "green" },
+        { "id": "a3", "label": "σ b_id = 102\n巨量中间结果里只有 2 行满足", "c": "red" },
+        { "id": "b3", "label": "R ⋈ (过滤后的 S)\n快得多", "c": "green" },
+        { "id": "r", "label": "结果完全一样", "kind": "pill", "c": "blue" }
+      ],
+      "edges": [ ["a1","a2"], ["a2","a3"], ["a3","r"], ["b1","b2"], ["b2","b3"], ["b3","r"] ]
+  } }
+]
